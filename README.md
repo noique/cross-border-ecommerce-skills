@@ -74,11 +74,11 @@ Load the `.md` files as system prompts or skill definitions.
 
 These skills are structured prompts with complex multi-step instructions. LLM capability directly affects output quality:
 
-| Model Tier | Expected Quality | Examples |
+| Model Tier | Expected Quality | Examples (as of April 2026) |
 |-----------|-----------------|---------|
-| Recommended | Full execution, data verification works | Claude Opus/Sonnet, GPT-4o, Gemini Pro |
-| Usable | Structure OK, may skip verification steps | DeepSeek V3, Llama 70B+, Qwen 72B+ |
-| Not recommended | Sections missing, compliance checks fail | Models under 30B parameters |
+| Recommended | Full execution, data verification works | Claude Opus 4.6 / Sonnet 4.6, GPT-5.4, Gemini 3.1 Pro |
+| Usable | Structure OK, may skip verification steps | DeepSeek V4 / V3.2, Llama 4, Qwen 3.5 (72B+), GLM-5.1 |
+| Not recommended | Sections missing, compliance checks fail | Qwen 3.5 9B and below, any model under 30B parameters |
 
 Key requirements: long context (8K+ input), strong instruction following, Chinese-English bilingual capability, tool use / web browsing (for research steps).
 
@@ -151,11 +151,11 @@ cp amazon/**/*.md ~/.claude/commands/
 
 这些技能是复杂的多步骤结构化 Prompt，底层 LLM 能力直接决定输出质量：
 
-| 模型层级 | 预期效果 | 代表模型 |
+| 模型层级 | 预期效果 | 代表模型（截至 2026 年 4 月） |
 |---------|---------|---------|
-| 推荐 | 完整执行，数据验证步骤生效 | Claude Opus/Sonnet、GPT-4o、Gemini Pro |
-| 可用 | 结构完整，可能跳过验证步骤 | DeepSeek V3、Llama 70B+、Qwen 72B+ |
-| 不建议 | 章节缺失，合规检查失效 | 30B 以下参数模型 |
+| 推荐 | 完整执行，数据验证步骤生效 | Claude Opus 4.6 / Sonnet 4.6、GPT-5.4、Gemini 3.1 Pro |
+| 可用 | 结构完整，可能跳过验证步骤 | DeepSeek V4 / V3.2、Llama 4、Qwen 3.5 (72B+)、GLM-5.1 |
+| 不建议 | 章节缺失，合规检查失效 | Qwen 3.5 9B 及以下、30B 以下参数模型 |
 
 关键能力要求：长上下文（8K+ 输入）、强指令遵循、中英双语、联网/工具调用（调研步骤需要）。
 
