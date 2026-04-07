@@ -137,7 +137,7 @@ cp amazon/**/*.md ~/.claude/commands/
 
 ## License
 
-Licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+Licensed under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
 
 You are free to use, share, and adapt these skills for any purpose, including commercial use, as long as you give credit.
 
