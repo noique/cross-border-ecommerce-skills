@@ -64,12 +64,27 @@ cp amazon/**/*.md ~/.claude/commands/
 **Google Antigravity:**
 Copy `.md` files to your Antigravity skill directory.
 
+**OpenClaw / 小龙虾:**
+Import `.md` files as custom skills. Works with any LLM backend supported by OpenClaw.
+
 **Any AI IDE with skill/prompt support:**
 Load the `.md` files as system prompts or skill definitions.
 
+### Minimum Model Requirements
+
+These skills are structured prompts with complex multi-step instructions. LLM capability directly affects output quality:
+
+| Model Tier | Expected Quality | Examples |
+|-----------|-----------------|---------|
+| Recommended | Full execution, data verification works | Claude Opus/Sonnet, GPT-4o, Gemini Pro |
+| Usable | Structure OK, may skip verification steps | DeepSeek V3, Llama 70B+, Qwen 72B+ |
+| Not recommended | Sections missing, compliance checks fail | Models under 30B parameters |
+
+Key requirements: long context (8K+ input), strong instruction following, Chinese-English bilingual capability, tool use / web browsing (for research steps).
+
 ### Examples
 
-See [examples/beautikini/](examples/beautikini/) for a complete test run using Beautikini period swimwear — all 6 skills executed with real Amazon data.
+See [examples/](examples/) for test reports (coming soon).
 
 ---
 
@@ -129,9 +144,24 @@ cp amazon/**/*.md ~/.claude/commands/
 **Google Antigravity：**
 复制 `.md` 文件到 Antigravity 技能目录。
 
+**OpenClaw / 小龙虾：**
+导入 `.md` 文件为自定义技能，支持 OpenClaw 接入的任何 LLM 后端。
+
+### 模型要求
+
+这些技能是复杂的多步骤结构化 Prompt，底层 LLM 能力直接决定输出质量：
+
+| 模型层级 | 预期效果 | 代表模型 |
+|---------|---------|---------|
+| 推荐 | 完整执行，数据验证步骤生效 | Claude Opus/Sonnet、GPT-4o、Gemini Pro |
+| 可用 | 结构完整，可能跳过验证步骤 | DeepSeek V3、Llama 70B+、Qwen 72B+ |
+| 不建议 | 章节缺失，合规检查失效 | 30B 以下参数模型 |
+
+关键能力要求：长上下文（8K+ 输入）、强指令遵循、中英双语、联网/工具调用（调研步骤需要）。
+
 ### 示例
 
-查看 [examples/beautikini/](examples/beautikini/) — 用 Beautikini 经期泳衣完整跑了 6 个技能的测试报告。
+查看 [examples/](examples/) — 测试报告即将上传。
 
 ---
 
