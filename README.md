@@ -143,4 +143,4 @@ You are free to use, share, and adapt these skills for any purpose, including co
 
 ## Author
 
-Created by **Alex / 黄子阳**
+Created by **Alex / 黄子阳** — [ckcm.us](https://ckcm.us)

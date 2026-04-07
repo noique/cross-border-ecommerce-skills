@@ -110,5 +110,5 @@ Beauty / Grocery / Health & Personal Care / Jewelry / Toys (Q4季节性) — 需
 
 ---
 
-> Created by Alex / 黄子阳
+> Created by Alex / 黄子阳 — https://ckcm.us
 > Licensed under CC BY-NC 4.0 — https://creativecommons.org/licenses/by-nc/4.0/
