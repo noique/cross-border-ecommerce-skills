@@ -16,16 +16,40 @@ A collection of AI agent skills (prompt templates) that automate key workflows i
 
 Each skill is a standalone `.md` file. Drop it into your AI IDE's skill directory and invoke it.
 
-### Amazon Skills (6 skills)
+### Amazon Skills (13 skills)
 
+**Phase 1: Product Selection**
 | Skill | What it does |
 |-------|-------------|
-| [amazon-product-selection](amazon/product-selection/amazon-product-selection.md) | Scores and ranks Top 30 potential products from any data source (Jimu Data, Helium10, JungleScout, etc.) |
-| [amazon-product-shortlist](amazon/product-selection/amazon-product-shortlist.md) | Deep feasibility screening: compliance, beginner-friendliness, seasonality, GTM flywheel check, Go-List with action plan |
-| [amazon-market-research](amazon/market-research/amazon-market-research.md) | Full market research: 1688 sourcing data, Amazon competitive landscape, VOC matrix, competitor teardown, SWOT |
-| [amazon-ip-risk-assessment](amazon/ip-risk/amazon-ip-risk-assessment.md) | Patent search (Google Patents + Espacenet), trademark risk, design comparison matrix, risk rating |
-| [amazon-keyword-research](amazon/listing-optimization/amazon-keyword-research.md) | Keyword library: 3-tier CPC strategy, negative keywords, COSMO/Rufus/A10 SEO guide, Search Terms optimization |
-| [amazon-listing-copywriter](amazon/listing-optimization/amazon-listing-copywriter.md) | Listing copy: title, bullet points, A+ description, Search Terms, Rufus checklist, 11-point compliance audit |
+| [amazon-product-selection](amazon/product-selection/amazon-product-selection.md) | Scores and ranks Top 30 potential products from any data source |
+| [amazon-product-shortlist](amazon/product-selection/amazon-product-shortlist.md) | Feasibility screening: compliance, GTM flywheel check, Go-List |
+
+**Phase 2: Research & Risk**
+| Skill | What it does |
+|-------|-------------|
+| [amazon-market-research](amazon/market-research/amazon-market-research.md) | Full market research: VOC matrix, competitor teardown, SWOT |
+| [amazon-ip-risk-assessment](amazon/ip-risk/amazon-ip-risk-assessment.md) | Patent + trademark risk, design comparison, risk rating |
+| [amazon-supplier-decision](amazon/supplier/amazon-supplier-decision.md) | 1688/Alibaba supplier evaluation, cost breakdown, red flag detection |
+
+**Phase 3: Listing Creation**
+| Skill | What it does |
+|-------|-------------|
+| [amazon-keyword-research](amazon/listing-optimization/amazon-keyword-research.md) | Keyword library: 3-tier CPC, COSMO/Rufus/A10 SEO guide |
+| [amazon-listing-copywriter](amazon/listing-optimization/amazon-listing-copywriter.md) | Title, bullet points, A+ description, Search Terms |
+| [amazon-main-image-prompt](amazon/image-design/amazon-main-image-prompt.md) | Main + secondary image design briefs and AI prompts |
+| [amazon-aplus-image-prompt](amazon/image-design/amazon-aplus-image-prompt.md) | A+ Content module layout, Brand Story, image prompts |
+
+**Phase 4: Compliance & Launch**
+| Skill | What it does |
+|-------|-------------|
+| [amazon-compliance-review](amazon/compliance-launch/amazon-compliance-review.md) | 3-dimension parallel audit: platform rules, legal/IP, AI search |
+| [amazon-pre-launch-review](amazon/compliance-launch/amazon-pre-launch-review.md) | Final pre-launch checklist across all previous SKILL outputs |
+
+**Phase 5: Advertising & Operations**
+| Skill | What it does |
+|-------|-------------|
+| [amazon-ad-architecture](amazon/advertising/amazon-ad-architecture.md) | PPC campaign structure: SP/SB/SD/SBV, budget allocation, bid strategy |
+| [amazon-weekly-ad-review](amazon/advertising/amazon-weekly-ad-review.md) | Weekly ad performance review, Search Term analysis, action list |
 
 ### Recommended Workflow
 
@@ -33,16 +57,24 @@ Each skill is a standalone `.md` file. Drop it into your AI IDE's skill director
 Data Source (Jimu / Helium10 / JungleScout)
     |
     v
-1. /amazon-product-selection      -> Top 30 candidates
-    |
-    v
-2. /amazon-product-shortlist      -> Go-List (5-10 products) + action plan
-    |
-    v  For each product:
-3. /amazon-market-research        -> Deep market research report
-4. /amazon-ip-risk-assessment     -> IP risk assessment
-5. /amazon-keyword-research       -> Keyword library
-6. /amazon-listing-copywriter     -> Listing copy (ready to publish)
+1.  /amazon-product-selection      -> Top 30 candidates
+     |
+2.  /amazon-product-shortlist      -> Go-List + action plan
+     |
+     v  For each product:
+3.  /amazon-market-research        -> Market research report
+4.  /amazon-ip-risk-assessment     -> IP risk report
+5.  /amazon-supplier-decision      -> Supplier decision doc
+6.  /amazon-keyword-research       -> Keyword library
+7.  /amazon-listing-copywriter     -> Listing copy
+8.  /amazon-main-image-prompt      -> Product image briefs
+9.  /amazon-aplus-image-prompt     -> A+ content design
+10. /amazon-compliance-review      -> 3-dimension compliance audit
+11. /amazon-pre-launch-review      -> Final pre-launch checklist
+     |
+     v  After launch:
+12. /amazon-ad-architecture        -> PPC campaign setup
+13. /amazon-weekly-ad-review       -> Weekly optimization (recurring)
 ```
 
 ### Key Features
@@ -96,16 +128,40 @@ See [examples/](examples/) for test reports (coming soon).
 
 每个技能是独立的 `.md` 文件，放入你的 AI IDE 技能目录即可使用。
 
-### Amazon 技能矩阵（6 个技能）
+### Amazon 技能矩阵（13 个技能）
 
+**阶段一：选品**
 | 技能 | 功能 |
 |------|------|
-| [amazon-product-selection](amazon/product-selection/amazon-product-selection.md) | 从榜单数据中筛选 Top 30 潜力产品（支持极目数据/Helium10/JungleScout 等） |
-| [amazon-product-shortlist](amazon/product-selection/amazon-product-shortlist.md) | 深度可行性筛选：合规红绿灯、新手友好度、季节性匹配、GTM飞轮快检、落地行动计划 |
-| [amazon-market-research](amazon/market-research/amazon-market-research.md) | 完整市场调研：1688数据提取、Amazon竞品扫描、VOC矩阵、竞品品牌拆解、SWOT分析 |
-| [amazon-ip-risk-assessment](amazon/ip-risk/amazon-ip-risk-assessment.md) | IP风险排查：Google Patents+Espacenet 专利检索、商标风险、外观对比、风险评级 |
-| [amazon-keyword-research](amazon/listing-optimization/amazon-keyword-research.md) | 关键词词库：3层CPC策略、否定词库、COSMO/Rufus/A10融合SEO指南、Search Terms优化 |
-| [amazon-listing-copywriter](amazon/listing-optimization/amazon-listing-copywriter.md) | Listing文案：标题、五点卖点、A+描述、Search Terms、Rufus优化清单、11项合规自检 |
+| [amazon-product-selection](amazon/product-selection/amazon-product-selection.md) | 从榜单筛选 Top 30 潜力产品 |
+| [amazon-product-shortlist](amazon/product-selection/amazon-product-shortlist.md) | 可行性筛选：合规红绿灯、GTM飞轮、落地行动计划 |
+
+**阶段二：调研与风险**
+| 技能 | 功能 |
+|------|------|
+| [amazon-market-research](amazon/market-research/amazon-market-research.md) | 市场调研：VOC矩阵、竞品拆解、SWOT |
+| [amazon-ip-risk-assessment](amazon/ip-risk/amazon-ip-risk-assessment.md) | IP风险：专利+商标检索、外观对比、风险评级 |
+| [amazon-supplier-decision](amazon/supplier/amazon-supplier-decision.md) | 供应商决策：1688比价、成本拆解、红旗检测 |
+
+**阶段三：Listing 创建**
+| 技能 | 功能 |
+|------|------|
+| [amazon-keyword-research](amazon/listing-optimization/amazon-keyword-research.md) | 关键词词库：3层CPC、COSMO/Rufus/A10 SEO |
+| [amazon-listing-copywriter](amazon/listing-optimization/amazon-listing-copywriter.md) | 标题、卖点、A+描述、Search Terms |
+| [amazon-main-image-prompt](amazon/image-design/amazon-main-image-prompt.md) | 主副图设计方案 + AI图片生成提示词 |
+| [amazon-aplus-image-prompt](amazon/image-design/amazon-aplus-image-prompt.md) | A+ Content 模块排布 + Brand Story + 图片提示词 |
+
+**阶段四：合规与上架**
+| 技能 | 功能 |
+|------|------|
+| [amazon-compliance-review](amazon/compliance-launch/amazon-compliance-review.md) | 三维度并行审查：平台规则/法律IP/AI搜索 |
+| [amazon-pre-launch-review](amazon/compliance-launch/amazon-pre-launch-review.md) | 上架前总复查：所有前置 SKILL 输出一次性检查 |
+
+**阶段五：广告与运营**
+| 技能 | 功能 |
+|------|------|
+| [amazon-ad-architecture](amazon/advertising/amazon-ad-architecture.md) | PPC广告架构：SP/SB/SD/SBV Campaign 设计 |
+| [amazon-weekly-ad-review](amazon/advertising/amazon-weekly-ad-review.md) | 每周广告复查：ACoS/TACoS分析、出价调整、行动清单 |
 
 ### 推荐流程
 
@@ -113,16 +169,24 @@ See [examples/](examples/) for test reports (coming soon).
 数据源（极目数据 / Helium10 / JungleScout）
     |
     v
-1. /amazon-product-selection      -> Top 30 候选品
-    |
-    v
-2. /amazon-product-shortlist      -> Go-List（5-10款）+ 行动计划
-    |
-    v  对每款产品执行：
-3. /amazon-market-research        -> 深度调研报告
-4. /amazon-ip-risk-assessment     -> IP风险排查
-5. /amazon-keyword-research       -> 关键词词库
-6. /amazon-listing-copywriter     -> 上架文案
+1.  /amazon-product-selection      -> Top 30 候选品
+     |
+2.  /amazon-product-shortlist      -> Go-List + 行动计划
+     |
+     v  对每款产品执行：
+3.  /amazon-market-research        -> 调研报告
+4.  /amazon-ip-risk-assessment     -> IP风险排查
+5.  /amazon-supplier-decision      -> 供应商决策
+6.  /amazon-keyword-research       -> 关键词词库
+7.  /amazon-listing-copywriter     -> Listing文案
+8.  /amazon-main-image-prompt      -> 主副图设计
+9.  /amazon-aplus-image-prompt     -> A+内容设计
+10. /amazon-compliance-review      -> 三维度合规审查
+11. /amazon-pre-launch-review      -> 上架前总复查
+     |
+     v  上架后：
+12. /amazon-ad-architecture        -> 广告架构搭建
+13. /amazon-weekly-ad-review       -> 每周广告优化（持续循环）
 ```
 
 ### 核心特色
