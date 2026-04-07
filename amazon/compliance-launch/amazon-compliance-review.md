@@ -61,6 +61,8 @@
 | Band-Aid | adhesive bandage |
 | Jacuzzi | whirlpool/hot tub |
 | Bubble Wrap | air cushion packaging |
+| Onesie | one-piece bodysuit |
+| Chapstick | lip balm |
 
 **竞品商标词扫描：**
 - 扫描文案中是否出现任何竞品品牌名（来自 ip-risk-assessment 的商标列表）
