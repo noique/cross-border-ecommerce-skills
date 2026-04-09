@@ -16,7 +16,7 @@ A collection of AI agent skills (prompt templates) that automate key workflows i
 
 Each skill is a standalone `.md` file. Drop it into your AI IDE's skill directory and invoke it.
 
-### Amazon Skills (13 skills)
+### Amazon Skills (14 skills)
 
 **Phase 1: Product Selection**
 | Skill | What it does |
@@ -50,6 +50,7 @@ Each skill is a standalone `.md` file. Drop it into your AI IDE's skill director
 |-------|-------------|
 | [amazon-ad-architecture](amazon/advertising/amazon-ad-architecture.md) | PPC campaign structure: SP/SB/SD/SBV, budget allocation, bid strategy |
 | [amazon-weekly-ad-review](amazon/advertising/amazon-weekly-ad-review.md) | Weekly ad performance review, Search Term analysis, action list |
+| [amazon-ad-diagnosis](amazon/advertising/amazon-ad-diagnosis.md) | **Existing product** ad diagnosis: competitive scan → keyword rebuild → copy fix → ad optimization |
 
 ### Recommended Workflow
 
@@ -75,6 +76,9 @@ Data Source (Jimu / Helium10 / JungleScout)
      v  After launch:
 12. /amazon-ad-architecture        -> PPC campaign setup
 13. /amazon-weekly-ad-review       -> Weekly optimization (recurring)
+
+     For existing products needing optimization:
+14. /amazon-ad-diagnosis           -> Full diagnosis + optimization (4-stage pipeline)
 ```
 
 ### Key Features
@@ -128,7 +132,7 @@ See [examples/](examples/) for test reports (coming soon).
 
 每个技能是独立的 `.md` 文件，放入你的 AI IDE 技能目录即可使用。
 
-### Amazon 技能矩阵（13 个技能）
+### Amazon 技能矩阵（14 个技能）
 
 **阶段一：选品**
 | 技能 | 功能 |
@@ -162,6 +166,7 @@ See [examples/](examples/) for test reports (coming soon).
 |------|------|
 | [amazon-ad-architecture](amazon/advertising/amazon-ad-architecture.md) | PPC广告架构：SP/SB/SD/SBV Campaign 设计 |
 | [amazon-weekly-ad-review](amazon/advertising/amazon-weekly-ad-review.md) | 每周广告复查：ACoS/TACoS分析、出价调整、行动清单 |
+| [amazon-ad-diagnosis](amazon/advertising/amazon-ad-diagnosis.md) | **已有产品**广告诊断：竞争环境→词库重建→文案埋词→广告优化（4阶段串联） |
 
 ### 推荐流程
 
@@ -187,6 +192,9 @@ See [examples/](examples/) for test reports (coming soon).
      v  上架后：
 12. /amazon-ad-architecture        -> 广告架构搭建
 13. /amazon-weekly-ad-review       -> 每周广告优化（持续循环）
+
+     已上架产品需要优化时：
+14. /amazon-ad-diagnosis           -> 全链路诊断+优化（4阶段串联）
 ```
 
 ### 核心特色
