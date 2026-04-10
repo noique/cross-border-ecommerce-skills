@@ -16,6 +16,18 @@ A collection of AI agent skills (prompt templates) that automate key workflows i
 
 Each skill is a standalone `.md` file. Drop it into your AI IDE's skill directory and invoke it.
 
+### Brand Strategy Skills (6 skills) — NEW
+
+**4-Round Brand Analysis Pipeline + IMC + Knowledge Base**
+| Skill | What it does |
+|-------|-------------|
+| [brand-market-scan](brand-strategy/brand-market-scan.md) | Round 1: Market panoramic scan — 4-layer user insight, VOC matrix, competitive landscape |
+| [brand-track-hypothesis](brand-strategy/brand-track-hypothesis.md) | Round 2: Track hypothesis generation — 3-5 market tracks, DTNICE classification, GTM flywheel |
+| [brand-deep-validation](brand-strategy/brand-deep-validation.md) | Round 3: Deep hypothesis validation — 5D framework, benchmark case studies, Zone 4 positioning |
+| [brand-strategy-plan](brand-strategy/brand-strategy-plan.md) | Round 4: Brand strategy & execution — 7-element positioning, 4 pillars, pricing, narrative, roadmap |
+| [brand-imc-framework](brand-strategy/brand-imc-framework.md) | IMC integrated marketing framework — Audience/User dual-path, 6-stage funnel, channel mix, calendar |
+| [brand-knowledge-base](brand-strategy/brand-knowledge-base.md) | Obsidian knowledge base generator — batch-creates 30-50 interlinked .md files |
+
 ### Amazon Skills (14 skills)
 
 **Phase 1: Product Selection**
@@ -54,6 +66,22 @@ Each skill is a standalone `.md` file. Drop it into your AI IDE's skill director
 
 ### Recommended Workflow
 
+**Brand Strategy → Amazon Execution (full pipeline):**
+```
+Brand / Product Info
+    |
+    v  Brand Strategy (4-round pipeline):
+1.  /brand-market-scan             -> Market scan + VOC + competitive landscape
+2.  /brand-track-hypothesis        -> 3-5 track hypotheses + top 2 selection
+3.  /brand-deep-validation         -> 5D validation + benchmark cases + Zone 4
+4.  /brand-strategy-plan           -> Brand positioning + 4 pillars + roadmap
+5.  /brand-imc-framework           -> Marketing framework + channel mix + calendar
+6.  /brand-knowledge-base          -> Obsidian knowledge base (30-50 files)
+     |
+     v  Then execute with Amazon Skills:
+```
+
+**Amazon Execution (product-level):**
 ```
 Data Source (Jimu / Helium10 / JungleScout)
     |
@@ -132,6 +160,18 @@ See [examples/](examples/) for test reports (coming soon).
 
 每个技能是独立的 `.md` 文件，放入你的 AI IDE 技能目录即可使用。
 
+### 品牌出海战略技能（6 个技能）— 新增
+
+**四轮品牌分析 + IMC 整合营销 + 知识库生成**
+| 技能 | 功能 |
+|------|------|
+| [brand-market-scan](brand-strategy/brand-market-scan.md) | 第一轮：市场全景扫描 — 四层用户洞察、VOC矩阵、竞争格局 |
+| [brand-track-hypothesis](brand-strategy/brand-track-hypothesis.md) | 第二轮：赛道假设生成 — 3-5个赛道假设、DTNICE分类、GTM飞轮 |
+| [brand-deep-validation](brand-strategy/brand-deep-validation.md) | 第三轮：假设深度验证 — 5D评估框架、对标案例拆解、第4区间定位 |
+| [brand-strategy-plan](brand-strategy/brand-strategy-plan.md) | 第四轮：品牌战略与执行 — 定位七要素、四大支柱、定价、叙事、路线图 |
+| [brand-imc-framework](brand-strategy/brand-imc-framework.md) | IMC整合营销框架 — Audience/User双路径、6阶段漏斗、渠道预算、执行日历 |
+| [brand-knowledge-base](brand-strategy/brand-knowledge-base.md) | Obsidian知识库生成 — 批量创建30-50个互联.md文件 |
+
 ### Amazon 技能矩阵（14 个技能）
 
 **阶段一：选品**
@@ -171,6 +211,18 @@ See [examples/](examples/) for test reports (coming soon).
 ### 推荐流程
 
 ```
+品牌/产品信息
+    |
+    v  品牌战略（四轮串联）：
+1.  /brand-market-scan             -> 市场扫描 + VOC + 竞争格局
+2.  /brand-track-hypothesis        -> 3-5个赛道假设 + 选出Top 2
+3.  /brand-deep-validation         -> 5D验证 + 对标案例 + 第4区间
+4.  /brand-strategy-plan           -> 品牌定位 + 四大支柱 + 路线图
+5.  /brand-imc-framework           -> 营销框架 + 渠道预算 + 执行日历
+6.  /brand-knowledge-base          -> Obsidian知识库（30-50个文件）
+     |
+     v  然后用 Amazon 技能执行落地：
+
 数据源（极目数据 / Helium10 / JungleScout）
     |
     v
