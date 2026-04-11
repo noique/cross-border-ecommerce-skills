@@ -141,6 +141,28 @@
 
 > 方法论来源：Sukey 广告平台选择框架 × Ada 全渠道预算模型
 
+#### 3.0 渠道基准数据采集（在评估前执行）
+
+> 使用 WebSearch 采集以下行业基准数据，避免凭经验估算。采集工具优先级：浏览器（Claude in Chrome MCP）> WebFetch > WebSearch。
+
+1. **Amazon 广告基准：** WebSearch `"[品类英文] Amazon ACoS benchmark [当前年份]"` → 提取品类平均 ACoS、CPC、CVR
+2. **TikTok 广告基准：** WebSearch `"TikTok ads CPM CPC benchmark [目标市场] [当前年份]"` → 提取 CPM/CPC/CVR 基准
+3. **Meta 广告基准：** WebSearch `"Facebook Instagram ads CPM CPC [品类] [当前年份]"` → 提取 CPM/CPC 基准
+4. **KOL 合作基准：** WebSearch `"[品类] influencer marketing cost micro mid tier [当前年份]"` → 提取不同层级 KOL 的合作价格区间
+5. **品类 SEO 关键词竞争度：** WebSearch `"[核心关键词] search volume competition"` → 判断 SEO 获客难度
+
+**输出格式：**
+
+| 渠道 | 基准指标 | 数值 | 来源 | 获取日期 |
+|------|---------|------|------|---------|
+| Amazon PPC | 品类平均 ACoS | | | |
+| TikTok Ads | CPM / CPC | | | |
+| Meta Ads | CPM / CPC | | | |
+| KOL (micro) | 单条合作价格 | | | |
+| KOL (mid-tier) | 单条合作价格 | | | |
+
+> 采集数据直接用于后续 3.1 平台选择评分中的"预估 CPA"和 3.2 预算分配中的投放规划。如某项数据未获取，标注"推测值"。
+
 #### 3.1 平台选择矩阵（Sukey 方法论）
 
 基于产品类型与目标用户匹配最优渠道：
