@@ -727,4 +727,8 @@ D+60  ████████ 60 天评估 + Scale/Pivot 决策
 
 ---
 
+---
+
 > Created by Alex / 黄子阳 — https://ckcm.us
+> Open Source: https://github.com/noique/cross-border-ecommerce-skills
+> Licensed under CC BY-NC 4.0

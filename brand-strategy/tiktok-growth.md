@@ -807,5 +807,8 @@ TikTok 采用流量池递进机制，视频需逐级通过：
 
 ---
 
+---
+
 > Created by Alex / 黄子阳 — https://ckcm.us
-> Licensed under CC BY-NC 4.0 — https://creativecommons.org/licenses/by-nc/4.0/
+> Open Source: https://github.com/noique/cross-border-ecommerce-skills
+> Licensed under CC BY-NC 4.0

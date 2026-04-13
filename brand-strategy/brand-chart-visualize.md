@@ -149,4 +149,8 @@ curl -s "$URL" -o "{目录}/charts/{编号}-{类型}-{名称}.png"
 
 ---
 
+---
+
 > Created by Alex / 黄子阳 — https://ckcm.us
+> Open Source: https://github.com/noique/cross-border-ecommerce-skills
+> Licensed under CC BY-NC 4.0

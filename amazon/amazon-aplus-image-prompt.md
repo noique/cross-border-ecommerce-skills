@@ -136,5 +136,8 @@ Brand Story 出现在 A+ 区域上方，是获得 Premium A+ 的前提：
 
 ---
 
+---
+
 > Created by Alex / 黄子阳 — https://ckcm.us
-> Licensed under CC BY-NC 4.0 — https://creativecommons.org/licenses/by-nc/4.0/
+> Open Source: https://github.com/noique/cross-border-ecommerce-skills
+> Licensed under CC BY-NC 4.0

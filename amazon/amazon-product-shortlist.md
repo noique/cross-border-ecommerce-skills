@@ -197,5 +197,8 @@ Go-List 确认后，对每款产品依次执行：
 
 ---
 
+---
+
 > Created by Alex / 黄子阳 — https://ckcm.us
-> Licensed under CC BY-NC 4.0 — https://creativecommons.org/licenses/by-nc/4.0/
+> Open Source: https://github.com/noique/cross-border-ecommerce-skills
+> Licensed under CC BY-NC 4.0

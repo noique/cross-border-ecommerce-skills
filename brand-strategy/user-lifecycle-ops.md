@@ -1025,5 +1025,8 @@ Step 3: "输入邮箱，获取专属推荐 + 10% 折扣"
 
 ---
 
+---
+
 > Created by Alex / 黄子阳 — https://ckcm.us
-> Licensed under CC BY-NC 4.0 — https://creativecommons.org/licenses/by-nc/4.0/
+> Open Source: https://github.com/noique/cross-border-ecommerce-skills
+> Licensed under CC BY-NC 4.0
