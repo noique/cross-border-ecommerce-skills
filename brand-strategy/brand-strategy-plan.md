@@ -474,6 +474,30 @@
 
 ---
 
+## 可视化输出（自动生成）
+
+> 报告正文完成后，使用 AntV API 自动生成以下图表并嵌入报告对应位置。
+
+### 必出图表
+
+**图表 1：单位经济瀑布图**
+- 类型：`waterfall`
+- 数据：从定价与财务规划中提取售价、各项成本、净利润
+- 插入位置：单位经济模型表格后
+- 示例请求：
+```bash
+curl -s -X POST https://antv-studio.alipay.com/api/gpt-vis \
+  -H "Content-Type: application/json" \
+  -d '{"type":"waterfall","source":"chart-visualization-skills","title":"单位经济模型","data":[{"category":"售价","value":139},{"category":"BOM","value":-25},{"category":"净利润","isTotal":true}],"theme":"academy","width":750,"height":450,"axisYTitle":"USD"}'
+```
+
+**生成步骤：**
+1. 从单位经济模型提取售价和各项成本
+2. 调用 AntV API（waterfall 类型）
+3. 嵌入报告
+
+---
+
 ## 注意事项
 
 - 本 SKILL 为品牌出海四轮分析体系的第四环，承接 /brand-deep-validation 输出

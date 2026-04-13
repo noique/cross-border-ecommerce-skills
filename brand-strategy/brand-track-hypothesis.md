@@ -345,6 +345,31 @@
 
 ---
 
+## 可视化输出（自动生成）
+
+> 报告正文完成后，使用 AntV API 自动生成以下图表并嵌入报告对应位置。
+
+### 必出图表
+
+**图表 1：赛道 GTM 飞轮对比雷达图**
+- 类型：`radar`
+- 数据：从 GTM 飞轮评分中提取 Top 3 赛道的四维度得分（市场/产品/营销/运营）
+- 插入位置：赛道对比排名表后
+- 示例请求：
+```bash
+curl -s -X POST https://antv-studio.alipay.com/api/gpt-vis \
+  -H "Content-Type: application/json" \
+  -d '{"type":"radar","source":"chart-visualization-skills","title":"赛道 GTM 飞轮对比","data":[{"name":"市场","value":8.5,"group":"赛道A"},{"name":"产品","value":8.0,"group":"赛道A"}],"theme":"academy","width":700,"height":500}'
+```
+
+**生成步骤：**
+1. 从 GTM 飞轮评分提取 Top 3 赛道的四维度数据
+2. 调用 AntV API
+3. 将返回的图片 URL 以 Markdown 图片格式插入
+4. 如 API 调用失败，标注"图表生成失败"
+
+---
+
 ## 注意事项
 
 - 本 SKILL 为品牌出海四轮分析体系的第二环，承接 /brand-market-scan 输出

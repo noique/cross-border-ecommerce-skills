@@ -567,6 +567,30 @@ CAC > 1/2 LTV（预警）
 
 ---
 
+## 可视化输出（自动生成）
+
+> 报告正文完成后，使用 AntV API 自动生成以下图表并嵌入报告对应位置。
+
+### 必出图表
+
+**图表 1：渠道预算分配饼图**
+- 类型：`pie`
+- 数据：从渠道预算分配中提取各渠道占比
+- 插入位置：预算分配表后
+- 示例请求：
+```bash
+curl -s -X POST https://antv-studio.alipay.com/api/gpt-vis \
+  -H "Content-Type: application/json" \
+  -d '{"type":"pie","source":"chart-visualization-skills","title":"Y1 渠道预算分配","data":[{"category":"Instagram/TikTok","value":40},{"category":"KOL","value":25}],"theme":"academy","width":600,"height":450}'
+```
+
+**生成步骤：**
+1. 从预算分配模型提取渠道和占比数据
+2. 调用 AntV API（pie 类型）
+3. 嵌入报告
+
+---
+
 ## 自动知识库生成触发（优化 #6）
 
 > **5 轮品牌战略分析完成后，自动触发知识库生成。**

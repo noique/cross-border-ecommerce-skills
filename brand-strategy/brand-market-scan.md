@@ -587,6 +587,31 @@ Opportunity Score = Importance + (Importance - Satisfaction)
 
 ---
 
+## 可视化输出（自动生成）
+
+> 报告正文完成后，使用 AntV API 自动生成以下图表并嵌入报告对应位置。
+
+### 必出图表
+
+**图表 1：VOC 机会分数条形图**
+- 类型：`bar`
+- 数据：从第二步 VOC 矩阵中提取所有功能卖点的机会分数
+- 插入位置：第二步 VOC 矩阵表格后
+- 示例请求：
+```bash
+curl -s -X POST https://antv-studio.alipay.com/api/gpt-vis \
+  -H "Content-Type: application/json" \
+  -d '{"type":"bar","source":"chart-visualization-skills","title":"VOC 机会分数排名","data":[{"category":"功能A","value":12.0},{"category":"功能B","value":10.5}],"theme":"academy","width":750,"height":450,"axisXTitle":"机会分数"}'
+```
+
+**生成步骤：**
+1. 从 VOC 矩阵提取数据，构造 JSON
+2. 调用 AntV API
+3. 将返回的图片 URL 以 `![VOC 机会分数排名](URL)` 格式插入报告
+4. 如 API 调用失败，标注"图表生成失败，请手动查看数据表格"
+
+---
+
 ## 注意事项
 
 - 所有数据基于实时抓取，请标注扫描日期
