@@ -302,6 +302,25 @@ source_skill: [来源SKILL名称，如 brand-market-scan]
 
 ---
 
+
+## 自动 PDF 导出
+
+> 报告 Markdown 文件写入完成后，自动执行以下步骤生成 PDF 版本。
+
+**步骤：**
+
+1. **检查转换脚本：** 验证 `/tmp/md2pdf.py` 是否存在。如不存在，按 `/report-pdf-export` SKILL 中的脚本内容重建
+2. **创建输出目录：** 在报告所在目录下创建 `PDF/` 子文件夹
+3. **执行转换：**
+```bash
+python3 /tmp/md2pdf.py [报告.md路径] [PDF/报告.pdf路径]
+```
+4. **确认输出：** 报告文件名和大小
+
+> 样式标准：A4 横版、深蓝表头白字、斑马条纹、页码底部居中。详见 `/report-pdf-export` SKILL。
+
+---
+
 ## 注意事项
 
 - 本 SKILL 生成的是**文件**，不是单一报告——每个文件独立存在、可独立阅读
