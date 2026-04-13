@@ -1,8 +1,8 @@
 # Cross-Border E-Commerce AI Skills
 
-**AI-powered skill templates for cross-border e-commerce operations.**
+**34 AI-powered skill templates for cross-border e-commerce — from brand strategy to Amazon operations to DTC growth.**
 
-Compatible with Claude Code (`~/.claude/commands/`) and Google Antigravity (`SKILL.md`).
+Compatible with Claude Code (`~/.claude/commands/`), Google Antigravity (`SKILL.md`), and any AI IDE with skill/prompt support.
 
 [中文说明](#中文说明) | [English](#english)
 
@@ -12,148 +12,148 @@ Compatible with Claude Code (`~/.claude/commands/`) and Google Antigravity (`SKI
 
 ### What is this?
 
-A collection of 21 AI agent skills (prompt templates) that automate key workflows in cross-border e-commerce — from brand strategy to product selection, market research, IP risk assessment, keyword strategy, and listing copywriting.
+A collection of **34 AI agent skills** (structured prompt templates) that automate the entire cross-border e-commerce workflow — brand strategy, market research, product selection, listing optimization, advertising, DTC site operations, social media, influencer marketing, and more.
 
 Each skill is a standalone `.md` file. Drop it into your AI IDE's skill directory and invoke it.
 
-### Brand Strategy Skills (7 skills)
+### Skill Map (34 skills across 8 chains)
 
-**4-Round Brand Analysis Pipeline + IMC + Knowledge Base + A/B Compare**
+```
+                        ┌─────────────────────────────────────┐
+                        │     Brand Strategy Chain (10)        │
+                        │                                     │
+  Market Scan ──► Track Hypothesis ──► Deep Validation ──► Strategy Plan
+       │                                                       │
+       │         Annual Plan ◄── Budget Ops                    │
+       │                                                       ▼
+       │                                    IMC Framework ──► Knowledge Base
+       │                                         │
+       │              A/B Compare    Chart Visualize   GTM Launch
+       │                                         │
+       ▼                                         ▼
+  ┌──────────────────┐   ┌──────────────────┐   ┌──────────────────┐
+  │ Amazon Chain (14) │   │ DTC Site (3)     │   │ Social & KOL (5) │
+  │                  │   │                  │   │                  │
+  │ Selection        │   │ SEO Playbook     │   │ TikTok Growth    │
+  │ Shortlist        │   │ SEM Ads          │   │ YouTube Ops      │
+  │ Market Research  │   │ Conversion UX    │   │ Content Calendar │
+  │ IP Risk          │   │                  │   │ Influencer Mktg  │
+  │ Supplier         │   └──────────────────┘   │ User Lifecycle   │
+  │ Keywords         │                          └──────────────────┘
+  │ Listing Copy     │   ┌──────────────────┐
+  │ Main Image       │   │ Offline (1)      │
+  │ A+ Content       │   │                  │
+  │ Compliance       │   │ US Retail        │
+  │ Pre-Launch       │   └──────────────────┘
+  │ Ad Architecture  │
+  │ Weekly Ad Review │
+  │ Ad Diagnosis     │
+  └──────────────────┘
+```
 
-> **v2.1 Update (2026-04-12):** Added Semrush local data auto-scan (Step 0), minimum analysis depth constraints, data gap reporting, SEO traffic model validation in Round 3, methodology citation index, auto knowledge base trigger, and the new `/brand-ab-compare` SKILL.
+---
+
+### Brand Strategy Chain (10 skills)
+
+**4-Round Analysis Pipeline + Planning + Execution + Tools**
 
 | Skill | What it does |
 |-------|-------------|
-| [brand-market-scan](brand-strategy/brand-market-scan.md) | Round 1: Market panoramic scan — 4-layer user insight, VOC matrix, competitive landscape. **Now with Semrush auto-scan, data gap reporting, minimum depth constraints** |
+| [brand-market-scan](brand-strategy/brand-market-scan.md) | Round 1: Market panoramic scan — 4-layer user insight, VOC matrix, competitive landscape, Semrush auto-scan |
 | [brand-track-hypothesis](brand-strategy/brand-track-hypothesis.md) | Round 2: Track hypothesis generation — 3-5 market tracks, DTNICE classification, GTM flywheel |
-| [brand-deep-validation](brand-strategy/brand-deep-validation.md) | Round 3: Deep hypothesis validation — 5D framework, benchmark case studies, Zone 4 positioning. **Now with SEO traffic model validation in D2/D3** |
+| [brand-deep-validation](brand-strategy/brand-deep-validation.md) | Round 3: Deep hypothesis validation — 5D framework, SEO traffic model, benchmark cases, Zone 4 |
 | [brand-strategy-plan](brand-strategy/brand-strategy-plan.md) | Round 4: Brand strategy & execution — 7-element positioning, 4 pillars, pricing, narrative, roadmap |
-| [brand-imc-framework](brand-strategy/brand-imc-framework.md) | IMC integrated marketing framework — Audience/User dual-path, 6-stage funnel, channel mix, calendar. **Now with auto KB generation trigger** |
-| [brand-knowledge-base](brand-strategy/brand-knowledge-base.md) | Obsidian knowledge base generator — batch-creates 30-50 interlinked .md files |
-| [brand-ab-compare](brand-strategy/brand-ab-compare.md) | **NEW** — 8-dimension A/B comparison between two brand strategy report sets (data thickness, validation, methodology, depth, actionability, timeliness, competitor precision, strategic credibility) |
+| [brand-imc-framework](brand-strategy/brand-imc-framework.md) | IMC integrated marketing — Audience/User dual-path, 6-stage funnel, channel mix, execution calendar |
+| [brand-annual-plan](brand-strategy/brand-annual-plan.md) | Annual planning — BSC scorecard, 52-week calendar, quarterly OKRs, resource allocation |
+| [brand-budget-ops](brand-strategy/brand-budget-ops.md) | Budget planning & control — 10-category budget model, monthly tracking, ROI by channel |
+| [brand-knowledge-base](brand-strategy/brand-knowledge-base.md) | Obsidian knowledge base — batch-creates 30-50 interlinked .md files from all rounds |
+| [brand-ab-compare](brand-strategy/brand-ab-compare.md) | 8-dimension A/B quality comparison between two brand strategy report sets |
+| [brand-chart-visualize](brand-strategy/brand-chart-visualize.md) | Auto-generate charts (radar, bar, waterfall, scatter, etc.) via AntV API for all reports |
 
-### Amazon Skills (14 skills)
+### Amazon Operations Chain (14 skills)
 
-**Phase 1: Product Selection**
+| Phase | Skill | What it does |
+|-------|-------|-------------|
+| Selection | [amazon-product-selection](amazon/amazon-product-selection.md) | Score and rank Top 30 potential products |
+| Selection | [amazon-product-shortlist](amazon/amazon-product-shortlist.md) | Feasibility screening, GTM flywheel check, Go-List |
+| Research | [amazon-market-research](amazon/amazon-market-research.md) | Full market research: VOC matrix, competitor teardown, SWOT |
+| Research | [amazon-ip-risk-assessment](amazon/amazon-ip-risk-assessment.md) | Patent + trademark risk, design comparison, risk rating |
+| Research | [amazon-supplier-decision](amazon/amazon-supplier-decision.md) | Supplier evaluation, cost breakdown, red flag detection |
+| Listing | [amazon-keyword-research](amazon/amazon-keyword-research.md) | Keyword library: 3-tier CPC, COSMO/Rufus/A10 SEO |
+| Listing | [amazon-listing-copywriter](amazon/amazon-listing-copywriter.md) | Title, bullet points, A+ description, Search Terms |
+| Listing | [amazon-main-image-prompt](amazon/amazon-main-image-prompt.md) | Main + secondary image design briefs and AI prompts |
+| Listing | [amazon-aplus-image-prompt](amazon/amazon-aplus-image-prompt.md) | A+ Content module layout, Brand Story, image prompts |
+| Launch | [amazon-compliance-review](amazon/amazon-compliance-review.md) | 3-dimension audit: platform rules, legal/IP, AI search |
+| Launch | [amazon-pre-launch-review](amazon/amazon-pre-launch-review.md) | Final pre-launch checklist across all SKILL outputs |
+| Ads | [amazon-ad-architecture](amazon/amazon-ad-architecture.md) | PPC campaign structure: SP/SB/SD/SBV, budget, bid strategy |
+| Ads | [amazon-weekly-ad-review](amazon/amazon-weekly-ad-review.md) | Weekly ad review: ACoS/TACoS, Search Terms, action list |
+| Ads | [amazon-ad-diagnosis](amazon/amazon-ad-diagnosis.md) | Existing product diagnosis: 4-stage optimization pipeline |
+
+### DTC Site & Traffic (3 skills)
+
 | Skill | What it does |
 |-------|-------------|
-| [amazon-product-selection](amazon/product-selection/amazon-product-selection.md) | Scores and ranks Top 30 potential products from any data source |
-| [amazon-product-shortlist](amazon/product-selection/amazon-product-shortlist.md) | Feasibility screening: compliance, GTM flywheel check, Go-List |
+| [dsite-seo-playbook](brand-strategy/dsite-seo-playbook.md) | Full SEO playbook: technical audit, keyword strategy, content plan, Core Web Vitals |
+| [dsite-sem-ads](brand-strategy/dsite-sem-ads.md) | SEM & paid ads: 10-platform comparison, AIPL funnel, budget allocation |
+| [dsite-conversion-ux](brand-strategy/dsite-conversion-ux.md) | Conversion rate optimization: 6-module CRO audit, UX best practices |
 
-**Phase 2: Research & Risk**
+### Social Media & Content (3 skills)
+
 | Skill | What it does |
 |-------|-------------|
-| [amazon-market-research](amazon/market-research/amazon-market-research.md) | Full market research: VOC matrix, competitor teardown, SWOT |
-| [amazon-ip-risk-assessment](amazon/ip-risk/amazon-ip-risk-assessment.md) | Patent + trademark risk, design comparison, risk rating |
-| [amazon-supplier-decision](amazon/supplier/amazon-supplier-decision.md) | 1688/Alibaba supplier evaluation, cost breakdown, red flag detection |
+| [tiktok-growth](brand-strategy/tiktok-growth.md) | TikTok full-funnel growth: content strategy, TikTok Shop, livestream, paid ads |
+| [youtube-channel-ops](brand-strategy/youtube-channel-ops.md) | YouTube channel operations: content strategy, SEO, monetization |
+| [social-content-calendar](brand-strategy/social-content-calendar.md) | Social media content calendar: multi-platform scheduling, content pillars |
 
-**Phase 3: Listing Creation**
+### KOL & User Operations (2 skills)
+
 | Skill | What it does |
 |-------|-------------|
-| [amazon-keyword-research](amazon/listing-optimization/amazon-keyword-research.md) | Keyword library: 3-tier CPC, COSMO/Rufus/A10 SEO guide |
-| [amazon-listing-copywriter](amazon/listing-optimization/amazon-listing-copywriter.md) | Title, bullet points, A+ description, Search Terms |
-| [amazon-main-image-prompt](amazon/image-design/amazon-main-image-prompt.md) | Main + secondary image design briefs and AI prompts |
-| [amazon-aplus-image-prompt](amazon/image-design/amazon-aplus-image-prompt.md) | A+ Content module layout, Brand Story, image prompts |
+| [influencer-marketing](brand-strategy/influencer-marketing.md) | KOL/influencer marketing: 5-tier pyramid, ROI tracking, contract templates |
+| [user-lifecycle-ops](brand-strategy/user-lifecycle-ops.md) | User lifecycle management: 5-stage funnel, retention curves, churn analysis |
 
-**Phase 4: Compliance & Launch**
+### GTM & Offline (2 skills)
+
 | Skill | What it does |
 |-------|-------------|
-| [amazon-compliance-review](amazon/compliance-launch/amazon-compliance-review.md) | 3-dimension parallel audit: platform rules, legal/IP, AI search |
-| [amazon-pre-launch-review](amazon/compliance-launch/amazon-pre-launch-review.md) | Final pre-launch checklist across all previous SKILL outputs |
+| [brand-gtm-launch](brand-strategy/brand-gtm-launch.md) | New product GTM launch: 7-step framework, timeline, channel coordination |
+| [offline-retail-us](brand-strategy/offline-retail-us.md) | US offline retail: 8-tier channel analysis, readiness assessment, cost model |
 
-**Phase 5: Advertising & Operations**
-| Skill | What it does |
-|-------|-------------|
-| [amazon-ad-architecture](amazon/advertising/amazon-ad-architecture.md) | PPC campaign structure: SP/SB/SD/SBV, budget allocation, bid strategy |
-| [amazon-weekly-ad-review](amazon/advertising/amazon-weekly-ad-review.md) | Weekly ad performance review, Search Term analysis, action list |
-| [amazon-ad-diagnosis](amazon/advertising/amazon-ad-diagnosis.md) | **Existing product** ad diagnosis: competitive scan → keyword rebuild → copy fix → ad optimization |
-
-### Recommended Workflow
-
-**Brand Strategy → Amazon Execution (full pipeline):**
-```
-Brand / Product Info
-    |
-    v  Brand Strategy (4-round pipeline):
-1.  /brand-market-scan             -> Market scan + VOC + competitive landscape + Semrush auto-scan
-2.  /brand-track-hypothesis        -> 3-5 track hypotheses + top 2 selection
-3.  /brand-deep-validation         -> 5D validation + SEO traffic model + benchmark cases
-4.  /brand-strategy-plan           -> Brand positioning + 4 pillars + roadmap
-5.  /brand-imc-framework           -> Marketing framework + channel mix + calendar
-6.  /brand-knowledge-base          -> Obsidian knowledge base (30-50 files)
-7.  /brand-ab-compare              -> 8-dimension A/B quality comparison (optional)
-     |
-     v  Then execute with Amazon Skills:
-```
-
-**Amazon Execution (product-level):**
-```
-Data Source (Jimu / Helium10 / JungleScout)
-    |
-    v
-1.  /amazon-product-selection      -> Top 30 candidates
-     |
-2.  /amazon-product-shortlist      -> Go-List + action plan
-     |
-     v  For each product:
-3.  /amazon-market-research        -> Market research report
-4.  /amazon-ip-risk-assessment     -> IP risk report
-5.  /amazon-supplier-decision      -> Supplier decision doc
-6.  /amazon-keyword-research       -> Keyword library
-7.  /amazon-listing-copywriter     -> Listing copy
-8.  /amazon-main-image-prompt      -> Product image briefs
-9.  /amazon-aplus-image-prompt     -> A+ content design
-10. /amazon-compliance-review      -> 3-dimension compliance audit
-11. /amazon-pre-launch-review      -> Final pre-launch checklist
-     |
-     v  After launch:
-12. /amazon-ad-architecture        -> PPC campaign setup
-13. /amazon-weekly-ad-review       -> Weekly optimization (recurring)
-
-     For existing products needing optimization:
-14. /amazon-ad-diagnosis           -> Full diagnosis + optimization (4-stage pipeline)
-```
+---
 
 ### Key Features
 
-- **Data Verification Layer** — Every skill includes a mandatory verification step. No fabricated data; unverifiable numbers are explicitly flagged.
-- **VOC (Voice of Customer) Matrix** — Mention frequency x satisfaction matrix to identify unmet needs, not just keyword opportunities.
-- **GTM Flywheel** — Product selection evaluates Market > Product > Marketing > Operations fit, not just "can it sell."
-- **Brand Narrative** — Listing copy anchors into Maslow's hierarchy (safety/social/esteem/self-actualization), not just keyword stuffing.
-- **AI Search Ready** — Optimized for Amazon Rufus (300M users), COSMO knowledge graph, and GEO (Generative Engine Optimization).
-- **2025-2026 Compliant** — Updated title limits (125 chars for apparel), Search Terms (249 bytes), tiered referral fees, FBA 2026 fee changes.
+- **34 Skills, 8 Chains** — Complete coverage from brand strategy to daily operations
+- **Data Verification Layer** — Every skill includes mandatory verification; estimates are explicitly flagged with ⚠️
+- **Chart Visualization** — 21 skills auto-generate charts (radar, bar, waterfall, scatter, funnel, etc.) via AntV API
+- **Semrush Integration** — Brand strategy skills auto-scan local Semrush xlsx/PDF data as high-confidence source
+- **VOC Matrix** — Mention frequency × satisfaction matrix to identify unmet needs
+- **GTM Flywheel** — Market → Product → Marketing → Operations four-wheel evaluation
+- **AI Search Ready** — Optimized for Amazon Rufus, COSMO knowledge graph, and GEO
+- **Multi-Platform** — Works on Claude Code, Google Antigravity, OpenClaw, and any AI IDE
 
 ### Installation
 
-**Claude Code:**
+**Claude Code (recommended):**
 ```bash
-cp amazon/**/*.md ~/.claude/commands/
+# Install all skills
+git clone https://github.com/noique/cross-border-ecommerce-skills.git
+cp cross-border-ecommerce-skills/brand-strategy/*.md ~/.claude/commands/
+cp cross-border-ecommerce-skills/amazon/*.md ~/.claude/commands/
 ```
 
-**Google Antigravity:**
-Copy `.md` files to your Antigravity skill directory.
+**Google Antigravity / OpenClaw / Any AI IDE:**
+Copy `.md` files to your skill directory.
 
-**OpenClaw / 小龙虾:**
-Import `.md` files as custom skills. Works with any LLM backend supported by OpenClaw.
+### Model Requirements
 
-**Any AI IDE with skill/prompt support:**
-Load the `.md` files as system prompts or skill definitions.
+| Tier | Quality | Models (as of April 2026) |
+|------|---------|--------------------------|
+| Recommended | Full execution, verification works | Claude Opus 4.6 / Sonnet 4.6, GPT-5.4, Gemini 3.1 Pro |
+| Usable | Structure OK, may skip verification | DeepSeek V4 / V3.2, Llama 4, Qwen 3.5 (72B+), GLM-5.1 |
+| Not recommended | Sections missing, checks fail | Models under 30B parameters |
 
-### Minimum Model Requirements
-
-These skills are structured prompts with complex multi-step instructions. LLM capability directly affects output quality:
-
-| Model Tier | Expected Quality | Examples (as of April 2026) |
-|-----------|-----------------|---------|
-| Recommended | Full execution, data verification works | Claude Opus 4.6 / Sonnet 4.6, GPT-5.4, Gemini 3.1 Pro |
-| Usable | Structure OK, may skip verification steps | DeepSeek V4 / V3.2, Llama 4, Qwen 3.5 (72B+), GLM-5.1 |
-| Not recommended | Sections missing, compliance checks fail | Qwen 3.5 9B and below, any model under 30B parameters |
-
-Key requirements: long context (8K+ input), strong instruction following, Chinese-English bilingual capability, tool use / web browsing (for research steps).
-
-### Examples
-
-See [examples/](examples/) for test reports (coming soon).
+Key requirements: long context (8K+ input), strong instruction following, Chinese-English bilingual, tool use / web browsing.
 
 ---
 
@@ -161,141 +161,72 @@ See [examples/](examples/) for test reports (coming soon).
 
 ### 这是什么？
 
-一套 21 个跨境电商 AI 技能模板（Prompt 模板），覆盖品牌战略→选品→市场调研→IP风险排查→关键词→文案的全流程自动化。
+一套 **34 个跨境电商 AI 技能模板**，覆盖品牌战略→选品→调研→文案→广告→独立站→社媒→红人→线下渠道的全流程自动化。
 
-每个技能是独立的 `.md` 文件，放入你的 AI IDE 技能目录即可使用。
+每个技能是独立的 `.md` 文件，放入 AI IDE 技能目录即可使用。
 
-### 品牌出海战略技能（7 个技能）
+### 技能矩阵（34 个技能，8 条链路）
 
-**四轮品牌分析 + IMC 整合营销 + 知识库生成 + A/B 对比**
-
-> **v2.1 更新（2026-04-12）：** 新增 Semrush 本地数据自动扫描（第零步）、最低分析深度约束、数据缺口报告、第三轮 SEO 流量模型验证、方法论引用索引、知识库自动触发、以及全新的 `/brand-ab-compare` SKILL。
-
-| 技能 | 功能 |
-|------|------|
-| [brand-market-scan](brand-strategy/brand-market-scan.md) | 第一轮：市场全景扫描 — 四层用户洞察、VOC矩阵、竞争格局。**新增 Semrush 自动扫描、数据缺口报告、最低深度约束** |
-| [brand-track-hypothesis](brand-strategy/brand-track-hypothesis.md) | 第二轮：赛道假设生成 — 3-5个赛道假设、DTNICE分类、GTM飞轮 |
-| [brand-deep-validation](brand-strategy/brand-deep-validation.md) | 第三轮：假设深度验证 — 5D评估框架、对标案例拆解、第4区间定位。**新增 D2/D3 SEO 流量模型验证** |
-| [brand-strategy-plan](brand-strategy/brand-strategy-plan.md) | 第四轮：品牌战略与执行 — 定位七要素、四大支柱、定价、叙事、路线图 |
-| [brand-imc-framework](brand-strategy/brand-imc-framework.md) | IMC整合营销框架 — Audience/User双路径、6阶段漏斗、渠道预算、执行日历。**新增知识库自动触发** |
-| [brand-knowledge-base](brand-strategy/brand-knowledge-base.md) | Obsidian知识库生成 — 批量创建30-50个互联.md文件 |
-| [brand-ab-compare](brand-strategy/brand-ab-compare.md) | **新增** — 8维度A/B对比（数据厚度、验证、方法论、深度、可操作性、时效性、竞品精度、战略可信度） |
-
-### Amazon 技能矩阵（14 个技能）
-
-**阶段一：选品**
-| 技能 | 功能 |
-|------|------|
-| [amazon-product-selection](amazon/product-selection/amazon-product-selection.md) | 从榜单筛选 Top 30 潜力产品 |
-| [amazon-product-shortlist](amazon/product-selection/amazon-product-shortlist.md) | 可行性筛选：合规红绿灯、GTM飞轮、落地行动计划 |
-
-**阶段二：调研与风险**
-| 技能 | 功能 |
-|------|------|
-| [amazon-market-research](amazon/market-research/amazon-market-research.md) | 市场调研：VOC矩阵、竞品拆解、SWOT |
-| [amazon-ip-risk-assessment](amazon/ip-risk/amazon-ip-risk-assessment.md) | IP风险：专利+商标检索、外观对比、风险评级 |
-| [amazon-supplier-decision](amazon/supplier/amazon-supplier-decision.md) | 供应商决策：1688比价、成本拆解、红旗检测 |
-
-**阶段三：Listing 创建**
-| 技能 | 功能 |
-|------|------|
-| [amazon-keyword-research](amazon/listing-optimization/amazon-keyword-research.md) | 关键词词库：3层CPC、COSMO/Rufus/A10 SEO |
-| [amazon-listing-copywriter](amazon/listing-optimization/amazon-listing-copywriter.md) | 标题、卖点、A+描述、Search Terms |
-| [amazon-main-image-prompt](amazon/image-design/amazon-main-image-prompt.md) | 主副图设计方案 + AI图片生成提示词 |
-| [amazon-aplus-image-prompt](amazon/image-design/amazon-aplus-image-prompt.md) | A+ Content 模块排布 + Brand Story + 图片提示词 |
-
-**阶段四：合规与上架**
-| 技能 | 功能 |
-|------|------|
-| [amazon-compliance-review](amazon/compliance-launch/amazon-compliance-review.md) | 三维度并行审查：平台规则/法律IP/AI搜索 |
-| [amazon-pre-launch-review](amazon/compliance-launch/amazon-pre-launch-review.md) | 上架前总复查：所有前置 SKILL 输出一次性检查 |
-
-**阶段五：广告与运营**
-| 技能 | 功能 |
-|------|------|
-| [amazon-ad-architecture](amazon/advertising/amazon-ad-architecture.md) | PPC广告架构：SP/SB/SD/SBV Campaign 设计 |
-| [amazon-weekly-ad-review](amazon/advertising/amazon-weekly-ad-review.md) | 每周广告复查：ACoS/TACoS分析、出价调整、行动清单 |
-| [amazon-ad-diagnosis](amazon/advertising/amazon-ad-diagnosis.md) | **已有产品**广告诊断：竞争环境→词库重建→文案埋词→广告优化（4阶段串联） |
-
-### 推荐流程
-
-```
-品牌/产品信息
-    |
-    v  品牌战略（四轮串联）：
-1.  /brand-market-scan             -> 市场扫描 + VOC + 竞争格局 + Semrush自动扫描
-2.  /brand-track-hypothesis        -> 3-5个赛道假设 + 选出Top 2
-3.  /brand-deep-validation         -> 5D验证 + SEO流量模型 + 对标案例
-4.  /brand-strategy-plan           -> 品牌定位 + 四大支柱 + 路线图
-5.  /brand-imc-framework           -> 营销框架 + 渠道预算 + 执行日历
-6.  /brand-knowledge-base          -> Obsidian知识库（30-50个文件）
-7.  /brand-ab-compare              -> 8维度A/B质量对比（可选）
-     |
-     v  然后用 Amazon 技能执行落地：
-
-数据源（极目数据 / Helium10 / JungleScout）
-    |
-    v
-1.  /amazon-product-selection      -> Top 30 候选品
-     |
-2.  /amazon-product-shortlist      -> Go-List + 行动计划
-     |
-     v  对每款产品执行：
-3.  /amazon-market-research        -> 调研报告
-4.  /amazon-ip-risk-assessment     -> IP风险排查
-5.  /amazon-supplier-decision      -> 供应商决策
-6.  /amazon-keyword-research       -> 关键词词库
-7.  /amazon-listing-copywriter     -> Listing文案
-8.  /amazon-main-image-prompt      -> 主副图设计
-9.  /amazon-aplus-image-prompt     -> A+内容设计
-10. /amazon-compliance-review      -> 三维度合规审查
-11. /amazon-pre-launch-review      -> 上架前总复查
-     |
-     v  上架后：
-12. /amazon-ad-architecture        -> 广告架构搭建
-13. /amazon-weekly-ad-review       -> 每周广告优化（持续循环）
-
-     已上架产品需要优化时：
-14. /amazon-ad-diagnosis           -> 全链路诊断+优化（4阶段串联）
-```
+| 链路 | 数量 | 技能 |
+|------|------|------|
+| **品牌战略链** | 10 | 市场扫描 → 赛道假设 → 深度验证 → 品牌战略 → IMC框架 → 年度规划 → 预算管控 → 知识库 → A/B对比 → 图表可视化 |
+| **Amazon 运营链** | 14 | 选品 → 筛选 → 调研 → IP排查 → 供应商 → 关键词 → 文案 → 主图 → A+ → 合规 → 复查 → 广告架构 → 周报 → 诊断 |
+| **独立站流量** | 3 | SEO全链路 → SEM广告 → 转化率优化 |
+| **社媒与内容** | 3 | TikTok增长 → YouTube运营 → 内容日历 |
+| **红人与用户** | 2 | 红人营销 → 用户生命周期 |
+| **GTM 执行** | 1 | 新品上市规划 |
+| **线下渠道** | 1 | 美国线下零售 |
 
 ### 核心特色
 
-- **数据验证层** — 每个技能内置强制验证步骤，推测数据必须标注来源，不编造数字
-- **VOC 用户洞察矩阵** — 提及量x满意度二维分析，找到真正未被满足的需求
-- **GTM 飞轮思维** — 选品评估市场→产品→营销→运营四环可行性，不是只看"能不能卖"
-- **品牌叙事驱动** — 文案锚定马斯洛需求层次，不是关键词堆砌
-- **AI 搜索适配** — 针对 Amazon Rufus（3亿用户）、COSMO 知识图谱、GEO 优化
-- **2025-2026 合规** — 更新了标题字符限制、Search Terms 249字节、服装类分层佣金、FBA 2026费率
+- **34 技能 × 8 链路** — 从战略到执行全覆盖
+- **数据验证层** — 每个技能内置强制验证，推测数据标 ⚠️
+- **图表可视化** — 21 个技能自动生成图表（雷达/柱状/瀑布/散点/漏斗等），调用 AntV API
+- **Semrush 集成** — 品牌战略技能自动扫描本地 Semrush 数据
+- **VOC 用户洞察** — 提及量×满意度二维分析
+- **GTM 飞轮** — 市场→产品→营销→运营四维评估
+- **AI 搜索适配** — Amazon Rufus / COSMO / GEO 优化
+- **多平台兼容** — Claude Code / Antigravity / OpenClaw / 任何 AI IDE
 
 ### 安装方式
 
-**Claude Code：**
 ```bash
-cp amazon/**/*.md ~/.claude/commands/
+# Claude Code 一键安装
+git clone https://github.com/noique/cross-border-ecommerce-skills.git
+cp cross-border-ecommerce-skills/brand-strategy/*.md ~/.claude/commands/
+cp cross-border-ecommerce-skills/amazon/*.md ~/.claude/commands/
 ```
-
-**Google Antigravity：**
-复制 `.md` 文件到 Antigravity 技能目录。
-
-**OpenClaw / 小龙虾：**
-导入 `.md` 文件为自定义技能，支持 OpenClaw 接入的任何 LLM 后端。
 
 ### 模型要求
 
-这些技能是复杂的多步骤结构化 Prompt，底层 LLM 能力直接决定输出质量：
+| 层级 | 效果 | 代表模型（2026 年 4 月） |
+|------|------|------------------------|
+| 推荐 | 完整执行，验证步骤生效 | Claude Opus 4.6 / Sonnet 4.6、GPT-5.4、Gemini 3.1 Pro |
+| 可用 | 结构完整，可能跳过验证 | DeepSeek V4 / V3.2、Llama 4、Qwen 3.5 (72B+)、GLM-5.1 |
+| 不建议 | 章节缺失，检查失效 | 30B 以下参数模型 |
 
-| 模型层级 | 预期效果 | 代表模型（截至 2026 年 4 月） |
-|---------|---------|---------|
-| 推荐 | 完整执行，数据验证步骤生效 | Claude Opus 4.6 / Sonnet 4.6、GPT-5.4、Gemini 3.1 Pro |
-| 可用 | 结构完整，可能跳过验证步骤 | DeepSeek V4 / V3.2、Llama 4、Qwen 3.5 (72B+)、GLM-5.1 |
-| 不建议 | 章节缺失，合规检查失效 | Qwen 3.5 9B 及以下、30B 以下参数模型 |
+---
 
-关键能力要求：长上下文（8K+ 输入）、强指令遵循、中英双语、联网/工具调用（调研步骤需要）。
+## Changelog
 
-### 示例
+### v3.0 (2026-04-13)
+- **12 new skills**: annual-plan, budget-ops, gtm-launch, seo-playbook, sem-ads, conversion-ux, tiktok-growth, youtube-ops, influencer-marketing, user-lifecycle-ops, social-content-calendar, offline-retail-us
+- **Chart visualization**: 21 skills now auto-generate charts via AntV API (radar, bar, column, pie, waterfall, scatter, line, funnel, sankey)
+- **Unified footers**: All 34 skills now include GitHub open source link
+- Total: **34 skills** across 8 chains
 
-查看 [examples/](examples/) — 测试报告即将上传。
+### v2.1 (2026-04-12)
+- Added `/brand-ab-compare` SKILL
+- Semrush local data auto-scan in Step 0
+- Data gap reporting, minimum depth constraints
+- SEO traffic model validation in Round 3
+- Auto knowledge base trigger in IMC
+
+### v2.0 (2026-04-11)
+- Real-time data collection layer added to 3 brand strategy SKILLs
+
+### v1.0 (2026-04-07)
+- Initial release: 6 brand strategy + 14 Amazon skills (20 total)
 
 ---
 
@@ -303,7 +234,7 @@ cp amazon/**/*.md ~/.claude/commands/
 
 Licensed under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
 
-You are free to use, share, and adapt these skills for any purpose, including commercial use, as long as you give credit.
+Free to use, share, and adapt with credit.
 
 ## Author
 
