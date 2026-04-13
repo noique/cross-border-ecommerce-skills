@@ -12,21 +12,25 @@ Compatible with Claude Code (`~/.claude/commands/`) and Google Antigravity (`SKI
 
 ### What is this?
 
-A collection of AI agent skills (prompt templates) that automate key workflows in cross-border e-commerce — from product selection to market research, IP risk assessment, keyword strategy, and listing copywriting.
+A collection of 21 AI agent skills (prompt templates) that automate key workflows in cross-border e-commerce — from brand strategy to product selection, market research, IP risk assessment, keyword strategy, and listing copywriting.
 
 Each skill is a standalone `.md` file. Drop it into your AI IDE's skill directory and invoke it.
 
-### Brand Strategy Skills (6 skills) — NEW
+### Brand Strategy Skills (7 skills)
 
-**4-Round Brand Analysis Pipeline + IMC + Knowledge Base**
+**4-Round Brand Analysis Pipeline + IMC + Knowledge Base + A/B Compare**
+
+> **v2.1 Update (2026-04-12):** Added Semrush local data auto-scan (Step 0), minimum analysis depth constraints, data gap reporting, SEO traffic model validation in Round 3, methodology citation index, auto knowledge base trigger, and the new `/brand-ab-compare` SKILL.
+
 | Skill | What it does |
 |-------|-------------|
-| [brand-market-scan](brand-strategy/brand-market-scan.md) | Round 1: Market panoramic scan — 4-layer user insight, VOC matrix, competitive landscape |
+| [brand-market-scan](brand-strategy/brand-market-scan.md) | Round 1: Market panoramic scan — 4-layer user insight, VOC matrix, competitive landscape. **Now with Semrush auto-scan, data gap reporting, minimum depth constraints** |
 | [brand-track-hypothesis](brand-strategy/brand-track-hypothesis.md) | Round 2: Track hypothesis generation — 3-5 market tracks, DTNICE classification, GTM flywheel |
-| [brand-deep-validation](brand-strategy/brand-deep-validation.md) | Round 3: Deep hypothesis validation — 5D framework, benchmark case studies, Zone 4 positioning |
+| [brand-deep-validation](brand-strategy/brand-deep-validation.md) | Round 3: Deep hypothesis validation — 5D framework, benchmark case studies, Zone 4 positioning. **Now with SEO traffic model validation in D2/D3** |
 | [brand-strategy-plan](brand-strategy/brand-strategy-plan.md) | Round 4: Brand strategy & execution — 7-element positioning, 4 pillars, pricing, narrative, roadmap |
-| [brand-imc-framework](brand-strategy/brand-imc-framework.md) | IMC integrated marketing framework — Audience/User dual-path, 6-stage funnel, channel mix, calendar |
+| [brand-imc-framework](brand-strategy/brand-imc-framework.md) | IMC integrated marketing framework — Audience/User dual-path, 6-stage funnel, channel mix, calendar. **Now with auto KB generation trigger** |
 | [brand-knowledge-base](brand-strategy/brand-knowledge-base.md) | Obsidian knowledge base generator — batch-creates 30-50 interlinked .md files |
+| [brand-ab-compare](brand-strategy/brand-ab-compare.md) | **NEW** — 8-dimension A/B comparison between two brand strategy report sets (data thickness, validation, methodology, depth, actionability, timeliness, competitor precision, strategic credibility) |
 
 ### Amazon Skills (14 skills)
 
@@ -71,12 +75,13 @@ Each skill is a standalone `.md` file. Drop it into your AI IDE's skill director
 Brand / Product Info
     |
     v  Brand Strategy (4-round pipeline):
-1.  /brand-market-scan             -> Market scan + VOC + competitive landscape
+1.  /brand-market-scan             -> Market scan + VOC + competitive landscape + Semrush auto-scan
 2.  /brand-track-hypothesis        -> 3-5 track hypotheses + top 2 selection
-3.  /brand-deep-validation         -> 5D validation + benchmark cases + Zone 4
+3.  /brand-deep-validation         -> 5D validation + SEO traffic model + benchmark cases
 4.  /brand-strategy-plan           -> Brand positioning + 4 pillars + roadmap
 5.  /brand-imc-framework           -> Marketing framework + channel mix + calendar
 6.  /brand-knowledge-base          -> Obsidian knowledge base (30-50 files)
+7.  /brand-ab-compare              -> 8-dimension A/B quality comparison (optional)
      |
      v  Then execute with Amazon Skills:
 ```
@@ -156,21 +161,25 @@ See [examples/](examples/) for test reports (coming soon).
 
 ### 这是什么？
 
-一套跨境电商 AI 技能模板（Prompt 模板），覆盖选品→市场调研→IP风险排查→关键词→文案的全流程自动化。
+一套 21 个跨境电商 AI 技能模板（Prompt 模板），覆盖品牌战略→选品→市场调研→IP风险排查→关键词→文案的全流程自动化。
 
 每个技能是独立的 `.md` 文件，放入你的 AI IDE 技能目录即可使用。
 
-### 品牌出海战略技能（6 个技能）— 新增
+### 品牌出海战略技能（7 个技能）
 
-**四轮品牌分析 + IMC 整合营销 + 知识库生成**
+**四轮品牌分析 + IMC 整合营销 + 知识库生成 + A/B 对比**
+
+> **v2.1 更新（2026-04-12）：** 新增 Semrush 本地数据自动扫描（第零步）、最低分析深度约束、数据缺口报告、第三轮 SEO 流量模型验证、方法论引用索引、知识库自动触发、以及全新的 `/brand-ab-compare` SKILL。
+
 | 技能 | 功能 |
 |------|------|
-| [brand-market-scan](brand-strategy/brand-market-scan.md) | 第一轮：市场全景扫描 — 四层用户洞察、VOC矩阵、竞争格局 |
+| [brand-market-scan](brand-strategy/brand-market-scan.md) | 第一轮：市场全景扫描 — 四层用户洞察、VOC矩阵、竞争格局。**新增 Semrush 自动扫描、数据缺口报告、最低深度约束** |
 | [brand-track-hypothesis](brand-strategy/brand-track-hypothesis.md) | 第二轮：赛道假设生成 — 3-5个赛道假设、DTNICE分类、GTM飞轮 |
-| [brand-deep-validation](brand-strategy/brand-deep-validation.md) | 第三轮：假设深度验证 — 5D评估框架、对标案例拆解、第4区间定位 |
+| [brand-deep-validation](brand-strategy/brand-deep-validation.md) | 第三轮：假设深度验证 — 5D评估框架、对标案例拆解、第4区间定位。**新增 D2/D3 SEO 流量模型验证** |
 | [brand-strategy-plan](brand-strategy/brand-strategy-plan.md) | 第四轮：品牌战略与执行 — 定位七要素、四大支柱、定价、叙事、路线图 |
-| [brand-imc-framework](brand-strategy/brand-imc-framework.md) | IMC整合营销框架 — Audience/User双路径、6阶段漏斗、渠道预算、执行日历 |
+| [brand-imc-framework](brand-strategy/brand-imc-framework.md) | IMC整合营销框架 — Audience/User双路径、6阶段漏斗、渠道预算、执行日历。**新增知识库自动触发** |
 | [brand-knowledge-base](brand-strategy/brand-knowledge-base.md) | Obsidian知识库生成 — 批量创建30-50个互联.md文件 |
+| [brand-ab-compare](brand-strategy/brand-ab-compare.md) | **新增** — 8维度A/B对比（数据厚度、验证、方法论、深度、可操作性、时效性、竞品精度、战略可信度） |
 
 ### Amazon 技能矩阵（14 个技能）
 
@@ -214,12 +223,13 @@ See [examples/](examples/) for test reports (coming soon).
 品牌/产品信息
     |
     v  品牌战略（四轮串联）：
-1.  /brand-market-scan             -> 市场扫描 + VOC + 竞争格局
+1.  /brand-market-scan             -> 市场扫描 + VOC + 竞争格局 + Semrush自动扫描
 2.  /brand-track-hypothesis        -> 3-5个赛道假设 + 选出Top 2
-3.  /brand-deep-validation         -> 5D验证 + 对标案例 + 第4区间
+3.  /brand-deep-validation         -> 5D验证 + SEO流量模型 + 对标案例
 4.  /brand-strategy-plan           -> 品牌定位 + 四大支柱 + 路线图
 5.  /brand-imc-framework           -> 营销框架 + 渠道预算 + 执行日历
 6.  /brand-knowledge-base          -> Obsidian知识库（30-50个文件）
+7.  /brand-ab-compare              -> 8维度A/B质量对比（可选）
      |
      v  然后用 Amazon 技能执行落地：
 

@@ -567,5 +567,31 @@ CAC > 1/2 LTV（预警）
 
 ---
 
+## 自动知识库生成触发（优化 #6）
+
+> **5 轮品牌战略分析完成后，自动触发知识库生成。**
+
+当本 SKILL（IMC 框架，第 5 轮）执行完毕后，在报告末尾追加以下提示：
+
+---
+
+### 🔄 知识库生成建议
+
+5 轮品牌战略报告已全部完成，建议立即运行 `/brand-knowledge-base` 生成 Obsidian 知识库：
+
+**输入：** 本次 5 轮报告的输出目录路径
+**输出：** 30-50 个 .md 文件的完整 Obsidian vault
+
+知识库将自动整合：
+- Round 1 市场扫描数据（含 Semrush 硬数据）
+- Round 2 赛道假设与评分
+- Round 3 深度验证结果
+- Round 4 品牌战略与执行计划
+- Round 5 IMC 框架与执行日历
+
+**如需与已有知识库做 A/B 对比，运行 `/brand-ab-compare`。**
+
+---
+
 > Created by Alex / 黄子阳 — https://ckcm.us
 > Licensed under CC BY-NC 4.0 — https://creativecommons.org/licenses/by-nc/4.0/
