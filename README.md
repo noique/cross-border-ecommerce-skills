@@ -239,3 +239,9 @@ Free to use, share, and adapt with credit.
 ## Author
 
 Created by **Alex / 黄子阳** — [ckcm.us](https://ckcm.us)
+
+### Contact / 联系方式
+
+有定制化调研需求、品牌咨询、或技能使用问题，扫码加微信：
+
+<img src="wechat-qr.png" alt="WeChat QR Code" width="200">
