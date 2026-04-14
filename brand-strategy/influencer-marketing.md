@@ -194,13 +194,16 @@ semrush_data/
 
 **2.5.1 启动 backlink-kol-extractor**
 
-调用方式：
+调用方式（二选一）：
 ```bash
+# 本地 Claude Code 安装路径
+python3 ~/.claude/skills/backlink-kol-extractor/scripts/extract_kol.py \
+  <semrush_data_dir> --output influencer_candidates.csv \
+  --min-sources 2 --min-traffic 500
+
+# 或在 cross-border-ecommerce-skills 仓库根目录
 python3 tools/backlink-kol-extractor/scripts/extract_kol.py \
-  <semrush_data_dir> \
-  --output influencer_candidates.csv \
-  --min-sources 2 \
-  --min-traffic 500
+  <semrush_data_dir> --output influencer_candidates.csv
 ```
 
 参数说明：

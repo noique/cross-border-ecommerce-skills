@@ -758,11 +758,14 @@ semrush_data/
 **4.6.2 调用 backlink-kol-extractor 脚本**
 
 ```bash
+# 本地 Claude Code 安装路径
+python3 ~/.claude/skills/backlink-kol-extractor/scripts/extract_kol.py \
+  <semrush_data_dir> --output backlink_targets.csv \
+  --min-sources 2 --min-traffic 1000
+
+# 或在 cross-border-ecommerce-skills 仓库根目录
 python3 tools/backlink-kol-extractor/scripts/extract_kol.py \
-  <semrush_data_dir> \
-  --output backlink_targets.csv \
-  --min-sources 2 \
-  --min-traffic 1000
+  <semrush_data_dir> --output backlink_targets.csv
 ```
 
 参数调优（SEO 场景）：
