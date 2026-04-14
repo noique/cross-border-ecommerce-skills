@@ -18,6 +18,7 @@
 | dsite-sem-ads | SEM付费广告投放 | 本 SKILL 聚焦**自然流量**，与SEM形成互补双引擎 |
 | dsite-conversion-ux | 转化率与UX优化 | 本 SKILL 为其**上游流量入口**，CRO优化依赖SEO流量质量 |
 | brand-imc-framework | 整合营销传播框架 | 本 SKILL 的内容策略需与**IMC内容日历**协同 |
+| backlink-kol-extractor | Semrush 反链数据挖掘（独立 skill） | 本 SKILL **条件性调用**：当用户提供 Semrush 竞品反链 xlsx 数据时，用其批量提取外链目标、做竞品外链缺口分析（见第四步 4.6） |
 
 ## 输入要求
 
@@ -34,8 +35,34 @@
 - Ahrefs/Semrush域名报告
 - 月度SEO预算范围
 - 品牌战略报告（来自 /brand-strategy-plan）
+- **Semrush 竞品反链 xlsx 数据**（至少 3 个竞品的 refdomains + backlinks 导出）：如提供，自动启用【第四步 4.6 Semrush 竞品反链深度挖掘模块】
 
 **如用户未提供站点URL，以"新站建设"模式执行，侧重架构规划而非诊断。**
+
+**Semrush 数据启用条件（可选，增强第四步外链建设）：**
+
+当用户提供 Semrush 导出的 xlsx 文件时，本 SKILL 自动进入"数据驱动外链挖掘"模式。数据要求：
+
+| 文件类型 | 命名模式 | 最低要求 |
+|---------|---------|---------|
+| Referring Domains | `*-backlinks_refdomains.xlsx` | 必须 |
+| Backlinks | `*-backlinks.xlsx` | 推荐（用于锚文本分析） |
+| Competitors | `*-organic.Competitors-*.xlsx` | 可选 |
+| 竞品数量 | 3+ 个竞品 | 用于跨竞品交叉验证 |
+
+目录结构示例：
+```
+semrush_data/
+  competitor1.com/
+    competitor1.com-backlinks_refdomains.xlsx
+    competitor1.com-backlinks.xlsx
+  competitor2.com/
+    ...
+  competitor3.com/
+    ...
+```
+
+**若未提供 Semrush 数据，第四步完全按 4.1-4.5 常规策略执行，不影响流程完整性。**
 
 ---
 
@@ -700,6 +727,126 @@ Google高级搜索命令：
 | 奖学金/教育合作（EDU链接） | $1,000-5,000/年 | 3-6个月 | 中 |
 | 品牌联名合作 | 变动 | 1-3个月 | 中 |
 | 慈善/社会责任（公益链接） | $500-5,000 | 1-3个月 | 低 |
+
+#### 4.6 Semrush 竞品反链深度挖掘（条件启用）
+
+> **启用条件**：当用户提供 Semrush 导出的竞品反链 xlsx 数据（至少 3 个竞品）时启用本小节，否则跳过。本小节调用独立 SKILL `backlink-kol-extractor` 完成批量提取，并与 4.1-4.5 策略联动。
+>
+> 方法论来源：竞品反链逆向工程 + backlink-kol-extractor 三步方法论（域名模式匹配、跨竞品交叉验证、社媒 handle 提取）
+
+**4.6.1 数据准备**
+
+| 数据类型 | Semrush 导出路径 | 本 SKILL 用途 |
+|---------|----------------|-------------|
+| Referring Domains (主) | Backlink Analytics → Referring Domains → Export xlsx | 识别哪些域名链接到竞品（候选外链来源） |
+| Backlinks (辅) | Backlink Analytics → Backlinks → Export xlsx | 提取具体 URL、锚文本、链接位置 |
+| Competitors (参考) | Organic Research → Competitors → Export xlsx | 流量重叠站，可作为外链目标扩展 |
+
+目录结构要求：
+```
+semrush_data/
+  competitor1.com/
+    competitor1.com-backlinks_refdomains.xlsx
+    competitor1.com-backlinks.xlsx
+    competitor1.com-organic.Competitors-us-*.xlsx
+  competitor2.com/
+    ...
+  competitor3.com/
+    ...
+```
+
+**4.6.2 调用 backlink-kol-extractor 脚本**
+
+```bash
+python3 ~/.claude/skills/backlink-kol-extractor/scripts/extract_kol.py \
+  <semrush_data_dir> \
+  --output backlink_targets.csv \
+  --min-sources 2 \
+  --min-traffic 1000
+```
+
+参数调优（SEO 场景）：
+- `--min-sources 2`：至少被 2 个竞品外链命中（避免偶然站点）
+- `--min-traffic 1000`：SEO 外链对流量要求更高（红人营销可以 500，外链建设建议 ≥1K）
+- 对 Enterprise 关键词场景可提高到 `--min-traffic 5000`
+
+**4.6.3 候选外链源四大类别定位**
+
+| 类别 | 在 SEO 外链策略中的定位 | 对应 4.2 策略 | 建议 DR 门槛 |
+|------|----------------------|-------------|-------------|
+| **Media/Press** | C级新闻/PR外链主力来源，品牌权威背书 | 策略二：PR/新闻外链 | DR ≥ 40 |
+| **KOL/Review** | B级行业博客 Guest Post 核心池 | 策略一：Guest Post | DR ≥ 30 |
+| **Affiliate/Deal** | 导购/比价站，偏向交易型流量+返佣联盟 | 策略一/三组合 | DR ≥ 25 |
+| **Forum/Community** | E级论坛外链，适合长尾种子 | 策略三：资源页外链 | DR ≥ 15 |
+
+**4.6.4 优先级评分与 4.1 质量体系对齐**
+
+backlink-kol-extractor 默认评分公式：
+```
+priority = (source_count × 10) + (log10(traffic + 1) × 3) + category_bonus
+```
+
+**映射到本 SKILL 4.1 外链质量分层：**
+
+| priority_score | 推荐归入层级 | 行动 |
+|--------------|-------------|------|
+| ≥ 80 | A级候选 | 优先 Guest Post Outreach，可付费（$200-500） |
+| 60-80 | B级候选 | 次优先，组合赠品/产品评测 Outreach |
+| 40-60 | C级候选 | 批量 Outreach，作为量的补充 |
+| 20-40 | D/E级候选 | 自助提交或低成本（HARO/资源页） |
+| < 20 | 不纳入 | 舍弃 |
+
+**4.6.5 竞品外链缺口分析**
+
+**"独占外链"识别**（最有价值）：
+- 只有**单个**竞品获得的外链（`source_count = 1`） → 竞品独特优势或关系外链
+- 分析其内容类型：是否可复制？是否需要建立相同关系？
+
+**"普遍外链"识别**（必须获得）：
+- 被 **3+ 个**竞品获得的外链（`source_count ≥ 3`） → 行业标配外链
+- **本站如果缺失这些外链 = SEO 短板**，必须优先补齐
+
+**"外链差距报告"输出模板：**
+
+| 域名 | 竞品A外链 | 竞品B外链 | 竞品C外链 | 本站外链 | 差距状态 | 行动 |
+|------|---------|---------|---------|---------|---------|------|
+| techblog.com | ✓ | ✓ | ✓ | ✗ | 严重差距 | 本月必补 |
+| reviewsite.com | ✓ | ✓ | ✗ | ✗ | 中等差距 | 本季度补 |
+| forumX.com | ✓ | ✗ | ✗ | ✓ | 已领先 | 维持 |
+
+**4.6.6 锚文本逆向学习**
+
+从 `*-backlinks.xlsx` 中提取竞品锚文本分布：
+- 统计每个竞品的品牌锚 / 精确匹配 / 长尾 / 裸URL / 通用 比例
+- 对照 4.3 推荐分布（5-10% / 20-30% / 50-60% / 3-5% / 5-10%）
+- 识别竞品的**锚文本策略漏洞**（例如过度精确匹配 → 未来可能被惩罚的机会点）
+- 提炼竞品常用长尾锚文本 → 作为本站 SEO 关键词扩展来源
+
+**4.6.7 社媒 handle 反查**
+
+对于 KOL/Review 类候选，从 backlink URL 自动提取社媒入口：
+- `linktr.ee/{username}` → 访问取全部社媒矩阵
+- `youtube.com/@{channel}` → YouTube 频道
+- `instagram.com/{user}` → Instagram
+- `tiktok.com/@{user}` → TikTok
+
+**双重用途：**
+- **SEO 用途**：Guest Post 沟通时可多渠道触达站长
+- **红人营销用途**：这些候选自动流入 `/influencer-marketing` 的候选池（本 SKILL 与 influencer-marketing 共享 Semrush 挖掘结果）
+
+**4.6.8 数据更新节奏**
+
+| 频率 | 动作 |
+|------|------|
+| 每季度 | 重新导出竞品 Semrush 反链数据，识别新增外链目标 |
+| 每月 | 复查"独占外链"和"普遍外链"获取进度 |
+| 每次发现新竞品 | 补充该竞品数据重跑 extractor |
+
+**4.6.9 与本 SKILL 其他步骤的联动**
+
+- 与 **3.3 EEAT 信号建设** 联动：Media/Press 类外链同时提升 EEAT 权威性
+- 与 **5.4 SEO + 红人营销协同** 联动：KOL/Review 候选共享至 `/influencer-marketing`
+- 与 **6.3 竞品监控** 联动：持续对比本站与竞品的外链差距
 
 ---
 

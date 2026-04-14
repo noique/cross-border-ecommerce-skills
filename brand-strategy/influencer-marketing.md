@@ -20,6 +20,7 @@
 | youtube-channel-ops | YouTube 频道运营与变现 | 本 SKILL 聚焦**外部达人合作**，youtube-channel-ops 聚焦自有频道运营 |
 | brand-imc-framework | 整合营销传播框架 | 本 SKILL 是 IMC 框架中**红人触点的深度执行方案** |
 | dsite-sem-ads | 独立站 SEM 与广告投放 | 本 SKILL 的达人内容可作为**广告素材来源** |
+| backlink-kol-extractor | Semrush 反链 KOL 数据挖掘（独立 skill） | 本 SKILL **条件性调用**：当用户提供 Semrush 竞品反链数据时，用其批量挖掘 KOL/媒体/联盟客候选，再接入本 SKILL 的七维评估模型筛选 |
 
 ## 输入要求
 
@@ -37,8 +38,33 @@
 - 团队配置（达人运营人员数量与能力）
 - 竞品的红人合作策略参考
 - 已有的联盟营销体系（如有）
+- **Semrush 竞品反链数据（xlsx 导出）**：如提供，自动启用【Semrush 反链 KOL 挖掘模块】，从竞品外链中批量识别 KOL/媒体/联盟客候选（见第二步 2.5 小节）
 
 **如用户未提供产品信息，引导用户提供基本品牌与市场信息。**
+
+**Semrush 数据启用条件（可选，增强第二步 2.5 达人发现）：**
+
+当用户提供以下 Semrush 导出的 xlsx 文件时，自动进入"数据驱动达人挖掘"模式：
+
+| 文件类型 | 命名模式 | 用途 |
+|---------|---------|------|
+| Referring Domains | `*-backlinks_refdomains.xlsx` | 主数据源，识别哪些域名链接到竞品 |
+| Backlinks | `*-backlinks.xlsx` | 辅助，提取具体 URL 与社媒 handle |
+| Competitors | `*-organic.Competitors-*.xlsx` | 流量重叠站，间接 KOL 发现 |
+
+**推荐至少提供 3 个以上竞品的数据**，以保证跨竞品交叉验证的有效性。数据目录结构：
+
+```
+semrush_data/
+  competitor1.com/
+    competitor1.com-backlinks.xlsx
+    competitor1.com-backlinks_refdomains.xlsx
+    competitor1.com-organic.Competitors-us-*.xlsx
+  competitor2.com/
+    ...
+```
+
+**检测逻辑：** 如果用户提供 Semrush 数据或数据目录路径，本 SKILL 调用独立的 `backlink-kol-extractor` SKILL 完成提取，并将结果接入本 SKILL 的"达人筛选七维评估模型"继续深化。
 
 ---
 
@@ -158,8 +184,93 @@
 | **第三方工具** | Upfluence/Grin/CreatorIQ | 批量搜索、数据丰富 | 付费 | 高 |
 | **达人主动申请** | 通过 Affiliate 平台吸引 | 成本低、达人意愿强 | 质量参差不齐 | 中 |
 | **行业社群** | Facebook Groups/Discord | 可发现垂直领域达人 | 覆盖面有限 | 低 |
+| **Semrush 反链数据挖掘** | 从竞品反链中批量提取 KOL/媒体/联盟客候选 | 数据驱动、可批量、交叉验证 | 需 Semrush 数据源 | 高（当数据可用时） |
 
-#### 2.5 达人数据库管理
+#### 2.5 Semrush 反链 KOL 挖掘（条件启用）
+
+> **启用条件**：当用户提供 Semrush 导出的竞品反链 xlsx 数据（至少 3 个竞品）时启用本小节，否则跳过，继续使用 2.4 的常规搜索渠道。
+>
+> 本小节通过调用独立 SKILL `backlink-kol-extractor`，从竞品反链中批量提取 KOL/媒体/联盟客候选，再接入 2.3 的七维评估模型深化筛选。
+
+**2.5.1 启动 backlink-kol-extractor**
+
+调用方式：
+```bash
+python3 ~/.claude/skills/backlink-kol-extractor/scripts/extract_kol.py \
+  <semrush_data_dir> \
+  --output influencer_candidates.csv \
+  --min-sources 2 \
+  --min-traffic 500
+```
+
+参数说明：
+- `--min-sources 2`：至少被 2 个竞品外链命中（交叉验证）
+- `--min-traffic 500`：最小月流量 500，过滤低质垃圾站
+- 输出 CSV 字段：`domain, category, priority_score, traffic, backlinks, source_count, sources`
+
+**2.5.2 四大候选类别识别**
+
+| 类别 | 域名关键词特征 | 在本 SKILL 中的定位 |
+|------|--------------|-------------------|
+| **KOL / Review** | review, blog, best, guide, test, unbox, daily, vlog | 第三步"种草层 / 破圈层"核心候选 |
+| **Media / Press** | news, press, magazine, journal, times, post, media | 第三步"蓄水层"品牌背书候选 |
+| **Forum / Community** | forum, talk, community, board, discussion | 第四步社群渗透、UGC 种子 |
+| **Affiliate / Deal** | deals, coupon, discount, compare, vs, affiliate, partner | 第六步联盟营销候选库 |
+
+**2.5.3 优先级评分公式**
+
+```
+priority = (source_count × 10) + (log10(traffic + 1) × 3) + category_bonus
+
+category_bonus:
+  KOL/Review:       +20（红人营销第一优先）
+  Media/Press:      +15
+  Affiliate/Deal:   +10
+  Forum/Community:   +5
+```
+
+**优先级分层：**
+
+| 优先级分数 | 行动策略 |
+|----------|---------|
+| **≥ 70** | 核心行业站，立即加入核心 BD 清单，3 天内首轮沟通 |
+| **50-70** | 重要渠道，纳入本季度 BD 计划 |
+| **30-50** | 值得监控，加入观察名单，每月复盘 |
+| **< 30** | 暂不优先（仍保留在数据库） |
+
+**2.5.4 与七维评估模型的衔接**
+
+从 CSV 提取出的候选并不等于最终合作对象，需要接入 2.3 的七维评估模型深化筛选：
+
+| Semrush 提取字段 | 映射到七维评估模型 |
+|---------------|------------------|
+| `category` = KOL/Review | → 内容垂直度 初筛（需二次验证具体内容） |
+| `traffic` ≥ 5K | → 平台匹配度 +1 分 |
+| `source_count` ≥ 3 | → 带货能力/权威性 +1 分（多竞品都在合作） |
+| `domain` 含社交 handle（linktr.ee/youtube/instagram/tiktok） | → 触达路径清晰，合作意愿评估可直接进入 |
+| `domain` 为 .gov / .edu / 巨头平台 | → 过滤，不纳入红人合作池 |
+
+**Linktree 展开策略：** 若候选域名含 `linktr.ee/{username}`，访问该页面可获得达人全部社媒矩阵链接，便于跨平台评估。
+
+**2.5.5 挖掘结果后处理 SOP**
+
+1. **去重与清洗**：删除竞品自有域名、通用平台（YouTube/Facebook/Reddit 等）、.gov/.edu 域名
+2. **分层入库**：按 `priority_score` 和 `category` 分为 A/B/C/D 四层，写入达人数据库
+3. **社媒反查**：对 KOL/Review 类候选，访问其网站找到社媒入口（Linktree / About 页）
+4. **七维评估**：Top 50 候选逐一按 2.3 七维模型打分
+5. **BD 排期**：评分 ≥ 4.0 进入本月首轮 BD，3.0-3.9 进入观察名单
+
+**2.5.6 数据更新节奏**
+
+| 频率 | 动作 |
+|------|------|
+| 季度 | 重新导出竞品 Semrush 反链，增量挖掘新出现的 KOL |
+| 月度 | 对"观察名单"候选复核，晋升或剔除 |
+| 每次 BD 后 | 更新达人数据库合作状态、效果数据 |
+
+---
+
+#### 2.6 达人数据库管理
 
 | 字段 | 说明 | 必填 |
 |------|------|------|
