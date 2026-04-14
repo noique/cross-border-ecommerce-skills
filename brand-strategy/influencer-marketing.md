@@ -196,7 +196,7 @@ semrush_data/
 
 调用方式：
 ```bash
-python3 ~/.claude/skills/backlink-kol-extractor/scripts/extract_kol.py \
+python3 tools/backlink-kol-extractor/scripts/extract_kol.py \
   <semrush_data_dir> \
   --output influencer_candidates.csv \
   --min-sources 2 \

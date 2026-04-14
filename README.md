@@ -119,6 +119,14 @@ Each skill is a standalone `.md` file. Drop it into your AI IDE's skill director
 | [brand-gtm-launch](brand-strategy/brand-gtm-launch.md) | New product GTM launch: 7-step framework, timeline, channel coordination |
 | [offline-retail-us](brand-strategy/offline-retail-us.md) | US offline retail: 8-tier channel analysis, readiness assessment, cost model |
 
+### Tools (standalone utilities)
+
+| Tool | What it does | Used by |
+|------|-------------|---------|
+| [backlink-kol-extractor](tools/backlink-kol-extractor/SKILL.md) | Extract KOL / media / affiliate prospects from Semrush competitor backlink xlsx data — 3-step methodology (domain pattern → cross-competitor validation → social handle extraction) | `influencer-marketing` (Step 2.5), `dsite-seo-playbook` (Step 4.6) — both conditionally activated when Semrush data is provided |
+
+See [tools/README.md](tools/README.md) for standalone usage.
+
 ---
 
 ### Key Features
