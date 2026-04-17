@@ -226,10 +226,8 @@ cp cross-border-ecommerce-skills/amazon/*.md ~/.claude/commands/
 ## Changelog
 
 ### v3.1 (2026-04-14)
-- **2 new skills**: `/trustpilot-voc-quick` (WebFetch-based, 5-min surface scan) and `/trustpilot-voc-deep` (full pipeline: scrape + sentiment + LDA + AI analysis)
-- **New tools directory**: `tools/trustpilot/` with Selenium scraper, proxy rotation, AntV-based visualization
-- Replaced matplotlib with AntV API for report-style chart consistency
-- Removed hardcoded API keys (now reads from `OPENROUTER_API_KEY` env var)
+- **New VOC chain (2 skills)**: `/trustpilot-voc-quick` (5-min surface scan) and `/trustpilot-voc-deep` (full pipeline with sentiment analysis, LDA topic modeling, and AI-powered insights)
+- **New tools directory**: `tools/trustpilot/` with Python toolkit for deep review analysis
 - Total: **36 skills** across 9 chains
 
 ### v3.0 (2026-04-13)
