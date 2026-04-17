@@ -1,6 +1,6 @@
 # Cross-Border E-Commerce AI Skills
 
-**34 AI-powered skill templates for cross-border e-commerce — from brand strategy to Amazon operations to DTC growth.**
+**36 AI-powered skill templates for cross-border e-commerce — from brand strategy to Amazon operations to DTC growth.**
 
 Compatible with Claude Code (`~/.claude/commands/`), Google Antigravity (`SKILL.md`), and any AI IDE with skill/prompt support.
 
@@ -12,11 +12,11 @@ Compatible with Claude Code (`~/.claude/commands/`), Google Antigravity (`SKILL.
 
 ### What is this?
 
-A collection of **34 AI agent skills** (structured prompt templates) that automate the entire cross-border e-commerce workflow — brand strategy, market research, product selection, listing optimization, advertising, DTC site operations, social media, influencer marketing, and more.
+A collection of **36 AI agent skills** (structured prompt templates) that automate the entire cross-border e-commerce workflow — brand strategy, market research, product selection, listing optimization, advertising, DTC site operations, social media, influencer marketing, and more.
 
 Each skill is a standalone `.md` file. Drop it into your AI IDE's skill directory and invoke it.
 
-### Skill Map (34 skills across 8 chains)
+### Skill Map (36 skills across 9 chains)
 
 ```
                         ┌─────────────────────────────────────┐
@@ -40,12 +40,12 @@ Each skill is a standalone `.md` file. Drop it into your AI IDE's skill director
   │ IP Risk          │   │                  │   │ Influencer Mktg  │
   │ Supplier         │   └──────────────────┘   │ User Lifecycle   │
   │ Keywords         │                          └──────────────────┘
-  │ Listing Copy     │   ┌──────────────────┐
-  │ Main Image       │   │ Offline (1)      │
-  │ A+ Content       │   │                  │
-  │ Compliance       │   │ US Retail        │
-  │ Pre-Launch       │   └──────────────────┘
-  │ Ad Architecture  │
+  │ Listing Copy     │   ┌──────────────────┐   ┌──────────────────┐
+  │ Main Image       │   │ Offline (1)      │   │ VOC Tools (2)    │
+  │ A+ Content       │   │                  │   │                  │
+  │ Compliance       │   │ US Retail        │   │ Trustpilot Quick │
+  │ Pre-Launch       │   └──────────────────┘   │ Trustpilot Deep  │
+  │ Ad Architecture  │                          └──────────────────┘
   │ Weekly Ad Review │
   │ Ad Diagnosis     │
   └──────────────────┘
@@ -104,6 +104,13 @@ Each skill is a standalone `.md` file. Drop it into your AI IDE's skill director
 | [tiktok-growth](brand-strategy/tiktok-growth.md) | TikTok full-funnel growth: content strategy, TikTok Shop, livestream, paid ads |
 | [youtube-channel-ops](brand-strategy/youtube-channel-ops.md) | YouTube channel operations: content strategy, SEO, monetization |
 | [social-content-calendar](brand-strategy/social-content-calendar.md) | Social media content calendar: multi-platform scheduling, content pillars |
+
+### VOC & Review Analysis (2 skills) — NEW in v3.1
+
+| Skill | What it does |
+|-------|-------------|
+| [trustpilot-voc-quick](brand-strategy/trustpilot-voc-quick.md) | 5-min WebFetch scan: overall rating, star distribution, recent review summaries. Ideal for brand scanning Step 0 or competitor comparison |
+| [trustpilot-voc-deep](brand-strategy/trustpilot-voc-deep.md) | Full pipeline (15-40 min): Selenium scraper with proxy rotation + sentiment analysis + LDA topic modeling + AI-powered deep insights. Uses `tools/trustpilot/` Python toolkit with **AntV visualization** for report-style consistency |
 
 ### KOL & User Operations (2 skills)
 
@@ -169,11 +176,11 @@ Key requirements: long context (8K+ input), strong instruction following, Chines
 
 ### 这是什么？
 
-一套 **34 个跨境电商 AI 技能模板**，覆盖品牌战略→选品→调研→文案→广告→独立站→社媒→红人→线下渠道的全流程自动化。
+一套 **36 个跨境电商 AI 技能模板**，覆盖品牌战略→选品→调研→文案→广告→独立站→社媒→红人→线下渠道的全流程自动化。
 
 每个技能是独立的 `.md` 文件，放入 AI IDE 技能目录即可使用。
 
-### 技能矩阵（34 个技能，8 条链路）
+### 技能矩阵（36 个技能，9 条链路）
 
 | 链路 | 数量 | 技能 |
 |------|------|------|
@@ -181,13 +188,14 @@ Key requirements: long context (8K+ input), strong instruction following, Chines
 | **Amazon 运营链** | 14 | 选品 → 筛选 → 调研 → IP排查 → 供应商 → 关键词 → 文案 → 主图 → A+ → 合规 → 复查 → 广告架构 → 周报 → 诊断 |
 | **独立站流量** | 3 | SEO全链路 → SEM广告 → 转化率优化 |
 | **社媒与内容** | 3 | TikTok增长 → YouTube运营 → 内容日历 |
+| **VOC 评论分析** | 2 | Trustpilot 快速扫描 → Trustpilot 深度分析（爬虫+情感+LDA+AI 归纳） |
 | **红人与用户** | 2 | 红人营销 → 用户生命周期 |
 | **GTM 执行** | 1 | 新品上市规划 |
 | **线下渠道** | 1 | 美国线下零售 |
 
 ### 核心特色
 
-- **34 技能 × 8 链路** — 从战略到执行全覆盖
+- **36 技能 × 9 链路** — 从战略到执行全覆盖
 - **数据验证层** — 每个技能内置强制验证，推测数据标 ⚠️
 - **图表可视化** — 21 个技能自动生成图表（雷达/柱状/瀑布/散点/漏斗等），调用 AntV API
 - **Semrush 集成** — 品牌战略技能自动扫描本地 Semrush 数据
@@ -217,10 +225,17 @@ cp cross-border-ecommerce-skills/amazon/*.md ~/.claude/commands/
 
 ## Changelog
 
+### v3.1 (2026-04-14)
+- **2 new skills**: `/trustpilot-voc-quick` (WebFetch-based, 5-min surface scan) and `/trustpilot-voc-deep` (full pipeline: scrape + sentiment + LDA + AI analysis)
+- **New tools directory**: `tools/trustpilot/` with Selenium scraper, proxy rotation, AntV-based visualization
+- Replaced matplotlib with AntV API for report-style chart consistency
+- Removed hardcoded API keys (now reads from `OPENROUTER_API_KEY` env var)
+- Total: **36 skills** across 9 chains
+
 ### v3.0 (2026-04-13)
 - **12 new skills**: annual-plan, budget-ops, gtm-launch, seo-playbook, sem-ads, conversion-ux, tiktok-growth, youtube-ops, influencer-marketing, user-lifecycle-ops, social-content-calendar, offline-retail-us
 - **Chart visualization**: 21 skills now auto-generate charts via AntV API (radar, bar, column, pie, waterfall, scatter, line, funnel, sankey)
-- **Unified footers**: All 34 skills now include GitHub open source link
+- **Unified footers**: All 36 skills now include GitHub open source link
 - Total: **34 skills** across 8 chains
 
 ### v2.1 (2026-04-12)
