@@ -1,6 +1,6 @@
 # Cross-Border E-Commerce AI Skills
 
-**36 AI-powered skill templates for cross-border e-commerce — from brand strategy to Amazon operations to DTC growth.**
+**38 AI-powered skill templates for cross-border e-commerce — from brand strategy to Amazon operations to DTC growth to overseas-buyer prospecting.**
 
 Compatible with Claude Code (`~/.claude/commands/`), Google Antigravity (`SKILL.md`), and any AI IDE with skill/prompt support.
 
@@ -12,11 +12,13 @@ Compatible with Claude Code (`~/.claude/commands/`), Google Antigravity (`SKILL.
 
 ### What is this?
 
-A collection of **36 AI agent skills** (structured prompt templates) that automate the entire cross-border e-commerce workflow — brand strategy, market research, product selection, listing optimization, advertising, DTC site operations, social media, influencer marketing, and more.
+A collection of **38 AI agent skills** (structured prompt templates) that automate the entire cross-border e-commerce workflow — brand strategy, market research, product selection, listing optimization, advertising, DTC site operations, social media, influencer marketing, **and overseas-buyer outbound prospecting**.
 
-Each skill is a standalone `.md` file. Drop it into your AI IDE's skill directory and invoke it.
+Two formats:
+- **Single-file skills** (36) — one `.md` file each, drop into your AI IDE's skill directory.
+- **Multi-file skill packages** (2, all under `outbound-prospecting/`) — `SKILL.md` + `references/` + `templates/` (incl. Python scripts and CSV trackers). Point your AI IDE at the package directory.
 
-### Skill Map (36 skills across 9 chains)
+### Skill Map (38 skills across 10 chains)
 
 ```
                         ┌─────────────────────────────────────┐
@@ -126,6 +128,17 @@ Each skill is a standalone `.md` file. Drop it into your AI IDE's skill director
 | [brand-gtm-launch](brand-strategy/brand-gtm-launch.md) | New product GTM launch: 7-step framework, timeline, channel coordination |
 | [offline-retail-us](brand-strategy/offline-retail-us.md) | US offline retail: 8-tier channel analysis, readiness assessment, cost model |
 
+### Outbound Prospecting (2 skills) — NEW in v3.2
+
+End-to-end pipelines for finding overseas B2B decision-makers and converting them into ready-to-message lead sheets. Each skill is a multi-file package with `SKILL.md` + dork libraries + country/role references + outreach playbooks + Python helpers.
+
+| Skill | What it does |
+|-------|-------------|
+| [google-whatsapp-prospecting](outbound-prospecting/google-whatsapp-prospecting/SKILL.md) | Google-dork → WhatsApp lead pipeline. 15+ search formulas (mobile-prefix narrowed), 30+ countries with B2B-platform / time-zone / compliance flags, full GDPR-CASL-CCPA-UWG compliance reference, multi-language outreach playbook (EN/ES/PT/FR/AR), SerpAPI batch script + `wa.me` validator. |
+| [linkedin-prospecting](outbound-prospecting/linkedin-prospecting/SKILL.md) | Google/Bing/Yandex/Wayback reverse-search of LinkedIn → enrichment via Apollo/Snov/Hunter/Lusha/Wiza → 4-touch outreach (CR → DM → follow-up → channel-switch). 50+ localized role keywords across 8 languages, LinkedIn ToS + quota reference, 12 DM templates across 5 archetypes (incl. voice-note opener), reply-handling matrix. |
+
+Sister skills — same 4-stage shape (Search → Enrich → Outreach → Compliance), different channels. Designed to run in parallel for the same lead set.
+
 ### Tools (standalone utilities)
 
 | Tool | What it does | Used by |
@@ -138,7 +151,7 @@ See [tools/README.md](tools/README.md) for standalone usage.
 
 ### Key Features
 
-- **34 Skills, 8 Chains** — Complete coverage from brand strategy to daily operations
+- **38 Skills, 10 Chains** — Complete coverage from brand strategy to daily operations to overseas-buyer outbound
 - **Data Verification Layer** — Every skill includes mandatory verification; estimates are explicitly flagged with ⚠️
 - **Chart Visualization** — 21 skills auto-generate charts (radar, bar, waterfall, scatter, funnel, etc.) via AntV API
 - **Semrush Integration** — Brand strategy skills auto-scan local Semrush xlsx/PDF data as high-confidence source
@@ -151,14 +164,20 @@ See [tools/README.md](tools/README.md) for standalone usage.
 
 **Claude Code (recommended):**
 ```bash
-# Install all skills
 git clone https://github.com/noique/cross-border-ecommerce-skills.git
+
+# Single-file skills → ~/.claude/commands/
 cp cross-border-ecommerce-skills/brand-strategy/*.md ~/.claude/commands/
 cp cross-border-ecommerce-skills/amazon/*.md ~/.claude/commands/
+
+# Multi-file skill packages → ~/.claude/skills/ (one directory per skill)
+cp -r cross-border-ecommerce-skills/outbound-prospecting/google-whatsapp-prospecting ~/.claude/skills/
+cp -r cross-border-ecommerce-skills/outbound-prospecting/linkedin-prospecting ~/.claude/skills/
+cp -r cross-border-ecommerce-skills/tools/backlink-kol-extractor ~/.claude/skills/
 ```
 
 **Google Antigravity / OpenClaw / Any AI IDE:**
-Copy `.md` files to your skill directory.
+Copy `.md` files (single-file skills) or whole directories (multi-file packages) into your skill directory.
 
 ### Model Requirements
 
@@ -176,11 +195,13 @@ Key requirements: long context (8K+ input), strong instruction following, Chines
 
 ### 这是什么？
 
-一套 **36 个跨境电商 AI 技能模板**，覆盖品牌战略→选品→调研→文案→广告→独立站→社媒→红人→线下渠道的全流程自动化。
+一套 **38 个跨境电商 AI 技能模板**，覆盖品牌战略→选品→调研→文案→广告→独立站→社媒→红人→线下渠道→海外开发的全流程自动化。
 
-每个技能是独立的 `.md` 文件，放入 AI IDE 技能目录即可使用。
+两种格式：
+- **单文件技能（36 个）** — 一个 `.md` 文件，放入 AI IDE 技能目录即可使用
+- **多文件技能包（2 个，全部在 `outbound-prospecting/`）** — `SKILL.md` + `references/` + `templates/`（含 Python 脚本和 CSV 跟踪表），将整个目录指向 AI IDE
 
-### 技能矩阵（36 个技能，9 条链路）
+### 技能矩阵（38 个技能，10 条链路）
 
 | 链路 | 数量 | 技能 |
 |------|------|------|
@@ -192,10 +213,11 @@ Key requirements: long context (8K+ input), strong instruction following, Chines
 | **红人与用户** | 2 | 红人营销 → 用户生命周期 |
 | **GTM 执行** | 1 | 新品上市规划 |
 | **线下渠道** | 1 | 美国线下零售 |
+| **海外开发（NEW v3.2）** | 2 | Google→WhatsApp 反查开发（15+ 公式 + 30+ 国家 + 多语言话术 + 合规手册）→ Google→LinkedIn 反查开发（CR + 12 DM 模板 + 5 种 archetype + 8 语言职位词 + LinkedIn ToS 限额表） |
 
 ### 核心特色
 
-- **36 技能 × 9 链路** — 从战略到执行全覆盖
+- **38 技能 × 10 链路** — 从战略到执行到海外开发全覆盖
 - **数据验证层** — 每个技能内置强制验证，推测数据标 ⚠️
 - **图表可视化** — 21 个技能自动生成图表（雷达/柱状/瀑布/散点/漏斗等），调用 AntV API
 - **Semrush 集成** — 品牌战略技能自动扫描本地 Semrush 数据
@@ -209,8 +231,15 @@ Key requirements: long context (8K+ input), strong instruction following, Chines
 ```bash
 # Claude Code 一键安装
 git clone https://github.com/noique/cross-border-ecommerce-skills.git
+
+# 单文件技能 → ~/.claude/commands/
 cp cross-border-ecommerce-skills/brand-strategy/*.md ~/.claude/commands/
 cp cross-border-ecommerce-skills/amazon/*.md ~/.claude/commands/
+
+# 多文件技能包 → ~/.claude/skills/（每个技能一个目录）
+cp -r cross-border-ecommerce-skills/outbound-prospecting/google-whatsapp-prospecting ~/.claude/skills/
+cp -r cross-border-ecommerce-skills/outbound-prospecting/linkedin-prospecting ~/.claude/skills/
+cp -r cross-border-ecommerce-skills/tools/backlink-kol-extractor ~/.claude/skills/
 ```
 
 ### 模型要求
@@ -224,6 +253,13 @@ cp cross-border-ecommerce-skills/amazon/*.md ~/.claude/commands/
 ---
 
 ## Changelog
+
+### v3.2 (2026-04-26)
+- **New Outbound Prospecting chain (2 multi-file skill packages)** under `outbound-prospecting/`:
+  - `google-whatsapp-prospecting` — Google-dork → WhatsApp lead pipeline. 4-stage workflow (Search → Validate → Enrich → Outreach). 15+ search formula variants, 30+ countries with mobile-prefix narrowing + B2B platforms + time-zone send windows + compliance flags. Full GDPR / CASL / CCPA / UWG §7 / WhatsApp ToS compliance reference. Multi-language outreach playbook (EN/ES/PT/FR/AR). SerpAPI batch script + `wa.me` validator + lead-tracker CSV.
+  - `linkedin-prospecting` — Google + Bing + Yandex + Wayback reverse-search of LinkedIn. Post-2024 Auth Wall workarounds. 50+ decision-maker role keywords localized into 8 languages with company-size-band gating (CEO targeting only valid for ≤500 employees). Enrichment-tool comparison (Apollo / Snov / Hunter / Lusha / Wiza) with cost + accuracy + legal context. LinkedIn ToS § 8.2 + 2026 quota table + account warm-up protocol. 4-touch outreach (Connection Request → DM → Follow-up → Channel-switch) with 12 DM templates across 5 archetypes (incl. voice-note opener), reply-handling matrix, native templates in PT/ES/FR/DE/AR/JA.
+- **New format**: multi-file skill packages (SKILL.md + references/ + templates/ with Python helpers + CSV trackers), in addition to existing single-file `.md` skills.
+- Total: **38 skills** across 10 chains.
 
 ### v3.1 (2026-04-14)
 - **New VOC chain (2 skills)**: `/trustpilot-voc-quick` (5-min surface scan) and `/trustpilot-voc-deep` (full pipeline with sentiment analysis, LDA topic modeling, and AI-powered insights)
