@@ -1,6 +1,6 @@
 # Cross-Border E-Commerce AI Skills
 
-**38 AI-powered skill templates for cross-border e-commerce — from brand strategy to Amazon operations to DTC growth to overseas-buyer prospecting.**
+**39 AI-powered skill templates for cross-border e-commerce — from brand strategy to Amazon operations to DTC growth to overseas-buyer prospecting.**
 
 Compatible with Claude Code (`~/.claude/commands/`), Google Antigravity (`SKILL.md`), and any AI IDE with skill/prompt support.
 
@@ -12,13 +12,13 @@ Compatible with Claude Code (`~/.claude/commands/`), Google Antigravity (`SKILL.
 
 ### What is this?
 
-A collection of **38 AI agent skills** (structured prompt templates) that automate the entire cross-border e-commerce workflow — brand strategy, market research, product selection, listing optimization, advertising, DTC site operations, social media, influencer marketing, **and overseas-buyer outbound prospecting**.
+A collection of **39 AI agent skills** (structured prompt templates) that automate the entire cross-border e-commerce workflow — brand strategy, market research, product selection, listing optimization, advertising, DTC site operations, social media, influencer marketing, **and overseas-buyer outbound prospecting**.
 
 Two formats:
-- **Single-file skills** (36) — one `.md` file each, drop into your AI IDE's skill directory.
+- **Single-file skills** (37) — one `.md` file each, drop into your AI IDE's skill directory.
 - **Multi-file skill packages** (2, all under `outbound-prospecting/`) — `SKILL.md` + `references/` + `templates/` (incl. Python scripts and CSV trackers). Point your AI IDE at the package directory.
 
-### Skill Map (38 skills across 10 chains)
+### Skill Map (39 skills across 10 chains)
 
 ```
                         ┌─────────────────────────────────────┐
@@ -34,12 +34,12 @@ Two formats:
        │                                         │
        ▼                                         ▼
   ┌──────────────────┐   ┌──────────────────┐   ┌──────────────────┐
-  │ Amazon Chain (14) │   │ DTC Site (3)     │   │ Social & KOL (5) │
+  │ Amazon Chain (14) │   │ DTC Site (4)     │   │ Social & KOL (5) │
   │                  │   │                  │   │                  │
-  │ Selection        │   │ SEO Playbook     │   │ TikTok Growth    │
-  │ Shortlist        │   │ SEM Ads          │   │ YouTube Ops      │
-  │ Market Research  │   │ Conversion UX    │   │ Content Calendar │
-  │ IP Risk          │   │                  │   │ Influencer Mktg  │
+  │ Selection        │   │ SEO Diagnostic   │   │ TikTok Growth    │
+  │ Shortlist        │   │ SEO Playbook     │   │ YouTube Ops      │
+  │ Market Research  │   │ SEM Ads          │   │ Content Calendar │
+  │ IP Risk          │   │ Conversion UX    │   │ Influencer Mktg  │
   │ Supplier         │   └──────────────────┘   │ User Lifecycle   │
   │ Keywords         │                          └──────────────────┘
   │ Listing Copy     │   ┌──────────────────┐   ┌──────────────────┐
@@ -91,10 +91,11 @@ Two formats:
 | Ads | [amazon-weekly-ad-review](amazon/amazon-weekly-ad-review.md) | Weekly ad review: ACoS/TACoS, Search Terms, action list |
 | Ads | [amazon-ad-diagnosis](amazon/amazon-ad-diagnosis.md) | Existing product diagnosis: 4-stage optimization pipeline |
 
-### DTC Site & Traffic (3 skills)
+### DTC Site & Traffic (4 skills)
 
 | Skill | What it does |
 |-------|-------------|
+| [dsite-seo-diagnostic](brand-strategy/dsite-seo-diagnostic.md) | **NEW** — Entry-orchestrator skill for live-site SEO traffic-drop diagnostics. 7-dimension diagnosis (traffic curve / keyword loss / single-point risk / i18n pollution / backlink quality / content ROI / KPI audit) → algorithm-event alignment → restart roadmap. Chains `xlsx` / `dsite-seo-playbook` / `trustpilot-voc-deep` / `competitors-analysis` / `backlink-kol-extractor` / `report-pdf-export`. Output: deliverable PDF (A4 landscape, hides internal SKILL refs). |
 | [dsite-seo-playbook](brand-strategy/dsite-seo-playbook.md) | Full SEO playbook: technical audit, keyword strategy, content plan, Core Web Vitals |
 | [dsite-sem-ads](brand-strategy/dsite-sem-ads.md) | SEM & paid ads: 10-platform comparison, AIPL funnel, budget allocation |
 | [dsite-conversion-ux](brand-strategy/dsite-conversion-ux.md) | Conversion rate optimization: 6-module CRO audit, UX best practices |
@@ -151,7 +152,7 @@ See [tools/README.md](tools/README.md) for standalone usage.
 
 ### Key Features
 
-- **38 Skills, 10 Chains** — Complete coverage from brand strategy to daily operations to overseas-buyer outbound
+- **39 Skills, 10 Chains** — Complete coverage from brand strategy to daily operations to overseas-buyer outbound
 - **Data Verification Layer** — Every skill includes mandatory verification; estimates are explicitly flagged with ⚠️
 - **Chart Visualization** — 21 skills auto-generate charts (radar, bar, waterfall, scatter, funnel, etc.) via AntV API
 - **Semrush Integration** — Brand strategy skills auto-scan local Semrush xlsx/PDF data as high-confidence source
@@ -195,19 +196,19 @@ Key requirements: long context (8K+ input), strong instruction following, Chines
 
 ### 这是什么？
 
-一套 **38 个跨境电商 AI 技能模板**，覆盖品牌战略→选品→调研→文案→广告→独立站→社媒→红人→线下渠道→海外开发的全流程自动化。
+一套 **39 个跨境电商 AI 技能模板**，覆盖品牌战略→选品→调研→文案→广告→独立站→社媒→红人→线下渠道→海外开发的全流程自动化。
 
 两种格式：
-- **单文件技能（36 个）** — 一个 `.md` 文件，放入 AI IDE 技能目录即可使用
+- **单文件技能（37 个）** — 一个 `.md` 文件，放入 AI IDE 技能目录即可使用
 - **多文件技能包（2 个，全部在 `outbound-prospecting/`）** — `SKILL.md` + `references/` + `templates/`（含 Python 脚本和 CSV 跟踪表），将整个目录指向 AI IDE
 
-### 技能矩阵（38 个技能，10 条链路）
+### 技能矩阵（39 个技能，10 条链路）
 
 | 链路 | 数量 | 技能 |
 |------|------|------|
 | **品牌战略链** | 10 | 市场扫描 → 赛道假设 → 深度验证 → 品牌战略 → IMC框架 → 年度规划 → 预算管控 → 知识库 → A/B对比 → 图表可视化 |
 | **Amazon 运营链** | 14 | 选品 → 筛选 → 调研 → IP排查 → 供应商 → 关键词 → 文案 → 主图 → A+ → 合规 → 复查 → 广告架构 → 周报 → 诊断 |
-| **独立站流量** | 3 | SEO全链路 → SEM广告 → 转化率优化 |
+| **独立站流量** | 4 | **SEO 全链路诊断（NEW v3.3）** → SEO全链路规划 → SEM广告 → 转化率优化 |
 | **社媒与内容** | 3 | TikTok增长 → YouTube运营 → 内容日历 |
 | **VOC 评论分析** | 2 | Trustpilot 快速扫描 → Trustpilot 深度分析（爬虫+情感+LDA+AI 归纳） |
 | **红人与用户** | 2 | 红人营销 → 用户生命周期 |
@@ -217,7 +218,7 @@ Key requirements: long context (8K+ input), strong instruction following, Chines
 
 ### 核心特色
 
-- **38 技能 × 10 链路** — 从战略到执行到海外开发全覆盖
+- **39 技能 × 10 链路** — 从战略到执行到海外开发全覆盖
 - **数据验证层** — 每个技能内置强制验证，推测数据标 ⚠️
 - **图表可视化** — 21 个技能自动生成图表（雷达/柱状/瀑布/散点/漏斗等），调用 AntV API
 - **Semrush 集成** — 品牌战略技能自动扫描本地 Semrush 数据
@@ -253,6 +254,16 @@ cp -r cross-border-ecommerce-skills/tools/backlink-kol-extractor ~/.claude/skill
 ---
 
 ## Changelog
+
+### v3.3 (2026-04-27)
+- **New entry-orchestrator skill** `dsite-seo-diagnostic` (single-file, under `brand-strategy/`) — for live-site SEO traffic-drop diagnostics + restart roadmap.
+  - **7-dimension diagnostic framework**: traffic curve (algorithm-downgrade signature) / keyword loss structure / single-point-failure risk / multilingual-Markets URL pollution / backlink quality (DS distribution + anchor text pathology) / content ROI (HCU-hit detection) / KPI body audit (process-volume vs outcome).
+  - **Algorithm-event alignment**: traffic curve auto-aligned with public Google Core / HCU / Spam Update timeline (rolling 24-month window).
+  - **Restart roadmap**: 4-phase plan (stop-the-bleeding → cleanse → content rebuild → off-site signals) anchored on the `dsite-seo-playbook` 6-step framework.
+  - **Multi-skill orchestration**: chains `xlsx` → `dsite-seo-playbook` → `trustpilot-voc-deep` / `competitors-analysis` / `backlink-kol-extractor` → `report-pdf-export`. Hides internal SKILL refs in deliverable.
+  - **Standard PDF deliverable** (A4 landscape, deep-blue header, zebra rows, page-numbered) via `report-pdf-export`.
+  - **Use cases**: traffic anomaly investigation, pre-vendor-replacement independent diagnostics, annual SEO health check, post-Core-Update impact assessment, post-migration audit, multilingual / Shopify Markets pollution audit.
+- Total: **39 skills** across 10 chains.
 
 ### v3.2 (2026-04-26)
 - **New Outbound Prospecting chain (2 multi-file skill packages)** under `outbound-prospecting/`:
