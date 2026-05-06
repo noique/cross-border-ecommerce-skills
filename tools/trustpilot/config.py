@@ -68,14 +68,18 @@ COUNTRY_NAME_TO_CODE = {
     'europe': 'EU'
 }
 
-# List of SOCKS5 proxies in the format: HOST:PORT:USER:PASS
-PROXIES = [
-    "93.89.220.26:12323:14a5bbed33ad1:2df01fef65",
-    "149.18.52.92:12323:14a5bbed33ad1:2df01fef65",
-    "127.0.0.1:10808:none:none",  # 本地SOCKS代理，端口10808
-    "127.0.0.1:10809:none:none",  # 本地HTTP代理，端口10809
-    # Add more proxies here if needed
-]
+# 远程 SOCKS5 代理，格式：HOST:PORT:USER:PASS
+# 通过环境变量注入，避免凭据进 git 历史。本地用法：
+#   export TP_PROXY_1="HOST:PORT:USER:PASS"
+#   export TP_PROXY_2="HOST:PORT:USER:PASS"
+# 也可放进项目根目录的 .env，scraper 启动时由 python-dotenv 加载（如已配置）
+import os
+
+PROXIES = [v for v in (os.environ.get("TP_PROXY_1"), os.environ.get("TP_PROXY_2")) if v]
+PROXIES.extend([
+    "127.0.0.1:10808:none:none",  # 本地 SOCKS5 (V2Ray)
+    "127.0.0.1:10809:none:none",  # 本地 HTTP  (V2Ray)
+])
 
 # V2Ray代理配置
 V2RAY_CONFIG = {
