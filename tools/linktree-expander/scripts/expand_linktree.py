@@ -72,6 +72,32 @@ SKIP_HOSTS = {
     "form.typeform.com",  # often used by users for surveys, not their primary social
 }
 
+# Domains that should NEVER be classified as `personal_site`. These are
+# third-party utilities / shorteners / aggregators / docs / scheduling tools that
+# happen to appear as outbound links but are not the creator's own site.
+NON_PERSONAL_HOSTS = {
+    # link shorteners
+    "amzn.to", "bit.ly", "tinyurl.com", "t.co", "rebrand.ly", "ow.ly",
+    "ngl.link", "fbuy.io", "glnk.io", "posh.mk", "lnk.bio",
+    # affiliate / shoppable / link-in-bio platforms
+    "liketoknow.it", "ltk.shopmy.com", "shopmy.com", "stan.store",
+    "beacons.ai", "linktr.ee", "solo.to", "snipfeed.co", "withkoji.com",
+    # docs / forms / scheduling / archive utilities
+    "docs.google.com", "drive.google.com", "forms.gle", "form.typeform.com",
+    "calendly.com", "tally.so", "savee.it",
+    "archive.md", "archive.org", "web.archive.org",
+    # major retailers / generic platforms (not creator's own)
+    "amazon.com", "etsy.com", "walmart.com", "target.com",
+    "spotify.com", "apple.com", "podcasts.apple.com",
+    "youtube.com", "instagram.com", "tiktok.com", "twitter.com", "x.com",
+    "facebook.com", "pinterest.com", "twitch.tv", "linkedin.com",
+    "patreon.com", "kofi.com", "ko-fi.com", "buymeacoffee.com",
+    "github.com", "medium.com", "substack.com",
+    # generic shopify subdomains (creator brands ARE shopify, but if domain is
+    # raw {something}.myshopify.com we don't want it as the canonical site)
+    "myshopify.com",
+}
+
 
 def categorize(url: str, title: str) -> str:
     host = urlparse(url).netloc.lower().lstrip("www.")
@@ -98,7 +124,7 @@ def categorize(url: str, title: str) -> str:
     return "other"
 
 
-def parse_linktree(html: str):
+def parse_linktree(html: str, handle: str = ""):
     m = NEXT_DATA_RE.search(html)
     if not m:
         return None
@@ -116,6 +142,7 @@ def parse_linktree(html: str):
         "page_title": acct.get("pageTitle") or "",
         "bio":        (acct.get("description") or "").strip(),
         "social_count": len(acct.get("socialLinks") or []),
+        "_handle":    handle,
     }
 
     for s in acct.get("socialLinks") or []:
@@ -128,6 +155,7 @@ def parse_linktree(html: str):
 
     outbound = []
     cat_count = {}
+    candidate_sites = []   # list of (host, title) for personal_site scoring
     for L in links:
         url = (L.get("url") or "").strip()
         title = (L.get("title") or L.get("label") or "").strip()
@@ -141,18 +169,45 @@ def parse_linktree(html: str):
             if mm and key not in out:
                 out[key] = mm.group(1)
                 break
-        if "personal_site" not in out:
-            cat = categorize(url, title)
-            if cat in ("blog", "other"):
-                if not any(s in host for s in (
-                    "instagram", "tiktok", "youtube", "twitter", "x.com",
-                    "facebook", "linktr.ee", "substack.com", "apple.com",
-                    "spotify.com", "amazon.", "etsy.com", "shopify", "form.typeform"
-                )):
-                    out["personal_site"] = host
         cat = categorize(url, title)
         cat_count[cat] = cat_count.get(cat, 0) + 1
         outbound.append((cat, host))
+        # Gather personal_site candidates — only blog/other/shop, not blocked
+        if cat in ("blog", "other", "shop"):
+            bare_host = host[4:] if host.startswith("www.") else host
+            blocked = (
+                bare_host in NON_PERSONAL_HOSTS
+                or any(bare_host == d or bare_host.endswith("." + d) for d in NON_PERSONAL_HOSTS)
+            )
+            if not blocked:
+                candidate_sites.append((host, title))
+
+    # Pick personal_site by scoring against the linktree handle.
+    # Only return if there's a confident match (handle in domain), else leave empty.
+    handle_norm = re.sub(r"[^a-z0-9]", "", (out.get("_handle") or "").lower())
+    out.pop("_handle", None)
+    best_score = 0
+    for host, title in candidate_sites:
+        bare = host[4:] if host.startswith("www.") else host
+        first_label = bare.split(".")[0].lower()
+        host_norm = re.sub(r"[^a-z0-9]", "", first_label)
+        score = 0
+        if handle_norm and host_norm:
+            if handle_norm == host_norm:
+                score += 100
+            elif handle_norm in host_norm or host_norm in handle_norm:
+                score += 80
+            elif len(handle_norm) >= 5 and handle_norm[:5] in host_norm:
+                score += 40
+        if bare.count(".") == 1 and bare.endswith((".com", ".co", ".net", ".org", ".me")):
+            score += 10
+        if score > best_score:
+            best_score = score
+            out["_best_site"] = host
+    if best_score >= 40:
+        out["personal_site"] = out.pop("_best_site", None)
+    else:
+        out.pop("_best_site", None)
 
     out["outbound_count"] = len(outbound)
     top_cats = sorted(cat_count.items(), key=lambda x: -x[1])[:3]
@@ -255,7 +310,7 @@ def main():
             rows.append({"linktree_handle": handle, "status": "fetch_failed",
                          "scraped_at": datetime.datetime.now().isoformat(timespec="seconds")})
             continue
-        parsed = parse_linktree(html)
+        parsed = parse_linktree(html, handle=handle)
         if not parsed:
             rows.append({"linktree_handle": handle, "status": "parse_failed",
                          "scraped_at": datetime.datetime.now().isoformat(timespec="seconds")})
