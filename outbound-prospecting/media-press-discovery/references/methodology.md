@@ -53,7 +53,7 @@ When unsure, manually visit `muckrack.com` and search the outlet name.
 
 **What it does**: If `tools/backlink-kol-extractor` was run on competitor Semrush data, journalists whose outlet appears in 2+ competitors' refdomains receive a `+20` score bump.
 
-**Why**: An editor who's already covered Modibodi *and* Knix *and* Saalt in articles you can see in the backlink graph is a higher-conviction target than one who matches keywords but hasn't been linked. The backlink graph gives "who's been cited" while Muckrack gives "who's published".
+**Why**: An editor who's already covered multiple competitors in articles you can see in the backlink graph is a higher-conviction target than one who matches keywords but hasn't been linked. The backlink graph gives "who's been cited" while Muckrack gives "who's published".
 
 **Code**: `score_and_export.py --backlinks kol_prospects.csv` (output of `extract_kol.py`).
 
@@ -90,7 +90,7 @@ When unsure, manually visit `muckrack.com` and search the outlet name.
 The CSV output is a structured starting point. Actual outreach requires:
 - Read 2-3 of each high-priority journalist's recent articles to understand their voice and angle preferences.
 - Craft a personalized pitch (no template-spray). Industry response rates (推算): generic spray 1-3%, personalized 15-25%, warm intro 30-50%.
-- Time pitches against the outlet's editorial calendar (period-care often clusters around Women's History Month March, World Menstrual Hygiene Day May 28, Back-to-School August).
+- Time pitches against the outlet's editorial calendar (most categories have natural seasonality — e.g. category awareness months, holiday gifting cycles, back-to-school).
 
 This is craft, not pipeline. The user's local PR playbook covers outreach methodology — see your project's `PR_建联方法论_*.md` if it exists.
 
@@ -99,7 +99,7 @@ This is craft, not pipeline. The user's local PR playbook covers outreach method
 ```bash
 # 1. Build outlet list (or use templates/outlets_template.txt as seed)
 cp templates/outlets_template.txt outlets.txt
-cp templates/keywords_period_care.txt keywords.txt
+cp templates/keywords_template.txt keywords.txt
 
 # 2. Step 1: Discover journalists
 python3 scripts/discover_journalists.py outlets.txt --out journalists.jsonl

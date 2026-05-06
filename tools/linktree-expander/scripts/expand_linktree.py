@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Expand Linktree handles into full social/outbound profiles.
 
-Input : handles.txt (one handle per line, e.g. `modibodi`, `meg.boggs`)
+Input : handles.txt (one handle per line, e.g. `example_creator`, `brand.x`)
         OR a CSV with column `username` (Linktree handle slug).
 
 Output: linktree_expanded.csv

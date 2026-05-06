@@ -63,7 +63,7 @@ export TP_PROXY_1="HOST:PORT:USER:PASS"
 export TP_PROXY_2="HOST:PORT:USER:PASS"
 
 python3 main.py \
-  --url https://www.trustpilot.com/review/modibodi.com \
+  --url https://www.trustpilot.com/review/yourbrand.com \
   --use_local_only \
   --skip_ai \
   --cutoff_date 2025-11-06 \
@@ -79,7 +79,7 @@ python3 main.py \
 **v3.4 rebuild (2026-05-06)** addresses Trustpilot's 2026 DOM update + several silent-failure modes:
 - Modern selectors using `[data-consumer-name-typography]` / `[data-consumer-country-typography]` / `[data-service-review-rating]` / `[data-service-review-text-typography]` / `[data-service-review-title-typography]` (replaces 110-line sibling-XPath fallback chain).
 - Use `textContent` not `.text` (avoids lazy-render visibility quirks).
-- URL: append `&sort=recency` (without it, Trustpilot serves "relevance" widget = snippet-only DOM with no rating / country / title metadata for some brands like modibodi.com).
+- URL: append `&sort=recency` (without it, Trustpilot serves "relevance" widget = snippet-only DOM with no rating / country / title metadata for some brands).
 - User-Agent pinned to desktop (`fake_useragent` would otherwise return iPhone UAs ~30% of the time, triggering Trustpilot's mobile snippet-only layout).
 - New `--cutoff_date` flag (efficiently bound scrapes to N-month windows).
 - Skip `generate_report()` when `--skip_ai` is set (signature requires 6 dir args from AI pipeline).
@@ -121,7 +121,7 @@ python3 scripts/expand_linktree.py handles.txt --out linktree_expanded.csv
 
 **`NON_PERSONAL_HOSTS` blocklist** (30+ domains): link shorteners (amzn.to / bit.ly / ngl.link / fbuy.io / glnk.io / posh.mk / lnk.bio), affiliate platforms (liketoknow.it / shopmy / beacons / stan.store), scheduling tools (calendly / typeform / docs.google.com / forms.gle), archive utilities (archive.md / web.archive.org), major retailers / generic platforms (amazon.com / etsy / spotify / social), Patreon / Ko-fi / GitHub / Medium / Substack base domains.
 
-**Pilot run (2026-05-06)**: 44/45 ok on 45 period-care-relevant handles. Field hit rates: ig 26/45 (58%), tiktok 18/45, youtube 8/45, podcast 5+5/45, personal_site 18/44 (after handle-match filtering — was 44/44 with v1.0's "first non-social outbound" heuristic, but those were 75% sponsor noise).
+**Pilot run (2026-05-06)**: 44/45 ok on a single-category seed list of 45 handles. Field hit rates: ig 26/45 (58%), tiktok 18/45, youtube 8/45, podcast 5+5/45, personal_site 18/44 (after handle-match filtering — was 44/44 with v1.0's "first non-social outbound" heuristic, but those were 75% sponsor noise).
 
 See [linktree-expander/SKILL.md](linktree-expander/SKILL.md) for details.
 
@@ -159,7 +159,7 @@ export YOUTUBE_API_KEY=xxx    # for YT description email scrape
 
 **`NEVER_DIG_DOMAINS`** — same blocklist concept as linktree-expander, prevents wasting requests on known third-party utilities that produce noise emails (sponsor / platform / random-3rd-party). 30+ entries.
 
-**Pilot run (2026-05-06, on 45 Linktree-derived KOLs)**: 5 high + 4 medium + 11 low + 25 none. The 25 "none" are IG-only / TikTok-only creators who don't have a discoverable personal_site — recommended next step is IG bio extraction via Apify (`apify/instagram-scraper` actor, ~$0.005/profile).
+**Pilot run (2026-05-06, on 45 Linktree-derived prospects from a single category)**: 5 high + 4 medium + 11 low + 25 none. The 25 "none" are IG-only / TikTok-only creators who don't have a discoverable personal_site — recommended next step is IG bio extraction via Apify (`apify/instagram-scraper` actor, ~$0.005/profile).
 
 See [contact-extractor/SKILL.md](contact-extractor/SKILL.md) for details.
 

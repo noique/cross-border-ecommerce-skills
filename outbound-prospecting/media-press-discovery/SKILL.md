@@ -33,7 +33,7 @@ mkdir -p press_html
 
 # 2. Run pipeline
 cp templates/outlets_template.txt outlets.txt
-cp templates/keywords_period_care.txt keywords.txt
+cp templates/keywords_template.txt keywords.txt
 
 python3 scripts/discover_journalists.py outlets.txt --via html-dir --html-dir press_html --out journalists.jsonl
 # now ALSO save each journalist's /articles page (one HTML per journalist)
@@ -68,7 +68,7 @@ Multi-machine fan-out: `references/multi_machine.md`.
 | Required | Description | Example |
 |---|---|---|
 | `outlets.txt` | One outlet per line. Format: `muckrack_slug,outlet_domain` | `teenvogue,teenvogue.com` |
-| `keywords.txt` | Topic keywords for relevance filter (one per line) | `period underwear`<br>`menstrual` |
+| `keywords.txt` | Topic keywords for relevance filter (one per line) | `[your category keyword 1]`<br>`[your category keyword 2]` |
 
 Optional:
 - `kol_prospects.csv` from sister skill `tools/backlink-kol-extractor` (boosts journalists at outlets that competitors got linked from).

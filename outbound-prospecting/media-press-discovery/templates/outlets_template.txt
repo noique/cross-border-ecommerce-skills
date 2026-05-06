@@ -5,7 +5,7 @@
 # outlet_domain = the email-bearing root domain
 #   e.g.  teenvogue.com (NOT www.teenvogue.com)
 
-# === Tier A — major US lifestyle/wellness (period-care category seed) ===
+# === Tier A — major US lifestyle / wellness / women's interest outlets (sample seed list) ===
 refinery29,refinery29.com
 teenvogue,teenvogue.com
 byrdie,byrdie.com
@@ -34,6 +34,6 @@ wired,wired.com
 newsweek,newsweek.com
 huffpost,huffpost.com
 
-# === Tier A — UK / international (period care strong in UK media) ===
+# === Tier A — UK / international ===
 the-guardian,theguardian.com
 glamourmagazine-uk,glamourmagazine.co.uk

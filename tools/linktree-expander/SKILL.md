@@ -1,6 +1,6 @@
 ---
 name: linktree-expander
-description: Expand a list of Linktree handles (e.g. modibodi, meg.boggs) into a full table of each user's social handles + outbound links + bio + visible email. Use when you have a list of Linktree slugs from KOL discovery (output of backlink-kol-extractor or similar) and need to enrich them into actionable per-creator profiles. Triggers on "expand linktree", "linktree to social handles", "enrich linktree creators", "find IG/TikTok behind linktree".
+description: Expand a list of Linktree handles (e.g. example_creator, brand_x) into a full table of each user's social handles + outbound links + bio + visible email. Use when you have a list of Linktree slugs from KOL discovery (output of backlink-kol-extractor or similar) and need to enrich them into actionable per-creator profiles. Triggers on "expand linktree", "linktree to social handles", "enrich linktree creators", "find IG/TikTok behind linktree".
 ---
 
 # Linktree Expander
@@ -77,8 +77,9 @@ Linktree currently does NOT use Cloudflare (verified 2026-05-06). Plain `request
 
 ## Pilot run results (2026-05-06)
 
-Run on 45 period-care-relevant Linktree handles (extracted from
-`kol_prospects_social.csv` via `tools/backlink-kol-extractor`):
+Run on a 45-handle seed list (extracted from
+`kol_prospects_social.csv` via `tools/backlink-kol-extractor` for a
+single domain category):
 
 ```
 Wrote 45 rows (44 ok) to linktree_expanded.csv

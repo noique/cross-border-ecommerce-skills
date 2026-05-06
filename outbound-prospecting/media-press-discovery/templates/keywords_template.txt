@@ -1,0 +1,29 @@
+# Topic keywords for relevance filtering. One per line.
+# Replace with keywords specific to YOUR category — these are illustrative only.
+# Used by find_articles.py to filter journalist's bylined articles by title.
+# Match is case-insensitive substring on article title.
+
+# === Example: wellness / women's health category ===
+wellness
+women health
+self care
+nutrition
+holistic
+
+# === Example: sustainability / eco category ===
+sustainable
+eco-friendly
+plastic-free
+zero waste
+
+# === Example: parenting / mom category ===
+parenting
+mom blog
+postpartum
+new mom
+
+# Add your own keywords below this line. Delete the categories you don't need.
+# Mention specific competitor brand names too if you want to catch articles
+# that compare them — e.g.:
+#   competitor_brand_a
+#   competitor_brand_b
