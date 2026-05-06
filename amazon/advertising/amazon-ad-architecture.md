@@ -98,7 +98,7 @@
 统一命名便于后期分析：
 ```
 [品牌]-[产品简称]-[广告类型]-[匹配类型]-[日期]
-例：Beautikini-PeriodSwim-SP-Exact-20260601
+例：YourBrand-YourCategory-SP-Exact-20260601
 ```
 
 ### 第五步：出价策略
