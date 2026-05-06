@@ -52,7 +52,7 @@ PARTITION=outlets_partition_aa
 # Run pipeline against partition
 python3 scripts/discover_journalists.py "$PARTITION" --out "journalists_${PARTITION##*_}.jsonl"
 python3 scripts/find_articles.py "journalists_${PARTITION##*_}.jsonl" \
-    --keywords templates/keywords_period_care.txt \
+    --keywords templates/keywords_template.txt \
     --out "articles_${PARTITION##*_}.jsonl"
 python3 scripts/guess_emails.py "journalists_${PARTITION##*_}.jsonl" --out "emails_${PARTITION##*_}.csv"
 python3 scripts/score_and_export.py \
