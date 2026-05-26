@@ -18,7 +18,7 @@ Two formats:
 - **Single-file skills** (37) — one `.md` file each, drop into your AI IDE's skill directory.
 - **Multi-file skill packages** (4, under `outbound-prospecting/` and `voc-tools/`) — `SKILL.md` + `references/` + `templates/` (incl. Python scripts and CSV trackers). Point your AI IDE at the package directory.
 
-Plus **4 standalone tools** under `tools/` (Python utilities used by skills, also runnable independently): `backlink-kol-extractor`, `trustpilot`, `linktree-expander`, `contact-extractor`.
+Plus **5 standalone tools** under `tools/` (Python utilities used by skills, also runnable independently): `backlink-kol-extractor`, `trustpilot`, `linktree-expander`, `contact-extractor`, `serp-content-teardown`.
 
 ### Skill Map (41 skills across 10 chains)
 
@@ -156,6 +156,7 @@ Standalone Python utilities under `tools/`. Each is a multi-file package with ow
 | [trustpilot](tools/trustpilot/) — **rebuilt v3.4** | Selenium-based Trustpilot review scraper with chained-proxy rotation, AI sentiment + topic analysis, multi-language. v3.4 rebuild: modern data-* attribute selectors (replaces 110-line sibling-XPath fallback chain), desktop-UA pin (Trustpilot serves snippet-only DOM to mobile UA), `--cutoff_date` arg, `--skip_ai` mode, redacted hardcoded proxy creds (env-var loading) | `trustpilot-voc-quick`, `trustpilot-voc-deep` |
 | [linktree-expander](tools/linktree-expander/SKILL.md) — **NEW v3.4** | Batch-enrich Linktree handles into per-creator profiles via `__NEXT_DATA__` JSON parsing. Extracts IG / TikTok / YouTube / Substack / Twitter / podcast handles + bio + outbound link categorization + handle-match-scored personal_site (with `NON_PERSONAL_HOSTS` blocklist for shorteners / aggregators / docs / scheduling) | KOL discovery pipelines downstream of `backlink-kol-extractor` |
 | [contact-extractor](tools/contact-extractor/SKILL.md) — **NEW v3.4** | Multi-source contact email extraction with confidence tiering. Sources: personal_site `/about` `/contact` `/press` paths (mailto/text) + YouTube Data API v3 description + Apple Podcasts RSS owner + email pattern guess (with `--verify` SMTP MX probe / Hunter.io). Outputs ranked `contact_email_1..3` + `confidence` (high / medium / low / none) | KOL outreach prep, post `linktree-expander` or `media-press-discovery` |
+| [serp-content-teardown](tools/serp-content-teardown/SKILL.md) — **NEW v3.6** | Deterministic (no-LLM) SERP/content reverse-engineering from local Semrush xlsx + competitor HTML. 8 scripts → ranked blog-URL pool, curl-fetched competitor articles (html5lib void-tag-safe), per-article structure metrics, **8 article archetypes** + opening/closing patterns, keyword distribution + core keywords, backlink/authority thresholds (Page AS / Ref.Domains / Backlinks) + weak-link winners, AI-Overview (GEO) saturation + schema readiness, on-page SEO. Output: per-topic content-strategy report (which archetype / word / H2 / schema / FAQ / keyword / authority / GEO posture). | `dsite-seo-playbook`, `brand-market-scan`; pairs with `backlink-kol-extractor` (links) + `structured-data-buildout` (implements the schema it measures) |
 
 See [tools/README.md](tools/README.md) for standalone usage.
 
@@ -215,7 +216,7 @@ Key requirements: long context (8K+ input), strong instruction following, Chines
 - **单文件技能（37 个）** — 一个 `.md` 文件，放入 AI IDE 技能目录即可使用
 - **多文件技能包（4 个，分布在 `outbound-prospecting/` 和 `voc-tools/`）** — `SKILL.md` + `references/` + `templates/`（含 Python 脚本和 CSV 跟踪表），将整个目录指向 AI IDE
 
-外加 **4 个独立工具** 在 `tools/`（Python 工具，被 skill 调用也可独立使用）：`backlink-kol-extractor` / `trustpilot` / `linktree-expander` / `contact-extractor`。
+外加 **5 个独立工具** 在 `tools/`（Python 工具，被 skill 调用也可独立使用）：`backlink-kol-extractor` / `trustpilot` / `linktree-expander` / `contact-extractor` / `serp-content-teardown`。
 
 ### 技能矩阵（41 个技能，10 条链路）
 
@@ -271,6 +272,14 @@ cp -r cross-border-ecommerce-skills/tools/backlink-kol-extractor ~/.claude/skill
 ---
 
 ## Changelog
+
+### v3.6 (2026-05-26)
+- **New `tools/serp-content-teardown/`** multi-file tool — deterministic (no-LLM) SERP/content reverse-engineering from local Semrush xlsx + competitor HTML. 8 scripts (`parse_serp` → `fetch_competitors` → `analyze_structure` → `classify_archetypes` → `keyword_analysis` → `backlink_analysis` → `geo_analysis` → `onpage_analysis`) + `run_all` orchestrator + shared `_config` (YAML topic-clusters / JSON brand-names).
+  - **Structure teardown**: parses Semrush `serp_urls` → ranked blog/info-article URL pool, fetches the top competitor articles (`curl` + browser UA, `html5lib` to survive Shopify void-tag body-nesting), computes per-article metrics (words, H1/H2/H3, lists, tables, JSON-LD `@type` set, author byline, dates, brand-mentions/1k, authority outlinks), classifies each into **8 article archetypes** (DEFINITION_QA / TUTORIAL_HOWTO / LISTICLE_TIPS / COMPARISON_VS / PILLAR_GUIDE / MYTH_DEBUNK / PRODUCT_MICROGUIDE / NEWS_EDITORIAL) + opening/closing patterns + cross-sample winning bands.
+  - **SEO/GEO/keyword/backlink layers**: keyword distribution + core keywords + difficulty-cliff (from `broad-match`); backlink/authority thresholds (Page AS / Ref.Domains / Backlinks) + "weak-link winners"; AI-Overview (GEO) saturation per topic + AI-cited domains + schema readiness of cited vs non-cited; on-page SEO (title/meta/H1/canonical/internal-links/SERP-features).
+  - **Output**: JSON artifacts + a per-topic content-strategy report (which archetype / word / H2 / schema / FAQ / opening-closing to use, which keywords to target, what authority is realistically needed, what GEO posture to take). Worked example under `examples/`: waterproof / stainless-steel jewelry niche (25 competitor articles).
+  - **Honest scope**: covers the ~20-30% code-side of what wins; content quality + domain age + backlinks are the other ~70-80%. Backlink data is page-level Authority Score, not domain DR. AI-Overview citation capture is sparse. Red line: `curl`-only fetch, no paid APIs, no live AI-citation probing. Pairs with `backlink-kol-extractor` (links) and `structured-data-buildout` (implements the schema this tool measures).
+- Tools count: 5 (was 4).
 
 ### v3.5 (2026-05-19)
 - **New `voc-tools/reddit-voc/`** multi-file skill — pre-purchase VOC mining from Reddit (complements post-purchase `trustpilot-voc-*`). Methodology:

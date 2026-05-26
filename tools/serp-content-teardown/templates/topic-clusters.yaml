@@ -1,0 +1,51 @@
+# ============================================================================
+# topic-clusters.yaml  —  EXAMPLE CONFIG (jewelry niche)
+# ----------------------------------------------------------------------------
+# REPLACE THIS ENTIRE FILE for your own niche. The clusters below are tuned for
+# a waterproof / stainless-steel / gold-plated jewelry brand and are only here
+# to show the format.
+#
+# FORMAT
+#   clusters:                 # top-level list, evaluated IN ORDER
+#     - name: CLUSTER_NAME    # short uppercase label used in all reports
+#       pattern: REGEX        # Python `re` regex, matched case-insensitively
+#                             # against the lowercased keyword / slug
+#
+# RULES
+#   * First match wins (precedence = list order). Put the most specific /
+#     highest-intent clusters first; broad catch-alls last.
+#   * Anything matching no pattern is bucketed as "OTHER".
+#   * Patterns are matched with re.search (substring, not full-match).
+#   * Keep names stable across runs — downstream JSON keys on them.
+#
+# Used by: parse_serp.py, keyword_analysis.py, backlink_analysis.py
+#          (geo_analysis.py reuses the cluster field already stored in keywords.json)
+# ============================================================================
+
+clusters:
+  - name: COMPARISON
+    pattern: \b(vs|versus|difference|compared|or )\b|gold filled vs|plated vs
+
+  - name: CARE_CLEAN
+    pattern: \b(clean|care|maintain|polish|store|storage|fix|repair|restore)\b
+
+  - name: HYPOALLERGENIC
+    pattern: \b(hypoallergen|nickel|allerg|sensitive skin|turn.*green|green skin|skin irritation)\b
+
+  - name: WATER_SHOWER
+    pattern: \b(waterproof|water.?resistant|shower|swim|swimming|sweat|pool|ocean|wet|water)\b
+
+  - name: TARNISH
+    pattern: \b(tarnish|rust|fade|discolor|corrode|won'?t tarnish|non.?tarnish|anti.?tarnish)\b
+
+  - name: STAINLESS
+    pattern: \b(stainless|316l|surgical steel|surgical.?grade)\b
+
+  - name: GOLD_PLATED
+    pattern: \b(gold.?plated|gold.?filled|vermeil|gold.?tone|plated|18k plated|pvd)\b
+
+  - name: MATERIAL_DEF
+    pattern: \b(what is|what are|meaning|made of|real gold|solid gold|sterling)\b
+
+  - name: STYLE_PRODUCT
+    pattern: \b(earrings|necklace|bracelet|ring|huggie|paperclip|chain|pendant|hoop)\b

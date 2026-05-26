@@ -2,7 +2,7 @@
 
 Standalone Python utilities used by skills in this repo. Each tool can also be used independently of any SKILL. Each tool is a multi-file package with its own `SKILL.md` + `scripts/` + `references/` + `templates/`.
 
-## Inventory (4 tools as of v3.4)
+## Inventory (5 tools as of v3.6)
 
 | Tool | Purpose | Skill triggers |
 |---|---|---|
@@ -10,6 +10,7 @@ Standalone Python utilities used by skills in this repo. Each tool can also be u
 | [trustpilot](#trustpilot) | Trustpilot review scraper + AI sentiment / topic analysis | `trustpilot-voc-quick`, `trustpilot-voc-deep` |
 | [linktree-expander](#linktree-expander) | Batch-enrich Linktree handles → per-creator social profile + outbound link categorization | KOL discovery downstream of `backlink-kol-extractor` |
 | [contact-extractor](#contact-extractor) | Multi-source contact email extraction with confidence tiering | KOL / press outreach prep, post `linktree-expander` or `media-press-discovery` |
+| [serp-content-teardown](#serp-content-teardown) | Reverse-engineer winning content shape + SEO/GEO/keyword/backlink strategy from Semrush serp_urls + broad-match xlsx + competitor HTML | `dsite-seo-playbook`, `brand-market-scan`; pairs with `backlink-kol-extractor` + `structured-data-buildout` |
 
 ---
 
@@ -162,6 +163,49 @@ export YOUTUBE_API_KEY=xxx    # for YT description email scrape
 **Pilot run (2026-05-06, on 45 Linktree-derived prospects from a single category)**: 5 high + 4 medium + 11 low + 25 none. The 25 "none" are IG-only / TikTok-only creators who don't have a discoverable personal_site — recommended next step is IG bio extraction via Apify (`apify/instagram-scraper` actor, ~$0.005/profile).
 
 See [contact-extractor/SKILL.md](contact-extractor/SKILL.md) for details.
+
+---
+
+## serp-content-teardown
+
+Deterministic (no-LLM) pipeline that reverse-engineers what content wins a Google / AI-search niche, from **local Semrush xlsx + fetched competitor HTML**. Answers, per target topic: which article archetype to write, how long, how many H2s, what schema + FAQ, what opening/closing pattern, which keywords to target, what backlink authority is realistically needed, and what GEO (AI-Overview) posture to take.
+
+**Standalone usage:**
+
+```bash
+cd tools/serp-content-teardown
+pip install -r scripts/requirements.txt
+
+# One-shot: all 8 steps in order
+python3 scripts/run_all.py \
+  --semrush-dir ~/Downloads/semrush/_project_<niche>/_keywords \
+  --out-dir ./teardown_out \
+  --topics templates/topic-clusters.yaml \
+  --brand-names templates/brand-names.json \
+  --top 30
+```
+
+**Input layout** — point `--semrush-dir` at a folder of Semrush exports (same shape as `backlink-kol-extractor`):
+```
+_keywords/
+  <kw>_serp_urls_us_*.xlsx        # SERP URLs (URL, Position, Type, Page AS, Ref.Domains, Backlinks, Search Traffic, SERP Features)
+  <kw>_broad-match_us_*.xlsx      # Keyword overview (Keyword, Volume, Keyword Difficulty, Intent, SERP Features)
+```
+
+**Config:** `templates/topic-clusters.yaml` (ordered cluster → regex, first match wins — replace per niche), `templates/brand-names.json` (domain → brand-name variants for brand-density; optional, auto-derives from domain if absent).
+
+**Outputs** (all under `--out-dir`): `url_pool.json`, `html/`, `fetch_manifest.json`, `results.json`, `prose_dump.txt`, `classified.json`, `keywords.json`, `backlinks.json`, `onpage.json`. Worked example reports in `examples/` (jewelry niche).
+
+**8 article archetypes:** DEFINITION_QA, TUTORIAL_HOWTO, LISTICLE_TIPS, COMPARISON_VS, PILLAR_GUIDE, MYTH_DEBUNK, PRODUCT_MICROGUIDE, NEWS_EDITORIAL.
+
+**Red line / honest scope:** `curl`-only fetch (browser UA) — no paid APIs (Ahrefs / Apify / Tavily / Jina / OpenRouter), no live AI-citation probing (Perplexity / Gemini / ChatGPT). Cloudflare-protected pages are flagged `blocked` and skipped. Backlink data is page-level Authority Score, not domain DR. Covers the ~20-30% structure/SEO/GEO "code-side" of what wins; content + domain age + backlinks are the other ~70-80%.
+
+**Used by / pairs with:**
+- `brand-strategy/dsite-seo-playbook.md` → content-plan step (what shape to write per target keyword)
+- `brand-strategy/brand-market-scan.md` → competitor content teardown
+- `tools/backlink-kol-extractor` (link side) + `structured-data-buildout` (implements the schema this tool only measures)
+
+See [serp-content-teardown/SKILL.md](serp-content-teardown/SKILL.md) and [references/methodology.md](serp-content-teardown/references/methodology.md) for details.
 
 ---
 
