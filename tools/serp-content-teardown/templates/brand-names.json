@@ -1,0 +1,14 @@
+{
+  "__comment__": "EXAMPLE CONFIG (jewelry niche). REPLACE with the competitor domains in YOUR cohort. Maps a registrable domain -> list of brand-name display variants used for brand-density scoring in analyze_structure.py. Use SPECIFIC forms only (spaced + concatenated), never generic words like 'jewelry' or 'gold' that would inflate the count. If a fetched domain is missing here, the brand token is auto-derived from the domain (e.g. 'oceanwavejewelry.com' -> 'oceanwave').",
+  "oceanwavejewelry.com": ["ocean wave", "oceanwave"],
+  "helloadorn.com": ["adorn"],
+  "puravidabracelets.com": ["pura vida", "puravida"],
+  "gldn.com": ["gldn"],
+  "saltycali.com": ["salty cali", "saltycali"],
+  "mejuri.com": ["mejuri"],
+  "clarajane.co": ["clara jane", "clarajane"],
+  "artizanjoyeria.com": ["artizan"],
+  "harlembling.com": ["harlembling", "harlem bling"],
+  "statementcollective.com": ["statement collective", "statementcollective"],
+  "jewelersmutual.com": ["jewelers mutual"]
+}
