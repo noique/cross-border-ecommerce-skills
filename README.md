@@ -100,7 +100,7 @@ Plus **4 standalone tools** under `tools/` (Python utilities used by skills, als
 | [dsite-seo-diagnostic](brand-strategy/dsite-seo-diagnostic.md) | **NEW** — Entry-orchestrator skill for live-site SEO traffic-drop diagnostics. 7-dimension diagnosis (traffic curve / keyword loss / single-point risk / i18n pollution / backlink quality / content ROI / KPI audit) → algorithm-event alignment → restart roadmap. Chains `xlsx` / `dsite-seo-playbook` / `trustpilot-voc-deep` / `competitors-analysis` / `backlink-kol-extractor` / `report-pdf-export`. Output: deliverable PDF (A4 landscape, hides internal SKILL refs). |
 | [dsite-seo-playbook](brand-strategy/dsite-seo-playbook.md) | Full SEO playbook: technical audit, keyword strategy, content plan, Core Web Vitals |
 | [dsite-sem-ads](brand-strategy/dsite-sem-ads.md) | SEM & paid ads: 10-platform comparison, AIPL funnel, budget allocation |
-| [dsite-conversion-ux](brand-strategy/dsite-conversion-ux.md) | Conversion rate optimization: 6-module CRO audit, UX best practices |
+| [dsite-conversion-ux](brand-strategy/dsite-conversion-ux.md) — **UPGRADED v3.7** | Live-site **CRO audit / 转化率检测**, rebuilt for **multi-agent concurrency on Claude Code**. **Step 0** fans out 5 parallel recon subagents (PDP / discovery / trust / checkout / competitor) via the `Workflow` tool with `StructuredOutput` schemas → reconPool → parallel **6-module framework** (trust / discovery / product-info / checkout / AOV-LTV / urgency) — retail-analogy CRO × Shopify benchmarks × ICE A/B × AICPL LPO × 35-day welcome flow. v3.7 adds a **technical-health & tracking-integrity check** (console errors / pixel firing / CWV / 404 / mobile-sticky — broken tracking silently invalidates all measurement → highest-priority finding), a mandatory **copy-rewrite table** (current → A/B) + **objection-handling table**, a **quick-win vs high-impact dual-bucket** with wall-clock effort, and A/B **stop-rule discipline**. Honesty preserved — data-credibility statement kept, lift figures stay ⚠️ hypotheses (no fabricated funnel numbers). Uses **browser-class MCP** (Claude in Chrome / Preview) for what static fetch can't see; chains `/dsite-seo-playbook` / `/dsite-sem-ads` / `/report-pdf-export`. |
 | [serp-content-teardown](brand-strategy/serp-content-teardown/SKILL.md) — **NEW v3.6** | Multi-file skill: deterministic (no-LLM) SERP/content reverse-engineering from local Semrush xlsx + competitor HTML. Parses serp_urls + broad-match, curl-fetches top competitor articles (html5lib void-tag-safe), computes per-article structure → **8 article archetypes** + opening/closing patterns, then keyword distribution + core keywords, backlink/authority thresholds (Page AS / Ref.Domains / Backlinks) + weak-link winners, AI-Overview (GEO) saturation + schema readiness, on-page SEO. Output: per-topic content blueprint (which archetype / word / H2 / schema / FAQ / keyword / authority / GEO posture). Pairs with `backlink-kol-extractor` (links) + `structured-data-buildout` (schema). |
 
 ### Social Media & Content (3 skills)
@@ -171,6 +171,7 @@ See [tools/README.md](tools/README.md) for standalone usage.
 - **VOC Matrix** — Mention frequency × satisfaction matrix to identify unmet needs
 - **GTM Flywheel** — Market → Product → Marketing → Operations four-wheel evaluation
 - **AI Search Ready** — Optimized for Amazon Rufus, COSMO knowledge graph, and GEO
+- **Multi-Agent Concurrency (Claude Code-native)** — skills like `dsite-conversion-ux` orchestrate parallel recon + analysis subagents via the `Workflow` tool with `StructuredOutput` schemas, run as background tasks, and use browser-class MCP (Claude in Chrome / Preview) for live-site inspection — fan out the work, keep the conclusions
 - **Multi-Platform** — Works on Claude Code, Google Antigravity, OpenClaw, and any AI IDE
 
 ### Installation
@@ -225,7 +226,7 @@ Key requirements: long context (8K+ input), strong instruction following, Chines
 |------|------|------|
 | **品牌战略链** | 10 | 市场扫描 → 赛道假设 → 深度验证 → 品牌战略 → IMC框架 → 年度规划 → 预算管控 → 知识库 → A/B对比 → 图表可视化 |
 | **Amazon 运营链** | 14 | 选品 → 筛选 → 调研 → IP排查 → 供应商 → 关键词 → 文案 → 主图 → A+ → 合规 → 复查 → 广告架构 → 周报 → 诊断 |
-| **独立站流量** | 5 | SEO 全链路诊断（NEW v3.3）→ SEO全链路规划 → SEM广告 → 转化率优化 → **SERP 内容拆解（NEW v3.6，竞品文章结构 + 关键词 + 反链 + GEO 一起拆）** |
+| **独立站流量** | 5 | SEO 全链路诊断（NEW v3.3）→ SEO全链路规划 → SEM广告 → **转化率优化 CRO（UPGRADED v3.7，多 Agent 并发实站检测：第零步 5 子代理并发侦察 + 6 模块 + 技术追踪健康层 + 文案改写/异议表 + 速赢双桶，Claude Code Workflow 编排）** → SERP 内容拆解（NEW v3.6，竞品文章结构 + 关键词 + 反链 + GEO 一起拆） |
 | **社媒与内容** | 3 | TikTok增长 → YouTube运营 → 内容日历 |
 | **VOC 评论分析** | 3 | **Reddit VOC（NEW v3.5，购买前用户洞察 / 4 维度找社区 / 6 类帖子分类 / 黑话词典 / 矩阵定位）** → Trustpilot 快速扫描 → Trustpilot 深度分析（爬虫+情感+LDA+AI 归纳） |
 | **红人与用户** | 2 | 红人营销 → 用户生命周期 |
@@ -242,6 +243,7 @@ Key requirements: long context (8K+ input), strong instruction following, Chines
 - **VOC 用户洞察** — 提及量×满意度二维分析
 - **GTM 飞轮** — 市场→产品→营销→运营四维评估
 - **AI 搜索适配** — Amazon Rufus / COSMO / GEO 优化
+- **多 Agent 并发（Claude Code 原生）** — `dsite-conversion-ux` 等技能用 `Workflow` 工具编排并发侦察+分析子代理（`StructuredOutput` schema），后台任务运行 + 浏览器类 MCP（Claude in Chrome / Preview）做实站检测——把活儿 fan out，只留结论
 - **多平台兼容** — Claude Code / Antigravity / OpenClaw / 任何 AI IDE
 
 ### 安装方式
@@ -274,6 +276,16 @@ cp -r cross-border-ecommerce-skills/tools/backlink-kol-extractor ~/.claude/skill
 ---
 
 ## Changelog
+
+### v3.7 (2026-06-29)
+- **`brand-strategy/dsite-conversion-ux` upgraded** — the CRO skill is rebuilt as a **multi-agent, Claude Code-native live-site audit** (was a single-pass content audit):
+  - **Multi-agent concurrency execution architecture** — a new section documents running the skill on Claude Code's `Workflow` tool / subagents: **Step 0** fans out 5 parallel recon agents (PDP / discovery / trust / checkout / competitor) with `StructuredOutput` schemas → `reconPool` → parallel **6-module analysis**; background tasks; browser-class MCP (Claude in Chrome / Preview) for what static `WebFetch` can't see (console / pixel firing / sticky / mobile). Concurrency speeds it up and removes blind spots without changing data truth.
+  - **New Step 0 — live-site reconnaissance** — turns the skill from "wait for user-supplied data" into "actually go look first," pinning page-level facts with verbatim evidence before diagnosis.
+  - **New §1.6 technical-health & tracking-integrity check** — console errors / GA4-Pixel firing / Core Web Vitals / 404 / mobile-sticky. Broken tracking silently invalidates all downstream A/B + funnel data, so it ranks as a foundation-layer, highest-priority finding (a layer most content-only CRO audits miss).
+  - **New mandatory deliverables** — a **copy-rewrite table** (current → A/B), an **objection-handling table** (doubt → current handling → gap → fix), and a **quick-win vs high-impact dual-bucket** triage with wall-clock effort estimates.
+  - **A/B stop-rule discipline** — every test now carries sample-size + ≥7-14 days + 95% significance + a stop rule.
+  - **Honesty preserved** — keeps the data-credibility statement; lift figures stay ⚠️ hypotheses (no fabricated funnel numbers); adds explicit WebFetch tool-boundary disclosure.
+- Skill count unchanged at **42** (upgrade to an existing skill, not a new one).
 
 ### v3.6 (2026-05-26)
 - **New `brand-strategy/serp-content-teardown/`** multi-file skill (DTC Site & Traffic chain) — deterministic (no-LLM) SERP/content reverse-engineering from local Semrush xlsx + competitor HTML. 8 scripts (`parse_serp` → `fetch_competitors` → `analyze_structure` → `classify_archetypes` → `keyword_analysis` → `backlink_analysis` → `geo_analysis` → `onpage_analysis`) + `run_all` orchestrator + shared `_config` (YAML topic-clusters / JSON brand-names).
