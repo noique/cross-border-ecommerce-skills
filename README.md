@@ -1,6 +1,6 @@
 # Cross-Border E-Commerce AI Skills
 
-**42 AI-powered skill templates for cross-border e-commerce — from brand strategy to Amazon operations to DTC growth to overseas-buyer prospecting + earned-media press discovery + Reddit pre-purchase VOC.**
+**50 AI-powered skill templates for cross-border e-commerce — from brand strategy to Amazon operations to DTC growth to finance & capital ops to overseas-buyer prospecting + earned-media press discovery + Reddit pre-purchase VOC.**
 
 Compatible with Claude Code (`~/.claude/commands/`), Google Antigravity (`SKILL.md`), and any AI IDE with skill/prompt support.
 
@@ -12,15 +12,15 @@ Compatible with Claude Code (`~/.claude/commands/`), Google Antigravity (`SKILL.
 
 ### What is this?
 
-A collection of **42 AI agent skills** (structured prompt templates) that automate the entire cross-border e-commerce workflow — brand strategy, market research, product selection, listing optimization, advertising, DTC site operations, social media, influencer marketing, **overseas-buyer outbound prospecting**, **earned-media press discovery**, and **Reddit pre-purchase VOC**.
+A collection of **50 AI agent skills** (structured prompt templates) that automate the entire cross-border e-commerce workflow — brand strategy, market research, product selection, listing optimization, advertising, DTC site operations, **finance & capital management**, social media, influencer marketing, **overseas-buyer outbound prospecting**, **earned-media press discovery**, and **Reddit pre-purchase VOC**.
 
 Two formats:
-- **Single-file skills** (37) — one `.md` file each, drop into your AI IDE's skill directory.
+- **Single-file skills** (45) — one `.md` file each, drop into your AI IDE's skill directory.
 - **Multi-file skill packages** (5, under `brand-strategy/`, `outbound-prospecting/`, and `voc-tools/`) — `SKILL.md` + `references/` + `templates/` (incl. Python scripts and CSV trackers). Point your AI IDE at the package directory.
 
 Plus **4 standalone tools** under `tools/` (Python utilities used by skills, also runnable independently): `backlink-kol-extractor`, `trustpilot`, `linktree-expander`, `contact-extractor`.
 
-### Skill Map (42 skills across 10 chains)
+### Skill Map (50 skills across 11 chains)
 
 ```
                         ┌─────────────────────────────────────┐
@@ -53,6 +53,12 @@ Plus **4 standalone tools** under `tools/` (Python utilities used by skills, als
   │ Weekly Ad Review │                          └──────────────────┘
   │ Ad Diagnosis     │
   └──────────────────┘
+
+  ┌──────────────────────────────────────────────────────────────┐
+  │ Finance & Capital (8) — NEW                                    │
+  │ Unit-Economics · FX/Payout · Tax-Nexus · Cashflow             │
+  │ Pricing · Reconciliation · Entity-Structure · Capital-Stack   │
+  └──────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -102,6 +108,21 @@ Plus **4 standalone tools** under `tools/` (Python utilities used by skills, als
 | [dsite-sem-ads](brand-strategy/dsite-sem-ads.md) | SEM & paid ads: 10-platform comparison, AIPL funnel, budget allocation |
 | [dsite-conversion-ux](brand-strategy/dsite-conversion-ux.md) — **UPGRADED v3.7** | Live-site **CRO audit / 转化率检测**, rebuilt for **multi-agent concurrency on Claude Code**. **Step 0** fans out 5 parallel recon subagents (PDP / discovery / trust / checkout / competitor) via the `Workflow` tool with `StructuredOutput` schemas → reconPool → parallel **6-module framework** (trust / discovery / product-info / checkout / AOV-LTV / urgency) — retail-analogy CRO × Shopify benchmarks × ICE A/B × AICPL LPO × 35-day welcome flow. v3.7 adds a **technical-health & tracking-integrity check** (console errors / pixel firing / CWV / 404 / mobile-sticky — broken tracking silently invalidates all measurement → highest-priority finding), a mandatory **copy-rewrite table** (current → A/B) + **objection-handling table**, a **quick-win vs high-impact dual-bucket** with wall-clock effort, and A/B **stop-rule discipline**. Honesty preserved — data-credibility statement kept, lift figures stay ⚠️ hypotheses (no fabricated funnel numbers). Uses **browser-class MCP** (Claude in Chrome / Preview) for what static fetch can't see; chains `/dsite-seo-playbook` / `/dsite-sem-ads` / `/report-pdf-export`. |
 | [serp-content-teardown](brand-strategy/serp-content-teardown/SKILL.md) — **NEW v3.6** | Multi-file skill: deterministic (no-LLM) SERP/content reverse-engineering from local Semrush xlsx + competitor HTML. Parses serp_urls + broad-match, curl-fetches top competitor articles (html5lib void-tag-safe), computes per-article structure → **8 article archetypes** + opening/closing patterns, then keyword distribution + core keywords, backlink/authority thresholds (Page AS / Ref.Domains / Backlinks) + weak-link winners, AI-Overview (GEO) saturation + schema readiness, on-page SEO. Output: per-topic content blueprint (which archetype / word / H2 / schema / FAQ / keyword / authority / GEO posture). Pairs with `backlink-kol-extractor` (links) + `structured-data-buildout` (schema). |
+
+### Finance & Capital (8 skills) — NEW v3.8
+
+Operator-facing finance/CFO chain for China→US/EU DTC + Amazon sellers — the actuals / profitability / tax / cash / financing side that the planning-oriented `brand-budget-ops` doesn't cover. Every skill is grounded in real tools + 2026 regulations, carries an explicit **YMYL disclaimer** (planning aid, NOT professional tax/legal/accounting advice — verify with a licensed CPA), and tags every rate/threshold/date as point-in-time. Built and cross-validated from a dual-source research pass (multi-agent web research + an independent deep-research report).
+
+| Skill | What it does |
+|-------|-------------|
+| [finance-landed-cost-unit-economics](finance/finance-landed-cost-unit-economics.md) | **Anchor** — fully-loaded landed cost → **CM1/CM2/CM3** waterfall → break-even ROAS/ACoS → per-SKU keep/kill/reprice + tariff/return sensitivity. Folds in Amazon 2026 fee changes (inbound placement ↑, Low-Inventory-Level Fee, fuel/inflation surcharge). |
+| [finance-fx-payout-optimizer](finance/finance-fx-payout-optimizer.md) | Collection · 结汇 · FX hedging. The "two numbers" (gross revenue vs RMB cash-landed) + FX-drag %, provider benchmark (PingPong/WorldFirst/Airwallex/Payoneer/Wise vs ACCS), natural-hedge plan, and a SAFE / 单证一致 compliance checklist (incl. the 2026-01-01 ≥¥5,000 AML monitoring). |
+| [finance-tax-nexus-vat-diagnostic](finance/finance-tax-nexus-vat-diagnostic.md) | Per-jurisdiction registration-obligation map + filing calendar + EPR streams. Covers EU OSS/IOSS, the **€3 fixed customs duty** (Reg (EU) 2026/382 — kept distinct from the not-yet-law ~€2 handling fee), UK £135, US economic nexus, and China 9610/9710/9810 + 出口退税. |
+| [finance-cashflow-runway-forecaster](finance/finance-cashflow-runway-forecaster.md) | CCC (DIO/DSO/DPO) + a **13-week** rolling direct-method forecast that models the Amazon DD+7/DDBR reserve correctly + a reorder-point capital trade-off → flags the week cash goes negative. |
+| [finance-pricing-margin-guard](finance/finance-pricing-margin-guard.md) | Dynamic price floor/ceiling, break-even ROAS = 1/CM%, FX-sensitivity-per-1%, marketplace price-parity + anti-gouging guardrails — fixes the static-floor trap when 2026 fees rise. |
+| [finance-reconciliation-bookkeeping](finance/finance-reconciliation-bookkeeping.md) | Multi-channel gross-to-net reconciliation (Amazon settlement / Shopify-Stripe-PayPal payouts → bank) via the clearing-account-to-zero method, an ecommerce chart of accounts, COGS/inventory valuation. Tools: A2X / Link My Books / Synder / Finlens → QuickBooks / Xero. |
+| [finance-entity-structure-advisor](finance/finance-entity-structure-advisor.md) | Entity tier (single HK Ltd → ODI → HK/SG holding → US LLC) with a "you don't need this yet" guardrail, the LRD transfer-pricing model, HK TP-doc exemption, and the 4-gate China profit repatriation. **YMYL-heavy.** |
+| [finance-capital-stack-advisor](finance/finance-capital-stack-advisor.md) | Normalizes any RBF/MCA flat-fee quote to a true **effective APR** at real repayment speed (Monte-Carlo), a provider-fit matrix (Wayflyer/Clearco/8fig/Amazon Lending), UCC-1-lien / exclusivity contract traps, and chargeback/VAMP defense. |
 
 ### Social Media & Content (3 skills)
 
@@ -164,7 +185,8 @@ See [tools/README.md](tools/README.md) for standalone usage.
 
 ### Key Features
 
-- **42 Skills, 10 Chains** — Complete coverage from brand strategy to daily operations to overseas-buyer outbound to earned-media press discovery to pre-purchase Reddit VOC
+- **50 Skills, 11 Chains** — Complete coverage from brand strategy to daily operations to finance & capital to overseas-buyer outbound to earned-media press discovery to pre-purchase Reddit VOC
+- **Finance & YMYL Discipline** — the 8-skill finance chain carries explicit "planning aid, not professional tax/legal/accounting advice — verify with a CPA" disclaimers, point-in-time-stamped 2026 regulations, and ⚠️-flagged estimates (no fabricated numbers)
 - **Data Verification Layer** — Every skill includes mandatory verification; estimates are explicitly flagged with ⚠️
 - **Chart Visualization** — 21 skills auto-generate charts (radar, bar, waterfall, scatter, funnel, etc.) via AntV API
 - **Semrush Integration** — Brand strategy skills auto-scan local Semrush xlsx/PDF data as high-confidence source
@@ -183,6 +205,7 @@ git clone https://github.com/noique/cross-border-ecommerce-skills.git
 # Single-file skills → ~/.claude/commands/
 cp cross-border-ecommerce-skills/brand-strategy/*.md ~/.claude/commands/
 cp cross-border-ecommerce-skills/amazon/*.md ~/.claude/commands/
+cp cross-border-ecommerce-skills/finance/*.md ~/.claude/commands/
 
 # Multi-file skill packages → ~/.claude/skills/ (one directory per skill)
 cp -r cross-border-ecommerce-skills/outbound-prospecting/google-whatsapp-prospecting ~/.claude/skills/
@@ -212,21 +235,22 @@ Key requirements: long context (8K+ input), strong instruction following, Chines
 
 ### 这是什么？
 
-一套 **42 个跨境电商 AI 技能模板**，覆盖品牌战略→选品→调研→文案→广告→独立站→社媒→红人→线下渠道→海外开发→媒体公关→**购买前 Reddit VOC** 全流程自动化。
+一套 **50 个跨境电商 AI 技能模板**，覆盖品牌战略→选品→调研→文案→广告→独立站→**财务资金**→社媒→红人→线下渠道→海外开发→媒体公关→**购买前 Reddit VOC** 全流程自动化。
 
 两种格式：
-- **单文件技能（37 个）** — 一个 `.md` 文件，放入 AI IDE 技能目录即可使用
+- **单文件技能（45 个）** — 一个 `.md` 文件，放入 AI IDE 技能目录即可使用
 - **多文件技能包（5 个，分布在 `brand-strategy/`、`outbound-prospecting/` 和 `voc-tools/`）** — `SKILL.md` + `references/` + `templates/`（含 Python 脚本和 CSV 跟踪表），将整个目录指向 AI IDE
 
 外加 **4 个独立工具** 在 `tools/`（Python 工具，被 skill 调用也可独立使用）：`backlink-kol-extractor` / `trustpilot` / `linktree-expander` / `contact-extractor`。
 
-### 技能矩阵（42 个技能，10 条链路）
+### 技能矩阵（50 个技能，11 条链路）
 
 | 链路 | 数量 | 技能 |
 |------|------|------|
 | **品牌战略链** | 10 | 市场扫描 → 赛道假设 → 深度验证 → 品牌战略 → IMC框架 → 年度规划 → 预算管控 → 知识库 → A/B对比 → 图表可视化 |
 | **Amazon 运营链** | 14 | 选品 → 筛选 → 调研 → IP排查 → 供应商 → 关键词 → 文案 → 主图 → A+ → 合规 → 复查 → 广告架构 → 周报 → 诊断 |
 | **独立站流量** | 5 | SEO 全链路诊断（NEW v3.3）→ SEO全链路规划 → SEM广告 → **转化率优化 CRO（UPGRADED v3.7，多 Agent 并发实站检测：第零步 5 子代理并发侦察 + 6 模块 + 技术追踪健康层 + 文案改写/异议表 + 速赢双桶，Claude Code Workflow 编排）** → SERP 内容拆解（NEW v3.6，竞品文章结构 + 关键词 + 反链 + GEO 一起拆） |
+| **财务与资金（NEW v3.8）** | 8 | 落地成本与单位经济(CM1/CM2/CM3) → 收款·结汇·FX 对冲 → 税务合规(Nexus/VAT/IOSS/EPR，含 EU €3 关税与 ~€2 处理费之分) → 13 周现金流预测 → 定价·毛利护栏 → 多渠道对账记账 → 跨境架构与利润回流 → 融资真实成本与风控 |
 | **社媒与内容** | 3 | TikTok增长 → YouTube运营 → 内容日历 |
 | **VOC 评论分析** | 3 | **Reddit VOC（NEW v3.5，购买前用户洞察 / 4 维度找社区 / 6 类帖子分类 / 黑话词典 / 矩阵定位）** → Trustpilot 快速扫描 → Trustpilot 深度分析（爬虫+情感+LDA+AI 归纳） |
 | **红人与用户** | 2 | 红人营销 → 用户生命周期 |
@@ -236,7 +260,8 @@ Key requirements: long context (8K+ input), strong instruction following, Chines
 
 ### 核心特色
 
-- **42 技能 × 10 链路 + 4 独立工具** — 从战略到执行到海外开发到媒体公关到购买前 Reddit VOC 全覆盖
+- **50 技能 × 11 链路 + 4 独立工具** — 从战略到执行到财务资金到海外开发到媒体公关到购买前 Reddit VOC 全覆盖
+- **财务链 YMYL 纪律** — 8 个财务技能均带"规划辅助、非专业税务/法律/会计意见、需找 CPA 核实"免责，2026 法规打时间戳，估算标 ⚠️（不编造数字）
 - **数据验证层** — 每个技能内置强制验证，推测数据标 ⚠️
 - **图表可视化** — 21 个技能自动生成图表（雷达/柱状/瀑布/散点/漏斗等），调用 AntV API
 - **Semrush 集成** — 品牌战略技能自动扫描本地 Semrush 数据
@@ -255,6 +280,7 @@ git clone https://github.com/noique/cross-border-ecommerce-skills.git
 # 单文件技能 → ~/.claude/commands/
 cp cross-border-ecommerce-skills/brand-strategy/*.md ~/.claude/commands/
 cp cross-border-ecommerce-skills/amazon/*.md ~/.claude/commands/
+cp cross-border-ecommerce-skills/finance/*.md ~/.claude/commands/
 
 # 多文件技能包 → ~/.claude/skills/（每个技能一个目录）
 cp -r cross-border-ecommerce-skills/outbound-prospecting/google-whatsapp-prospecting ~/.claude/skills/
@@ -276,6 +302,13 @@ cp -r cross-border-ecommerce-skills/tools/backlink-kol-extractor ~/.claude/skill
 ---
 
 ## Changelog
+
+### v3.8 (2026-06-29)
+- **New `finance/` chain — 8 skills (Finance & Capital)** for China→US/EU DTC + Amazon sellers: `finance-landed-cost-unit-economics` (CM1/CM2/CM3 + break-even ROAS), `finance-fx-payout-optimizer` (收款/结汇/FX hedging + SAFE checklist), `finance-tax-nexus-vat-diagnostic` (registration-obligation map + EU €3 duty / IOSS / US nexus / EPR), `finance-cashflow-runway-forecaster` (13-week rolling forecast), `finance-pricing-margin-guard`, `finance-reconciliation-bookkeeping` (clearing-account-to-zero), `finance-entity-structure-advisor` (HK/SG/US LLC + repatriation, YMYL), `finance-capital-stack-advisor` (RBF/MCA true-APR + contract traps).
+  - **Dual-source, cross-validated** — built from a multi-agent web-research pass + an independent deep-research report, then merged. Example correction surfaced by the merge: the EU low-value-parcel change is a **fixed €3 customs duty** (Council Reg (EU) 2026/382, applies 2026-07-01, interim to 2028) — DISTINCT from the not-yet-law ~€2 per-consignment handling fee (UCC reform, only provisionally agreed 2026-03-26).
+  - **YMYL-first** — every finance skill carries an explicit "operator planning aid, NOT professional tax/legal/accounting/financial advice — verify with a licensed CPA before filing/binding decisions" disclaimer; all rates/thresholds/dates tagged point-in-time; estimates flagged ⚠️ hypotheses; no fabricated seller numbers.
+  - **Complements `brand-budget-ops`** (forward budgeting) with the actuals / profitability / tax / cash / financing side; cross-links into Amazon ops + DTC chains.
+- Total: **50 skills** across **11 chains** (was 42 / 10). Single-file skills: 45 (was 37).
 
 ### v3.7 (2026-06-29)
 - **`brand-strategy/dsite-conversion-ux` upgraded** — the CRO skill is rebuilt as a **multi-agent, Claude Code-native live-site audit** (was a single-pass content audit):
