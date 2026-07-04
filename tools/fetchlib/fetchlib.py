@@ -157,19 +157,64 @@ def robots_allows(url, user_agent=DEFAULT_UA):
     return True if rp is None else rp.can_fetch(user_agent, url)
 
 
+# ---- adaptive backend selection ----------------------------------------------
+class ThompsonSelector:
+    """Per-(domain, tier) Beta-Bernoulli bandit: learns which tier tends to SUCCEED for each
+    domain and tries the empirically-best one FIRST — so a domain where curl_cffi always blocks
+    but Jina works stops wasting the curl_cffi attempt. Optional JSON persistence carries the
+    learning across runs. (Real benchmarks show the "best backend" is site/IP-dependent, not
+    fixed — so learn it instead of hardcoding the waterfall order.)"""
+
+    def __init__(self, path=None):
+        self.path = path
+        self._ab = {}                        # "host|tier" -> [alpha, beta]
+        if path:
+            try:
+                with open(path) as f:
+                    self._ab = json.load(f)
+            except Exception:
+                self._ab = {}
+
+    @staticmethod
+    def _key(host, tier):
+        return host + "|" + tier
+
+    def order(self, host, tiers):
+        """Sample each tier's success-prob from its Beta posterior; try best first."""
+        def score(t):
+            a, b = self._ab.get(self._key(host, t), [1.0, 1.0])
+            return random.betavariate(a, b)
+        return sorted(tiers, key=score, reverse=True)
+
+    def update(self, host, tier, success):
+        ab = self._ab.setdefault(self._key(host, tier), [1.0, 1.0])
+        ab[0 if success else 1] += 1.0
+
+    def save(self):
+        if not self.path:
+            return
+        try:
+            with open(self.path, "w") as f:
+                json.dump(self._ab, f)
+        except Exception:
+            pass
+
+
 # ---- orchestrator -------------------------------------------------------------
 class Fetcher:
     """Per-run fetch orchestrator: one AIMD + CircuitBreaker + Pacer per domain, escalating
     tiers only on a real block. Returns {url, tier, status, text, headers} (tier=None if all fail)."""
 
     def __init__(self, tiers=("curl_cffi", "jina"), respect_robots=True, jina_key=None,
-                 managed=None, log_path=None, user_agent=DEFAULT_UA, pace=True):
+                 managed=None, log_path=None, user_agent=DEFAULT_UA, pace=True,
+                 learn=False, selector_path=None):
         self.tiers = list(tiers)
         self.respect_robots = respect_robots
         self.jina_key = jina_key
         self.user_agent = user_agent
         self.log_path = log_path
         self.pace = pace
+        self.selector = ThompsonSelector(selector_path) if learn else None
         self._dom = {}
         if managed:                        # opt-in paid L4
             register_backend("managed", managed)
@@ -198,10 +243,10 @@ class Fetcher:
         if self.respect_robots and not robots_allows(url, self.user_agent):
             self._log({"url": url, "tier": None, "status": None, "blocked": True, "reason": "robots_disallow"})
             raise PermissionError("robots.txt disallows: " + url)
-        for tier in self.tiers:
+        wired = [t for t in self.tiers if (TIER_FUNCS.get(t) or _EXTRA.get(t))]
+        order = self.selector.order(host, wired) if self.selector else wired
+        for tier in order:
             fn = TIER_FUNCS.get(tier) or _EXTRA.get(tier)
-            if fn is None:                 # tier not wired (e.g. nodriver before batch 2)
-                continue
             for _ in range(max_retries_per_tier):
                 now = time.monotonic()
                 if not st["cb"].allow(now):
@@ -219,6 +264,8 @@ class Fetcher:
                     st["pacer"].update(headers)
                 self._log({"url": url, "tier": tier, "status": status, "blocked": blocked,
                            "bytes": len(body or ""), "ms": int((time.monotonic() - t0) * 1000)})
+                if self.selector:
+                    self.selector.update(host, tier, not blocked)
                 if blocked:
                     st["aimd"].on_block()
                     st["cb"].on_block(time.monotonic())
@@ -256,4 +303,14 @@ if __name__ == "__main__":
     r = f.fetch("https://example.com/x")
     print("waterfall escalation → served by tier={} status={}".format(r["tier"], r["status"]))
     assert r["tier"] == "mock_ok" and r["status"] == 200, "waterfall escalation failed"
+
+    # ThompsonSelector learns which tier succeeds for a domain
+    sel_f = Fetcher(tiers=("mock_block", "mock_ok"), respect_robots=False, pace=False, learn=True)
+    for _ in range(10):
+        sel_f.fetch("https://learn.example.com/x")
+    ok = sel_f.selector._ab.get("learn.example.com|mock_ok", [1.0, 1.0])
+    bl = sel_f.selector._ab.get("learn.example.com|mock_block", [1.0, 1.0])
+    mean = lambda ab: ab[0] / (ab[0] + ab[1])
+    print("ThompsonSelector: success-mean mock_ok={:.2f} vs mock_block={:.2f}".format(mean(ok), mean(bl)))
+    assert mean(ok) > mean(bl), "selector did not learn to prefer the OK tier"
     print("OK: all self-tests passed")

@@ -41,19 +41,42 @@ f = Fetcher(tiers=("curl_cffi", "jina", "nodriver"),
             managed=my_brightdata_fetch)                    # 追加付费 L4，opt-in
 ```
 
-自测(无网络,验证 AIMD/熔断/block 检测/升级逻辑):`PYTHONPATH=../api-pacer python3 fetchlib.py`。
+**自适应选后端(Thompson 采样,批二)**——按域名自学"哪个 tier 最灵",可跨运行持久化:
+
+```python
+f = Fetcher(tiers=("curl_cffi", "jina", "nodriver"), learn=True,
+            selector_path="fetch_selector.json")   # 每(域,tier) Beta-Bernoulli，学到就先试最灵的
+# ... 一批 fetch 之后 ...
+f.selector.save()                                   # 收尾持久化，下次接着学
+```
+> 为什么要它:实测(见下)显示"最优后端是**按站 + 按 IP** 变的",没有固定最优顺序——所以让它学,而不是硬编。
+
+自测(无网络,验证 AIMD/熔断/block 检测/升级/选后端学习):`PYTHONPATH=../api-pacer python3 fetchlib.py`。
 
 ## 被哪些 skill 使用（adoption）
 
 | Skill | 怎么接 |
 |---|---|
-| `serp-content-teardown` | `fetch_competitors.py` 把裸 `curl` 换成 `Fetcher(tiers=("curl_cffi",))`,产物 manifest/flags 不变 |
-| `media-press-discovery` | Muckrack 是 JS 质询(curl_cffi 已证 403)→ 批二加 `nodriver` 后端 |
-| `tools/trustpilot` | 评论多为 SSR,先试 `curl_cffi`;能收就砍多线程 Selenium |
+| `serp-content-teardown` | ✅ **已接入(批二)**:`fetch_competitors.py` 自动用 `curl_cffi`(装了就用、没装回退原 `curl`),产物 manifest/flags 不变 |
+| `media-press-discovery` | Muckrack 是 JS 质询(curl_cffi/Jina 实测都 403)→ 需 `nodriver`(L3)**且住宅 IP**,或付费 L4;**有住宅代理时本地实测再接**,别盲接 |
+| `tools/trustpilot` | **保持现有 Selenium(能成功跑就不动)**;fetchlib 不接入 |
 | `outbound-prospecting` | 打 SERP/搜索前挂 `Fetcher` + api-pacer |
 | `reddit-voc` | 只读研究:优先官方 API(PRAW),HTML 兜底走 fetchlib |
 
 > 现有 skill **可选接入**——它们已能独立跑;本工具是"想更稳/更省"时的 drop-in,不改其核心逻辑。
+
+## 实测结论（2026-06，从数据中心 IP，本仓库目标类型）
+
+| 目标 | plain | curl_cffi | Jina Reader |
+|---|---|---|---|
+| 无防护 Shopify(products.json) | ✅ | ✅ | ✅ |
+| Trustpilot | ❌ 403 | ❌ **403** | ✅ **拿到(36k)** |
+| Cloudflare 质询 / Muckrack / G2 | ❌ 403 | ❌ 403 | ❌(只拿到质询页) |
+
+- **curl_cffi 不是万能**:对 JS 质询/行为/IP-信誉门的站,和 plain 一样 403(TLS necessary-not-sufficient);只有 TLS-only 门的站才有增量。数据中心 IP 下更悲观,住宅 IP 会好些。
+- **Jina 在免费层里意外强**(拿下了 Trustpilot),但对硬 JS 质询站也只返回质询页。
+- **硬反爬站(Cloudflare/Muckrack/G2)免费层全灭** → 需 `nodriver` + 住宅 IP,或付费 unblocker。
+- ⇒ **最优后端按站/按 IP 变** → 用 `learn=True`(Thompson)让它自学,别硬编顺序。
 
 ## 依赖
 

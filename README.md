@@ -305,6 +305,13 @@ cp -r cross-border-ecommerce-skills/tools/backlink-kol-extractor ~/.claude/skill
 
 ## Changelog
 
+### v3.11 (2026-06-29)
+- **`fetchlib` batch 2 + `serp-content-teardown` migration** — after a real benchmark of the free tiers against representative targets (Shopify `products.json`, Trustpilot, a Cloudflare JS-challenge, Muckrack, G2, from a datacenter IP):
+  - **`serp-content-teardown/fetch_competitors.py` now uses `curl_cffi`** (real-browser TLS/JA3, free, local) with a **graceful fallback to plain `curl`** if it isn't installed — non-breaking, same `fetch_manifest.json` / outputs. The skill's "free + local, no paid APIs" red line is preserved (curl_cffi is a free local libcurl, not an API); no headless browser is added (it stays a deterministic offline analyzer).
+  - **`fetchlib` gains a `ThompsonSelector`** (per-domain Beta-Bernoulli bandit, `Fetcher(learn=True, selector_path=…)`) that learns which tier actually succeeds per site and tries the best first — because the benchmark showed the "best backend" is **site- and IP-dependent, not fixed** (e.g. `curl_cffi` matched plain `curl` and 403'd on Trustpilot/Cloudflare/Muckrack/G2 from a datacenter IP, while free **Jina Reader** cleared Trustpilot; the hard JS-challenge sites need `nodriver` + a residential IP or a paid unblocker). Self-test covers the selector.
+  - **Honest scope**: `nodriver` (L3) stays a documented `register_backend` plug-in — deferred until tested locally on a residential IP (it won't clear those sites from a datacenter IP either). `tools/trustpilot`'s working Selenium is left untouched per its owner.
+- No new skills/tools; counts unchanged (50 skills / 11 chains / 6 tools).
+
 ### v3.10 (2026-06-29)
 - **New `tools/fetchlib/`** — a compliant fetch **waterfall** for the scraping skills, built from the 2026 dual-source scraping-stack research (multi-agent web research + a Gemini Deep Research report). Escalates one tier only on a real block (Markov-style state machine): **L1 `curl_cffi`** (TLS/JA3 impersonation, free, no JS) → **L2 Jina Reader** (`r.jina.ai` JS→clean-markdown, free\*) → L3 `nodriver` (batch-2 `register_backend` plug-in) → L4 managed unblocker (paid, opt-in).
   - **Control layer**: `api-pacer` (header-adaptive pacing + full-jitter backoff) + **AIMD** (additive-increase / multiplicative-decrease per-domain rate — creep up, cut hard on block) + **circuit breaker** (cool down a target that keeps blocking) + per-fetch JSONL instrumentation.

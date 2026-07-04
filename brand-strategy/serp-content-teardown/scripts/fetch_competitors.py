@@ -6,9 +6,13 @@ Reads url_pool.json (from parse_serp.py), selects which URLs to fetch
 with curl, detects anti-bot blocks and SKIPS+LOGS them, and writes the raw HTML
 to <out-dir>/html/ plus a fetch_manifest.json.
 
-RED LINE: fetching uses curl ONLY. No paid APIs (Ahrefs / Apify / Tavily / Jina /
-OpenRouter / ScrapingBee / etc.). curl with a browser UA is the only allowed
-network access in this toolkit.
+RED LINE: fetching stays FREE + LOCAL. It uses curl_cffi (a free, local, TLS/JA3-
+impersonating libcurl; auto-used if installed) or falls back to plain curl — nothing
+else. NO paid / external scraping APIs (Ahrefs / Apify / Tavily / Jina / OpenRouter /
+ScrapingBee / Bright Data / etc.) and NO headless browser here: this stays a
+deterministic offline analyzer. A few JS-challenge URLs that curl_cffi can't clear are
+SKIPPED + LOGGED, not escalated. Heavier tiers live in tools/fetchlib for skills that
+opt in.
 
 Usage:
     python3 fetch_competitors.py --out-dir DIR [--top 30] [--select FILE]
@@ -28,6 +32,11 @@ import os
 import re
 import subprocess
 import sys
+
+try:
+    from curl_cffi import requests as _cffi   # free, local TLS/JA3 impersonation (NOT a paid API)
+except Exception:
+    _cffi = None
 
 # Realistic desktop Chrome UA — many Shopify/CDN edges 403 a bare curl UA.
 UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
@@ -92,13 +101,30 @@ def load_select_file(path, pool):
     return records
 
 
+HDRS = {
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Referer": "https://www.google.com/",
+}
+
+
 def fetch_one(url, out_path):
-    """curl: browser UA, follow redirects, gzip, ~25s. Returns (http_code, nbytes, body)."""
+    """Fetch to out_path. Prefers curl_cffi (real-browser TLS/JA3, free, local) if installed;
+    falls back to the plain curl subprocess otherwise. Returns (http_code, nbytes, body)."""
+    if _cffi is not None:
+        try:
+            r = _cffi.get(url, impersonate="chrome", timeout=25, headers=HDRS)
+            body = r.text
+            with open(out_path, "w", encoding="utf-8", errors="ignore") as f:
+                f.write(body)
+            return str(r.status_code), os.path.getsize(out_path), body
+        except Exception:
+            pass  # any curl_cffi error → fall through to plain curl
     cmd = ["curl", "-sSL", "--compressed", "--max-time", "25",
            "-A", UA,
-           "-H", "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-           "-H", "Accept-Language: en-US,en;q=0.9",
-           "-H", "Referer: https://www.google.com/",
+           "-H", "Accept: " + HDRS["Accept"],
+           "-H", "Accept-Language: " + HDRS["Accept-Language"],
+           "-H", "Referer: " + HDRS["Referer"],
            "-o", out_path, "-w", "%{http_code}", url]
     try:
         code = subprocess.run(cmd, capture_output=True, text=True, timeout=40).stdout.strip()
