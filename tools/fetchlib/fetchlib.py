@@ -45,7 +45,9 @@ DEFAULT_UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
               "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36")
 BLOCK_MARKERS = ("just a moment", "checking your browser", "cf-chl", "attention required",
                  "access denied", "captcha", "datadome", "verify you are human",
-                 "please enable javascript", "unusual traffic")
+                 "please enable javascript", "unusual traffic", "pardon our interruption",
+                 "are you a robot", "additional verification",
+                 "请稍候", "正在验证", "请完成")  # incl. Chinese Cloudflare interstitial (benchmark caught it)
 
 
 def is_blocked(status, body=""):

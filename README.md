@@ -18,7 +18,7 @@ Two formats:
 - **Single-file skills** (45) — one `.md` file each, drop into your AI IDE's skill directory.
 - **Multi-file skill packages** (5, under `brand-strategy/`, `outbound-prospecting/`, and `voc-tools/`) — `SKILL.md` + `references/` + `templates/` (incl. Python scripts and CSV trackers). Point your AI IDE at the package directory.
 
-Plus **6 standalone tools** under `tools/` (Python utilities used by skills, also runnable independently): `backlink-kol-extractor`, `trustpilot`, `linktree-expander`, `contact-extractor`, `api-pacer`, `fetchlib`.
+Plus **7 standalone tools** under `tools/` (Python utilities used by skills, also runnable independently): `backlink-kol-extractor`, `trustpilot`, `linktree-expander`, `contact-extractor`, `api-pacer`, `fetchlib`, `browser-fetch`.
 
 ### Skill Map (50 skills across 11 chains)
 
@@ -180,6 +180,7 @@ Standalone Python utilities under `tools/`. Each is a multi-file package with ow
 | [contact-extractor](tools/contact-extractor/SKILL.md) — **NEW v3.4** | Multi-source contact email extraction with confidence tiering. Sources: personal_site `/about` `/contact` `/press` paths (mailto/text) + YouTube Data API v3 description + Apple Podcasts RSS owner + email pattern guess (with `--verify` SMTP MX probe / Hunter.io). Outputs ranked `contact_email_1..3` + `confidence` (high / medium / low / none) | KOL outreach prep, post `linktree-expander` or `media-press-discovery` |
 | [api-pacer](tools/api-pacer/SKILL.md) — **NEW v3.9** | Polite, adaptive request pacer + AWS-style full-jitter backoff for the scraping / API skills. Paces to the server's OWN rate-limit headers (`x-ratelimit-remaining` / `reset`) when present, else a configured RPS budget; full-jitter (uniform) backoff on 429/503/Retry-After. Reads the REAL budget instead of guessing a delay from a distribution — a Gaussian/uniform "human-like" sleep is not what evades rate limits. Stdlib-only (`requests` optional). Rate-limit-respecting research use only, NOT ToS-violating evasion. | `reddit-voc` (wired), + `serp-content-teardown` / `media-press-discovery` / `trustpilot` / `outbound-prospecting` (opt-in) |
 | [fetchlib](tools/fetchlib/SKILL.md) — **NEW v3.10** | Compliant fetch **waterfall** for the scraping skills (built from the 2026 dual-source scraping-stack research). Escalates one tier only on a real block (Markov-style): **L1 `curl_cffi`** (TLS/JA3 impersonation, free) → **L2 Jina Reader** (`r.jina.ai` JS→markdown, free\*) → L3 `nodriver` (batch-2 plug-in) → L4 managed unblocker (paid, opt-in). Control layer = `api-pacer` (header-adaptive pace + full-jitter backoff) + **AIMD** (creep-up / cut-hard-on-block) + **circuit breaker** + per-fetch JSONL instrumentation. Honors robots.txt; **does NOT defeat access barriers / rotate IPs / forge fingerprints / handle PII** — compliant research use only. Stdlib-runnable; `curl_cffi` optional (graceful urllib fallback). Depends on `api-pacer`. | `serp-content-teardown` / `media-press-discovery` / `trustpilot` / `outbound-prospecting` / `reddit-voc` (opt-in) |
+| [browser-fetch](tools/browser-fetch/SKILL.md) — **NEW v3.12** | Optional shared **browser-render** backend for `fetchlib`'s **L3** — promotes the "real browser + optional proxy" capability (the kind in `tools/trustpilot`) into one reusable module so skills stop re-implementing a browser. Pluggable engine, **default Selenium** (`register_engine()` for nodriver / camoufox / scrapling). Returns `(status, body, headers)`; normalizes a detected challenge page to `403` so `fetchlib` flags it. **Honest scope (benchmarked from a datacenter IP)**: it clears **Trustpilot-class** sites that `curl_cffi` can't render, but does NOT beat Cloudflare Managed Challenge / DataDome (Muckrack, G2) — even a real browser stalls on the challenge from a datacenter IP; those need a **residential IP** (+ maybe a Turnstile solver) or a paid unblocker, not a fancier library. Renders JS + can use a proxy but does NOT solve CAPTCHAs / defeat barriers / handle PII (caller's call). `selenium` is a lazy import. `tools/trustpilot` is left untouched. | any JS-render need via `fetchlib` `browser` tier (all opt-in) |
 
 See [tools/README.md](tools/README.md) for standalone usage.
 
@@ -243,7 +244,7 @@ Key requirements: long context (8K+ input), strong instruction following, Chines
 - **单文件技能（45 个）** — 一个 `.md` 文件，放入 AI IDE 技能目录即可使用
 - **多文件技能包（5 个，分布在 `brand-strategy/`、`outbound-prospecting/` 和 `voc-tools/`）** — `SKILL.md` + `references/` + `templates/`（含 Python 脚本和 CSV 跟踪表），将整个目录指向 AI IDE
 
-外加 **6 个独立工具** 在 `tools/`（Python 工具，被 skill 调用也可独立使用）：`backlink-kol-extractor` / `trustpilot` / `linktree-expander` / `contact-extractor` / `api-pacer` / `fetchlib`。
+外加 **7 个独立工具** 在 `tools/`（Python 工具，被 skill 调用也可独立使用）：`backlink-kol-extractor` / `trustpilot` / `linktree-expander` / `contact-extractor` / `api-pacer` / `fetchlib` / `browser-fetch`。
 
 ### 技能矩阵（50 个技能，11 条链路）
 
@@ -262,7 +263,7 @@ Key requirements: long context (8K+ input), strong instruction following, Chines
 
 ### 核心特色
 
-- **50 技能 × 11 链路 + 6 独立工具** — 从战略到执行到财务资金到海外开发到媒体公关到购买前 Reddit VOC 全覆盖
+- **50 技能 × 11 链路 + 7 独立工具** — 从战略到执行到财务资金到海外开发到媒体公关到购买前 Reddit VOC 全覆盖
 - **财务链 YMYL 纪律** — 8 个财务技能均带"规划辅助、非专业税务/法律/会计意见、需找 CPA 核实"免责，2026 法规打时间戳，估算标 ⚠️（不编造数字）
 - **数据验证层** — 每个技能内置强制验证，推测数据标 ⚠️
 - **图表可视化** — 21 个技能自动生成图表（雷达/柱状/瀑布/散点/漏斗等），调用 AntV API
@@ -304,6 +305,13 @@ cp -r cross-border-ecommerce-skills/tools/backlink-kol-extractor ~/.claude/skill
 ---
 
 ## Changelog
+
+### v3.12 (2026-06-29)
+- **New `tools/browser-fetch/`** — an optional shared **browser-render** backend for `fetchlib`'s **L3**, promoting the "real browser + optional proxy" capability (the kind in `tools/trustpilot`) into one reusable module (pluggable engine, **default Selenium**; `register_engine()` for nodriver / camoufox / scrapling). Drop-in: `fetchlib.register_backend("browser", browser_fetch.as_fetchlib_backend(engine="selenium"))`.
+  - **Benchmark-driven, honest scope**: real testing (Selenium + nodriver, from a datacenter IP) showed a browser clears **Trustpilot-class** sites `curl_cffi` can't render (Selenium got real content), but **no free tool — Selenium, nodriver, curl_cffi, Jina — beat Cloudflare Managed Challenge / DataDome (Muckrack, G2, cf-challenge) from a datacenter IP**. The bottleneck there is **IP reputation + Turnstile, not the browser library** → those need a residential IP (+ maybe Camoufox/Scrapling's Turnstile solver) or a paid unblocker. So Selenium is the proven default; other engines are opt-in "validate on a residential IP first."
+  - Normalizes a detected challenge page (incl. the Chinese Cloudflare interstitial "请稍候") to `403` so `fetchlib` flags it; `selenium` is a lazy import; self-test is browser-free. Also hardened `fetchlib`'s block-detector with the Chinese + a few more challenge markers.
+  - **Compliance (US)**: renders JS + optional proxy, but does NOT solve CAPTCHAs, defeat access barriers, use botnet proxies, or handle PII (caller's call under CFAA / hiQ / CCPA-CPRA). `tools/trustpilot`'s working Selenium is left untouched.
+- Total: 50 skills across 11 chains; **standalone tools: 7** (was 6).
 
 ### v3.11 (2026-06-29)
 - **`fetchlib` batch 2 + `serp-content-teardown` migration** — after a real benchmark of the free tiers against representative targets (Shopify `products.json`, Trustpilot, a Cloudflare JS-challenge, Muckrack, G2, from a datacenter IP):
