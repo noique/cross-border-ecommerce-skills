@@ -1,6 +1,6 @@
 # Cross-Border E-Commerce AI Skills
 
-**50 AI-powered skill templates for cross-border e-commerce — from brand strategy to Amazon operations to DTC growth to finance & capital ops to overseas-buyer prospecting + earned-media press discovery + Reddit pre-purchase VOC.**
+**54 AI-powered skill templates for cross-border e-commerce — from brand strategy to Amazon operations to DTC growth to finance & capital ops to affiliate-program building to EU channel entry to overseas-buyer prospecting + earned-media press discovery + Reddit pre-purchase VOC.**
 
 Compatible with Claude Code (`~/.claude/commands/`), Google Antigravity (`SKILL.md`), and any AI IDE with skill/prompt support.
 
@@ -12,7 +12,7 @@ Compatible with Claude Code (`~/.claude/commands/`), Google Antigravity (`SKILL.
 
 ### What is this?
 
-A collection of **50 AI agent skills** (structured prompt templates) that automate the entire cross-border e-commerce workflow — brand strategy, market research, product selection, listing optimization, advertising, DTC site operations, **finance & capital management**, social media, influencer marketing, **overseas-buyer outbound prospecting**, **earned-media press discovery**, and **Reddit pre-purchase VOC**.
+A collection of **54 AI agent skills** (structured prompt templates) that automate the entire cross-border e-commerce workflow — brand strategy, market research, product selection, listing optimization, advertising, DTC site operations, **finance & capital management**, **affiliate-program building**, **EU channel & market entry**, social media, influencer marketing, **overseas-buyer outbound prospecting**, **earned-media press discovery**, and **Reddit pre-purchase VOC**.
 
 Two formats:
 - **Single-file skills** (45) — one `.md` file each, drop into your AI IDE's skill directory.
@@ -20,7 +20,7 @@ Two formats:
 
 Plus **7 standalone tools** under `tools/` (Python utilities used by skills, also runnable independently): `backlink-kol-extractor`, `trustpilot`, `linktree-expander`, `contact-extractor`, `api-pacer`, `fetchlib`, `browser-fetch`.
 
-### Skill Map (50 skills across 11 chains)
+### Skill Map (54 skills across 13 chains)
 
 ```
                         ┌─────────────────────────────────────┐
@@ -58,6 +58,18 @@ Plus **7 standalone tools** under `tools/` (Python utilities used by skills, als
   │ Finance & Capital (8) — NEW                                    │
   │ Unit-Economics · FX/Payout · Tax-Nexus · Cashflow             │
   │ Pricing · Reconciliation · Entity-Structure · Capital-Stack   │
+  └──────────────────────────────────────────────────────────────┘
+
+  ┌──────────────────────────────────────────────────────────────┐
+  │ Affiliate & Partnership (2) — NEW                              │
+  │ Readiness-Audit (affiliate's-POV mirror of CRO) ·             │
+  │ Program-Ops (AI: DB → score → outreach → activate → report)   │
+  └──────────────────────────────────────────────────────────────┘
+
+  ┌──────────────────────────────────────────────────────────────┐
+  │ Channel & Market Entry (2) — NEW                               │
+  │ EU-Channel-Entry (SSPV · RCS · growth flywheel) ·            │
+  │ Price-System & Channel-Conflict Guard                         │
   └──────────────────────────────────────────────────────────────┘
 ```
 
@@ -156,6 +168,22 @@ VOC tools split by decision stage. Reddit / Quora capture **pre-purchase** inten
 | [brand-gtm-launch](brand-strategy/brand-gtm-launch.md) | New product GTM launch: 7-step framework, timeline, channel coordination |
 | [offline-retail-us](brand-strategy/offline-retail-us.md) | US offline retail: 8-tier channel analysis, readiness assessment, cost model |
 
+### Affiliate & Partnership (2 skills) — NEW v3.13
+
+Building an affiliate/partnership program from the **affiliate's economics** — audit first (is your product even worth promoting?), then run the AI-automated recruit → score → outreach → activate loop. Complements `influencer-marketing` (content/relationship lens) without overlap: this is the performance/ROI lens.
+
+| Skill | What it does |
+|-------|-------------|
+| [affiliate-readiness-audit](brand-strategy/affiliate-readiness-audit.md) — **NEW v3.13** | Audits a product/Listing from the **affiliate's wallet POV** — the mirror of `dsite-conversion-ux` (CRO): CRO audits "why users won't buy," this audits "why affiliates won't promote you." Affiliate ROI ledger + EPC + 3-layer arbitrage, 6-dim recruitability scorecard with score bands, admission buckets, 6 silent-rejection red flags, traffic-catch self-check + 30-day fix roadmap. Multi-agent fan-out over the 6 scoring dimensions + competitor-offer benchmark |
+| [affiliate-program-ops](brand-strategy/affiliate-program-ops.md) — **NEW v3.13** | AI-automated affiliate operations pipeline: database → find candidates across the **6 affiliate ecosystems** → 100-pt AI scoring with priority bands → standardized contact collection (10 sources) → AI personalized outreach (5-element email, not mass blast) → Partner Resource Hub activation → 4-layer KPI + AI weekly report → 30-day minimum loop. Fan-out per ecosystem type via `Workflow`; reuses `outbound-prospecting` infra + `backlink-kol-extractor` |
+
+### Channel & Market Entry (2 skills) — NEW v3.13
+
+| Skill | What it does |
+|-------|-------------|
+| [eu-channel-market-entry](brand-strategy/eu-channel-market-entry.md) — **NEW v3.13** | Channel/distributor-driven Europe market entry for **US-entity brands**: US-vs-EU market logic (growth vs mature-replacement), competitive-positioning quadrant, **SSPV** user-value model (JTBD-based), **RCS** regional-combat model (Region × Channel × Service) across the 5 EU regions, channel development + enablement, price protection, overseas-org 3 stages, the 8-step Europe growth flywheel. Org/tax decisions hand off to `finance-*`. 5-region parallel analysis via `Workflow` |
+| [price-system-conflict-guard](brand-strategy/price-system-conflict-guard.md) — **NEW v3.13** | Multi-channel price-system & channel-conflict guard for brands running DTC + Amazon + distribution simultaneously: cross-channel real-price diagnosis (auto-flags conflicts), the 3-layer mechanism (unified price × promo-sync × regional protection), DTC-vs-channel boundary, T-60 promo SOP. Carries a US antitrust (MAP vs RPM / Sherman Act) compliance boundary. Pluggable impl of the flywheel's price-protection step |
+
 ### Outbound Prospecting (3 skills) — v3.4 adds press discovery
 
 End-to-end pipelines for finding overseas B2B decision-makers, KOLs, and journalists, then converting them into ready-to-message lead sheets. Each skill is a multi-file package with `SKILL.md` + scripts + references + templates.
@@ -188,7 +216,8 @@ See [tools/README.md](tools/README.md) for standalone usage.
 
 ### Key Features
 
-- **50 Skills, 11 Chains** — Complete coverage from brand strategy to daily operations to finance & capital to overseas-buyer outbound to earned-media press discovery to pre-purchase Reddit VOC
+- **54 Skills, 13 Chains** — Complete coverage from brand strategy to daily operations to finance & capital to affiliate-program building to EU channel entry to overseas-buyer outbound to earned-media press discovery to pre-purchase Reddit VOC
+- **Affiliate & Channel Systems (2026 decks)** — a 2-skill affiliate chain built from the affiliate's own economics (`affiliate-readiness-audit` mirrors CRO — "why affiliates won't promote you"; `affiliate-program-ops` runs the AI recruit→score→outreach→activate loop), plus a US-entity Europe channel-entry strategy (SSPV / RCS / growth flywheel) and a multi-channel price-conflict guard. Framework skeletons only, each crediting its source deck in a methodology index
 - **Finance & YMYL Discipline** — the 8-skill finance chain carries explicit "planning aid, not professional tax/legal/accounting advice — verify with a CPA" disclaimers, point-in-time-stamped 2026 regulations, and ⚠️-flagged estimates (no fabricated numbers)
 - **Data Verification Layer** — Every skill includes mandatory verification; estimates are explicitly flagged with ⚠️
 - **Chart Visualization** — 21 skills auto-generate charts (radar, bar, waterfall, scatter, funnel, etc.) via AntV API
@@ -239,7 +268,7 @@ Key requirements: long context (8K+ input), strong instruction following, Chines
 
 ### 这是什么？
 
-一套 **50 个跨境电商 AI 技能模板**，覆盖品牌战略→选品→调研→文案→广告→独立站→**财务资金**→社媒→红人→线下渠道→海外开发→媒体公关→**购买前 Reddit VOC** 全流程自动化。
+一套 **54 个跨境电商 AI 技能模板**，覆盖品牌战略→选品→调研→文案→广告→独立站→**财务资金**→**联盟营销**→**欧洲渠道进入**→社媒→红人→线下渠道→海外开发→媒体公关→**购买前 Reddit VOC** 全流程自动化。
 
 两种格式：
 - **单文件技能（45 个）** — 一个 `.md` 文件，放入 AI IDE 技能目录即可使用
@@ -247,7 +276,7 @@ Key requirements: long context (8K+ input), strong instruction following, Chines
 
 外加 **7 个独立工具** 在 `tools/`（Python 工具，被 skill 调用也可独立使用）：`backlink-kol-extractor` / `trustpilot` / `linktree-expander` / `contact-extractor` / `api-pacer` / `fetchlib` / `browser-fetch`。
 
-### 技能矩阵（50 个技能，11 条链路）
+### 技能矩阵（54 个技能，13 条链路）
 
 | 链路 | 数量 | 技能 |
 |------|------|------|
@@ -260,11 +289,14 @@ Key requirements: long context (8K+ input), strong instruction following, Chines
 | **红人与用户** | 2 | 红人营销 → 用户生命周期 |
 | **GTM 执行** | 1 | 新品上市规划 |
 | **线下渠道** | 1 | 美国线下零售 |
+| **联盟与合作伙伴（NEW v3.13）** | 2 | **联盟可推性审计**（联盟客视角，`dsite-conversion-ux` CRO 的镜像——审"联盟客为什么不推你"：ROI 账本 + EPC + 三层套利 + 六维评分 + 沉默拒绝红灯）→ **联盟运营流水线（AI）**（数据库→6 类生态找候选→100 分评分→10 来源采集→AI 个性化建联→素材库激活→4 层 KPI→30 天闭环，多 Agent 并发） |
+| **渠道与市场进入（NEW v3.13）** | 2 | **欧洲渠道进入战略**（美国主体进欧盟：美/欧市场逻辑 · 定位象限 · SSPV 用户价值 · RCS 区域作战 · 渠道赋能 · 组织三阶段 · 增长飞轮，5 区并发）→ **价格体系与渠道冲突护栏**（DTC+Amazon+分销：跨渠道真实价诊断 · 统一价×促销同步×区域保护三层 · T-60 促销 SOP · 含 MAP/反垄断边界） |
 | **海外开发与媒体公关（NEW v3.2 + v3.4）** | 3 | Google→WhatsApp 反查开发 → Google→LinkedIn 反查开发 → **媒体公关发现（NEW v3.4，Muckrack-anchored journalist DB pipeline，5 脚本 + Cloudflare-aware 4 后端 fetcher + 多机分片）** |
 
 ### 核心特色
 
-- **50 技能 × 11 链路 + 7 独立工具** — 从战略到执行到财务资金到海外开发到媒体公关到购买前 Reddit VOC 全覆盖
+- **54 技能 × 13 链路 + 7 独立工具** — 从战略到执行到财务资金到联盟营销到欧洲渠道进入到海外开发到媒体公关到购买前 Reddit VOC 全覆盖
+- **联盟与渠道体系（源自 2026 行业分享）** — 从联盟客的经济账反推的 2 技能联盟链（`affiliate-readiness-audit` 是 CRO 的镜像——审"联盟客为什么不推你"；`affiliate-program-ops` 跑 AI 招募→评分→建联→激活闭环），外加美国主体的欧洲渠道进入战略（SSPV / RCS / 增长飞轮）与多渠道价格冲突护栏。只抽方法论骨架，每个技能在"参考方法论索引"注明来源分享
 - **财务链 YMYL 纪律** — 8 个财务技能均带"规划辅助、非专业税务/法律/会计意见、需找 CPA 核实"免责，2026 法规打时间戳，估算标 ⚠️（不编造数字）
 - **数据验证层** — 每个技能内置强制验证，推测数据标 ⚠️
 - **图表可视化** — 21 个技能自动生成图表（雷达/柱状/瀑布/散点/漏斗等），调用 AntV API
@@ -307,6 +339,16 @@ cp -r cross-border-ecommerce-skills/tools/backlink-kol-extractor ~/.claude/skill
 ---
 
 ## Changelog
+
+### v3.13 (2026-07-04)
+- **New chain — Affiliate & Partnership (2 skills)**, built from three 2026 industry decks (each skill credits its source in a `参考方法论索引` table, per repo convention — framework skeletons only, no slide copy):
+  - **`affiliate-readiness-audit`** — the **mirror of `dsite-conversion-ux` (CRO)**: audits a product/Listing from the affiliate's wallet POV ("why affiliates won't promote you"). Affiliate ROI ledger + EPC + 3-layer arbitrage, 6-dim recruitability scorecard with score bands, admission buckets, 6 silent-rejection red flags, traffic-catch self-check + 30-day fix roadmap. Source: **Toony** (affiliate-POV audit) × **珂仔 / 跨境品牌说** (scoring model).
+  - **`affiliate-program-ops`** — AI-automated affiliate operations pipeline: database → find candidates across 6 affiliate ecosystems → 100-pt AI scoring → standardized contact collection (10 sources) → AI personalized outreach (5-element email) → Partner Resource Hub activation → 4-layer KPI + weekly report → 30-day minimum loop. Multi-agent fan-out per ecosystem; reuses `outbound-prospecting`. Source: **珂仔 / 跨境品牌说** (AI affiliate workflow) × **Toony** (6 ecosystems + economics). Complements `influencer-marketing` (content/relationship lens) without overlap.
+- **New chain — Channel & Market Entry (2 skills)**:
+  - **`eu-channel-market-entry`** — channel/distributor-driven Europe entry for **US-entity brands**: US-vs-EU market logic, positioning quadrant, **SSPV** user-value model, **RCS** regional-combat model across the 5 EU regions, channel enablement, overseas-org 3 stages, the 8-step growth flywheel. Org/tax hand off to `finance-*`. Source: **Amethyst 同易** (Europe channel growth strategy), reframed China-seller → US-entity.
+  - **`price-system-conflict-guard`** — multi-channel price-system & channel-conflict guard (DTC + Amazon + distribution): cross-channel real-price diagnosis, 3-layer mechanism (unified price × promo-sync × regional protection), DTC-vs-channel boundary, T-60 promo SOP, US antitrust (MAP vs RPM) boundary. Source: **Amethyst 同易** (price-system & channel-conflict management).
+- All four are Claude Code multi-agent-ready (`Workflow` fan-out + `StructuredOutput` schemas), US-jurisdiction framing, brand-neutral examples.
+- Total: **54 skills across 13 chains**; standalone tools: 7 (unchanged).
 
 ### v3.12 (2026-06-29)
 - **New `tools/browser-fetch/`** — an optional shared **browser-render** backend for `fetchlib`'s **L3**, promoting the "real browser + optional proxy" capability (the kind in `tools/trustpilot`) into one reusable module (pluggable engine, **default Selenium**; `register_engine()` for nodriver / camoufox / scrapling). Drop-in: `fetchlib.register_backend("browser", browser_fetch.as_fetchlib_backend(engine="selenium"))`.
