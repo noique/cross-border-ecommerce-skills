@@ -18,7 +18,7 @@ Two formats:
 - **Single-file skills** (45) — one `.md` file each, drop into your AI IDE's skill directory.
 - **Multi-file skill packages** (5, under `brand-strategy/`, `outbound-prospecting/`, and `voc-tools/`) — `SKILL.md` + `references/` + `templates/` (incl. Python scripts and CSV trackers). Point your AI IDE at the package directory.
 
-Plus **4 standalone tools** under `tools/` (Python utilities used by skills, also runnable independently): `backlink-kol-extractor`, `trustpilot`, `linktree-expander`, `contact-extractor`.
+Plus **5 standalone tools** under `tools/` (Python utilities used by skills, also runnable independently): `backlink-kol-extractor`, `trustpilot`, `linktree-expander`, `contact-extractor`, `api-pacer`.
 
 ### Skill Map (50 skills across 11 chains)
 
@@ -178,6 +178,7 @@ Standalone Python utilities under `tools/`. Each is a multi-file package with ow
 | [trustpilot](tools/trustpilot/) — **rebuilt v3.4** | Selenium-based Trustpilot review scraper with chained-proxy rotation, AI sentiment + topic analysis, multi-language. v3.4 rebuild: modern data-* attribute selectors (replaces 110-line sibling-XPath fallback chain), desktop-UA pin (Trustpilot serves snippet-only DOM to mobile UA), `--cutoff_date` arg, `--skip_ai` mode, redacted hardcoded proxy creds (env-var loading) | `trustpilot-voc-quick`, `trustpilot-voc-deep` |
 | [linktree-expander](tools/linktree-expander/SKILL.md) — **NEW v3.4** | Batch-enrich Linktree handles into per-creator profiles via `__NEXT_DATA__` JSON parsing. Extracts IG / TikTok / YouTube / Substack / Twitter / podcast handles + bio + outbound link categorization + handle-match-scored personal_site (with `NON_PERSONAL_HOSTS` blocklist for shorteners / aggregators / docs / scheduling) | KOL discovery pipelines downstream of `backlink-kol-extractor` |
 | [contact-extractor](tools/contact-extractor/SKILL.md) — **NEW v3.4** | Multi-source contact email extraction with confidence tiering. Sources: personal_site `/about` `/contact` `/press` paths (mailto/text) + YouTube Data API v3 description + Apple Podcasts RSS owner + email pattern guess (with `--verify` SMTP MX probe / Hunter.io). Outputs ranked `contact_email_1..3` + `confidence` (high / medium / low / none) | KOL outreach prep, post `linktree-expander` or `media-press-discovery` |
+| [api-pacer](tools/api-pacer/SKILL.md) — **NEW v3.9** | Polite, adaptive request pacer + AWS-style full-jitter backoff for the scraping / API skills. Paces to the server's OWN rate-limit headers (`x-ratelimit-remaining` / `reset`) when present, else a configured RPS budget; full-jitter (uniform) backoff on 429/503/Retry-After. Reads the REAL budget instead of guessing a delay from a distribution — a Gaussian/uniform "human-like" sleep is not what evades rate limits. Stdlib-only (`requests` optional). Rate-limit-respecting research use only, NOT ToS-violating evasion. | `reddit-voc` (wired), + `serp-content-teardown` / `media-press-discovery` / `trustpilot` / `outbound-prospecting` (opt-in) |
 
 See [tools/README.md](tools/README.md) for standalone usage.
 
@@ -241,7 +242,7 @@ Key requirements: long context (8K+ input), strong instruction following, Chines
 - **单文件技能（45 个）** — 一个 `.md` 文件，放入 AI IDE 技能目录即可使用
 - **多文件技能包（5 个，分布在 `brand-strategy/`、`outbound-prospecting/` 和 `voc-tools/`）** — `SKILL.md` + `references/` + `templates/`（含 Python 脚本和 CSV 跟踪表），将整个目录指向 AI IDE
 
-外加 **4 个独立工具** 在 `tools/`（Python 工具，被 skill 调用也可独立使用）：`backlink-kol-extractor` / `trustpilot` / `linktree-expander` / `contact-extractor`。
+外加 **5 个独立工具** 在 `tools/`（Python 工具，被 skill 调用也可独立使用）：`backlink-kol-extractor` / `trustpilot` / `linktree-expander` / `contact-extractor` / `api-pacer`。
 
 ### 技能矩阵（50 个技能，11 条链路）
 
@@ -260,7 +261,7 @@ Key requirements: long context (8K+ input), strong instruction following, Chines
 
 ### 核心特色
 
-- **50 技能 × 11 链路 + 4 独立工具** — 从战略到执行到财务资金到海外开发到媒体公关到购买前 Reddit VOC 全覆盖
+- **50 技能 × 11 链路 + 5 独立工具** — 从战略到执行到财务资金到海外开发到媒体公关到购买前 Reddit VOC 全覆盖
 - **财务链 YMYL 纪律** — 8 个财务技能均带"规划辅助、非专业税务/法律/会计意见、需找 CPA 核实"免责，2026 法规打时间戳，估算标 ⚠️（不编造数字）
 - **数据验证层** — 每个技能内置强制验证，推测数据标 ⚠️
 - **图表可视化** — 21 个技能自动生成图表（雷达/柱状/瀑布/散点/漏斗等），调用 AntV API
@@ -302,6 +303,13 @@ cp -r cross-border-ecommerce-skills/tools/backlink-kol-extractor ~/.claude/skill
 ---
 
 ## Changelog
+
+### v3.9 (2026-06-29)
+- **New `tools/api-pacer/`** — a shared, dependency-light **request pacer** (adaptive rate-limiting + AWS-style full-jitter backoff) for the scraping / API skills. Paces to the server's own `x-ratelimit-*` headers when present (else a configured RPS budget); full-jitter (uniform) backoff on 429/503/Retry-After; stdlib-only, `requests` optional.
+  - **Why it exists** — reads the REAL rate-limit budget instead of guessing a delay from a distribution. A Gaussian/uniform "human-like" sleep is *not* what avoids rate limits/blocks (platforms don't fit-test your delay distribution); the winners are (a) obeying the response-header budget and (b) full-jitter backoff for retries.
+  - **Adoption** — `reddit-voc` gets an integration note (`voc-tools/reddit-voc/references/rate-limiting.md`: PRAW + pacer, read-only research framing); `serp-content-teardown` / `media-press-discovery` / `trustpilot` / `outbound-prospecting` are documented as **opt-in** drop-ins (their working scrapers are left unchanged).
+  - **Scope / red line** — legitimate rate-limit-respecting research use only; NOT for ToS-violating automation (vote manipulation, spam, sockpuppets, ban evasion). It does not defeat anti-bot, rotate IPs, or forge fingerprints.
+- Total: 50 skills across 11 chains; **standalone tools: 5** (was 4).
 
 ### v3.8 (2026-06-29)
 - **New `finance/` chain — 8 skills (Finance & Capital)** for China→US/EU DTC + Amazon sellers: `finance-landed-cost-unit-economics` (CM1/CM2/CM3 + break-even ROAS), `finance-fx-payout-optimizer` (收款/结汇/FX hedging + SAFE checklist), `finance-tax-nexus-vat-diagnostic` (registration-obligation map + EU €3 duty / IOSS / US nexus / EPR), `finance-cashflow-runway-forecaster` (13-week rolling forecast), `finance-pricing-margin-guard`, `finance-reconciliation-bookkeeping` (clearing-account-to-zero), `finance-entity-structure-advisor` (HK/SG/US LLC + repatriation, YMYL), `finance-capital-stack-advisor` (RBF/MCA true-APR + contract traps).
