@@ -18,7 +18,7 @@ Two formats:
 - **Single-file skills** (45) — one `.md` file each, drop into your AI IDE's skill directory.
 - **Multi-file skill packages** (5, under `brand-strategy/`, `outbound-prospecting/`, and `voc-tools/`) — `SKILL.md` + `references/` + `templates/` (incl. Python scripts and CSV trackers). Point your AI IDE at the package directory.
 
-Plus **5 standalone tools** under `tools/` (Python utilities used by skills, also runnable independently): `backlink-kol-extractor`, `trustpilot`, `linktree-expander`, `contact-extractor`, `api-pacer`.
+Plus **6 standalone tools** under `tools/` (Python utilities used by skills, also runnable independently): `backlink-kol-extractor`, `trustpilot`, `linktree-expander`, `contact-extractor`, `api-pacer`, `fetchlib`.
 
 ### Skill Map (50 skills across 11 chains)
 
@@ -179,6 +179,7 @@ Standalone Python utilities under `tools/`. Each is a multi-file package with ow
 | [linktree-expander](tools/linktree-expander/SKILL.md) — **NEW v3.4** | Batch-enrich Linktree handles into per-creator profiles via `__NEXT_DATA__` JSON parsing. Extracts IG / TikTok / YouTube / Substack / Twitter / podcast handles + bio + outbound link categorization + handle-match-scored personal_site (with `NON_PERSONAL_HOSTS` blocklist for shorteners / aggregators / docs / scheduling) | KOL discovery pipelines downstream of `backlink-kol-extractor` |
 | [contact-extractor](tools/contact-extractor/SKILL.md) — **NEW v3.4** | Multi-source contact email extraction with confidence tiering. Sources: personal_site `/about` `/contact` `/press` paths (mailto/text) + YouTube Data API v3 description + Apple Podcasts RSS owner + email pattern guess (with `--verify` SMTP MX probe / Hunter.io). Outputs ranked `contact_email_1..3` + `confidence` (high / medium / low / none) | KOL outreach prep, post `linktree-expander` or `media-press-discovery` |
 | [api-pacer](tools/api-pacer/SKILL.md) — **NEW v3.9** | Polite, adaptive request pacer + AWS-style full-jitter backoff for the scraping / API skills. Paces to the server's OWN rate-limit headers (`x-ratelimit-remaining` / `reset`) when present, else a configured RPS budget; full-jitter (uniform) backoff on 429/503/Retry-After. Reads the REAL budget instead of guessing a delay from a distribution — a Gaussian/uniform "human-like" sleep is not what evades rate limits. Stdlib-only (`requests` optional). Rate-limit-respecting research use only, NOT ToS-violating evasion. | `reddit-voc` (wired), + `serp-content-teardown` / `media-press-discovery` / `trustpilot` / `outbound-prospecting` (opt-in) |
+| [fetchlib](tools/fetchlib/SKILL.md) — **NEW v3.10** | Compliant fetch **waterfall** for the scraping skills (built from the 2026 dual-source scraping-stack research). Escalates one tier only on a real block (Markov-style): **L1 `curl_cffi`** (TLS/JA3 impersonation, free) → **L2 Jina Reader** (`r.jina.ai` JS→markdown, free\*) → L3 `nodriver` (batch-2 plug-in) → L4 managed unblocker (paid, opt-in). Control layer = `api-pacer` (header-adaptive pace + full-jitter backoff) + **AIMD** (creep-up / cut-hard-on-block) + **circuit breaker** + per-fetch JSONL instrumentation. Honors robots.txt; **does NOT defeat access barriers / rotate IPs / forge fingerprints / handle PII** — compliant research use only. Stdlib-runnable; `curl_cffi` optional (graceful urllib fallback). Depends on `api-pacer`. | `serp-content-teardown` / `media-press-discovery` / `trustpilot` / `outbound-prospecting` / `reddit-voc` (opt-in) |
 
 See [tools/README.md](tools/README.md) for standalone usage.
 
@@ -242,7 +243,7 @@ Key requirements: long context (8K+ input), strong instruction following, Chines
 - **单文件技能（45 个）** — 一个 `.md` 文件，放入 AI IDE 技能目录即可使用
 - **多文件技能包（5 个，分布在 `brand-strategy/`、`outbound-prospecting/` 和 `voc-tools/`）** — `SKILL.md` + `references/` + `templates/`（含 Python 脚本和 CSV 跟踪表），将整个目录指向 AI IDE
 
-外加 **5 个独立工具** 在 `tools/`（Python 工具，被 skill 调用也可独立使用）：`backlink-kol-extractor` / `trustpilot` / `linktree-expander` / `contact-extractor` / `api-pacer`。
+外加 **6 个独立工具** 在 `tools/`（Python 工具，被 skill 调用也可独立使用）：`backlink-kol-extractor` / `trustpilot` / `linktree-expander` / `contact-extractor` / `api-pacer` / `fetchlib`。
 
 ### 技能矩阵（50 个技能，11 条链路）
 
@@ -261,7 +262,7 @@ Key requirements: long context (8K+ input), strong instruction following, Chines
 
 ### 核心特色
 
-- **50 技能 × 11 链路 + 5 独立工具** — 从战略到执行到财务资金到海外开发到媒体公关到购买前 Reddit VOC 全覆盖
+- **50 技能 × 11 链路 + 6 独立工具** — 从战略到执行到财务资金到海外开发到媒体公关到购买前 Reddit VOC 全覆盖
 - **财务链 YMYL 纪律** — 8 个财务技能均带"规划辅助、非专业税务/法律/会计意见、需找 CPA 核实"免责，2026 法规打时间戳，估算标 ⚠️（不编造数字）
 - **数据验证层** — 每个技能内置强制验证，推测数据标 ⚠️
 - **图表可视化** — 21 个技能自动生成图表（雷达/柱状/瀑布/散点/漏斗等），调用 AntV API
@@ -303,6 +304,14 @@ cp -r cross-border-ecommerce-skills/tools/backlink-kol-extractor ~/.claude/skill
 ---
 
 ## Changelog
+
+### v3.10 (2026-06-29)
+- **New `tools/fetchlib/`** — a compliant fetch **waterfall** for the scraping skills, built from the 2026 dual-source scraping-stack research (multi-agent web research + a Gemini Deep Research report). Escalates one tier only on a real block (Markov-style state machine): **L1 `curl_cffi`** (TLS/JA3 impersonation, free, no JS) → **L2 Jina Reader** (`r.jina.ai` JS→clean-markdown, free\*) → L3 `nodriver` (batch-2 `register_backend` plug-in) → L4 managed unblocker (paid, opt-in).
+  - **Control layer**: `api-pacer` (header-adaptive pacing + full-jitter backoff) + **AIMD** (additive-increase / multiplicative-decrease per-domain rate — creep up, cut hard on block) + **circuit breaker** (cool down a target that keeps blocking) + per-fetch JSONL instrumentation.
+  - **Grounded conclusions**: `curl_cffi` is the free TLS-impersonation workhorse; `cloudscraper` / `FlareSolverr` / `undetected-chromedriver` / `puppeteer-stealth` are dead/declining vs 2026 WAFs and are NOT used; "human-like" delay distributions (Gaussian etc.) are cargo-cult for read-only research — header-driven pacing + full-jitter backoff is what matters.
+  - **Compliance-first / red line**: honors robots.txt; does NOT defeat access barriers, rotate IPs, forge fingerprints, solve CAPTCHAs, or handle PII (caller's duty); use only KYC/consent-audited proxies if any; legitimate rate-limit-respecting RESEARCH use only, NOT ToS-violating automation. Notes GDPR/CIPA + China AUCL (2025-10-15) Art. 13.
+  - Stdlib-runnable (`curl_cffi` optional with graceful urllib fallback); **depends on `api-pacer`**. Adoption is opt-in for `serp-content-teardown` / `media-press-discovery` / `trustpilot` / `outbound-prospecting` / `reddit-voc` (their working scrapers unchanged). Batch 2 will add the `nodriver` backend + a Thompson-sampling backend selector.
+- Total: 50 skills across 11 chains; **standalone tools: 6** (was 5).
 
 ### v3.9 (2026-06-29)
 - **New `tools/api-pacer/`** — a shared, dependency-light **request pacer** (adaptive rate-limiting + AWS-style full-jitter backoff) for the scraping / API skills. Paces to the server's own `x-ratelimit-*` headers when present (else a configured RPS budget); full-jitter (uniform) backoff on 429/503/Retry-After; stdlib-only, `requests` optional.
