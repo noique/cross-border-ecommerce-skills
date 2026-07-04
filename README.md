@@ -170,7 +170,7 @@ Sister skills — same 4-stage shape (Search → Enrich → Outreach → Complia
 
 ### Tools (standalone utilities)
 
-Standalone Python utilities under `tools/`. Each is a multi-file package with own `SKILL.md` + `scripts/` + `references/` + `templates/`. Used by skills above conditionally; also runnable independently.
+Standalone Python utilities under `tools/`. Each is a multi-file package with own `SKILL.md` + `scripts/` + `references/` + `templates/`. Used by skills above conditionally; also runnable independently. The three **fetch tools** — `api-pacer`, `fetchlib`, `browser-fetch` — compose into one compliant scraping pipeline (**pace → waterfall → browser L3**); the rest are data/enrichment utilities.
 
 | Tool | What it does | Used by |
 |------|-------------|---------|
@@ -197,6 +197,7 @@ See [tools/README.md](tools/README.md) for standalone usage.
 - **GTM Flywheel** — Market → Product → Marketing → Operations four-wheel evaluation
 - **AI Search Ready** — Optimized for Amazon Rufus, COSMO knowledge graph, and GEO
 - **Multi-Agent Concurrency (Claude Code-native)** — skills like `dsite-conversion-ux` orchestrate parallel recon + analysis subagents via the `Workflow` tool with `StructuredOutput` schemas, run as background tasks, and use browser-class MCP (Claude in Chrome / Preview) for live-site inspection — fan out the work, keep the conclusions
+- **Compliant Scraping Stack (2026-benchmarked)** — a free-first, US-compliant fetch pipeline the skills share: `api-pacer` (header-adaptive pacing + full-jitter backoff) → `fetchlib` (Markov waterfall `curl_cffi` → Jina Reader → browser → paid, with an AIMD rate limiter, circuit breaker, and a Thompson-sampling backend selector) → `browser-fetch` (pluggable browser-render L3, Selenium default). Grounded in real benchmarks (`cloudscraper` / `FlareSolverr` are dead; hard Cloudflare / DataDome sites need a residential IP or a paid unblocker, not a fancier library) and it honors robots + rate limits — no access-barrier defeat, IP rotation, CAPTCHA-solving, or PII handling (caller's call under CFAA / hiQ / CCPA-CPRA)
 - **Multi-Platform** — Works on Claude Code, Google Antigravity, OpenClaw, and any AI IDE
 
 ### Installation
@@ -272,6 +273,7 @@ Key requirements: long context (8K+ input), strong instruction following, Chines
 - **GTM 飞轮** — 市场→产品→营销→运营四维评估
 - **AI 搜索适配** — Amazon Rufus / COSMO / GEO 优化
 - **多 Agent 并发（Claude Code 原生）** — `dsite-conversion-ux` 等技能用 `Workflow` 工具编排并发侦察+分析子代理（`StructuredOutput` schema），后台任务运行 + 浏览器类 MCP（Claude in Chrome / Preview）做实站检测——把活儿 fan out，只留结论
+- **合规抓取栈（2026 实测）** — 各 skill 共享的免费优先、美国合规取页流水线：`api-pacer`（按响应头自适应 + full-jitter 退避）→ `fetchlib`（Markov waterfall：`curl_cffi` → Jina Reader → 浏览器 → 付费；带 AIMD 限速 + 熔断 + Thompson 选后端）→ `browser-fetch`（可插拔浏览器渲染 L3，默认 Selenium）。真实基准落地（`cloudscraper`/`FlareSolverr` 已死；Cloudflare/DataDome 堡垒需住宅 IP 或付费，非换库能解），默认守 robots + 限速——不破壁、不换 IP、不解 CAPTCHA、不碰 PII（CFAA / hiQ / CCPA-CPRA 下由调用方判断）
 - **多平台兼容** — Claude Code / Antigravity / OpenClaw / 任何 AI IDE
 
 ### 安装方式
