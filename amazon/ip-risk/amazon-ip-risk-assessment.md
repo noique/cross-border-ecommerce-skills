@@ -17,14 +17,19 @@
    - 使用产品关键词搜索，重点关注：
      - US Design Patent（外观专利）— 最重要
      - US Utility Patent（实用专利）— 如有特殊结构
-   - 筛选近 20 年内有效的专利
+   - 专利有效期口径：实用专利自申请日起 20 年；外观专利（2015-05-13 后授权的）自授权日起 15 年。据此收窄 Design 检索窗口，并对每个高风险专利显式计算过期日
 
 2. **Espacenet (worldwide.espacenet.com)** — 补充检索
    - 比 Google Patents 更全面的国际覆盖
    - 更详细的法律状态追踪（Active/Expired/Lapsed）
    - 适合检查欧洲市场的外观设计保护
 
-3. 记录每个相关专利的：
+3. **图像检索腿** — 以图搜图补充关键词检索的盲区
+   - Google Lens：反查外观近似的在售产品与专利配图
+   - TMview（全球商标）/ DesignView（全球外观设计）— WIPO/EUIPO 官方多局检索
+   - EUIPO RCD（注册共同体外观设计）— 覆盖欧盟外观设计保护
+
+4. 记录每个相关专利的：
    - 专利号
    - 专利标题
    - 申请人/持有人
@@ -37,6 +42,7 @@
 2. 检查头部卖家是否有 Brand Registry
 3. 关注产品描述中是否提到 "patented design" 等字样
 4. 检查是否有 Utility Patent Number 标注在 Listing 上
+5. **专利号核实闭环：** 凡 Listing 自称 "patented" / "patent pending" 或标注专利号，必回 USPTO Patent Center（patentcenter.uspto.gov）按专利号核实真实性、权利人与当前法律状态——自称 patented 不等于真有有效专利
 
 ### 第四步：数据验证（必做）
 1. **专利持有人精度：** 区分 Assignee（专利权人）、Security Interest（担保权益）、Licensee（被许可方）— 这三者法律含义不同，不可混淆
@@ -45,11 +51,11 @@
 4. **设计专利持有人：** 必须标注具体持有人公司名，不可留空
 
 ### 第五步：商标与品牌词风险检索
-1. 在 USPTO TESS (tmsearch.uspto.gov) 检索产品相关商标
+1. 在 USPTO Trademark Search（TESS 已于 2023-11 退役，现为 tmsearch.uspto.gov 上的新版检索系统）检索产品相关商标
 2. 关注通用词被注册为商标的情况（如 Velcro, Teflon 等）
 3. 检查竞品品牌名是否已注册，避免在标题/关键词中使用
 
-### 第五步：生成风险排查报告
+### 第六步：生成风险排查报告
 
 按以下结构输出报告（Markdown 格式）：
 
@@ -76,7 +82,7 @@
 ### 检索方法
 - 检索平台：Google Patents + Espacenet
 - 检索关键词：[列出使用的关键词]
-- 检索范围：US Design Patent + US Utility Patent，近 20 年
+- 检索范围：US Utility Patent（自申请日 20 年）+ US Design Patent（2015-05-13 后授权 +15 年 / 自授权日），对高风险专利显式标注过期日
 
 ### 相关专利列表
 
@@ -132,8 +138,8 @@
 #### P1：上架后保护
 1. **品牌保护：** 优先注册 Amazon Brand Registry 备案
 2. **专利申请：** 若存在可行改款方案，建议尽早提交 US Design Patent 申请，作为防御性策略
-3. **侵权监控：** 设置 Amazon APEX 及相关侵权监控工具，从多维角度监控（看图/看词/用采购号反查）
-4. **品类即品牌策略：** 如产品具有创新性，考虑将品牌名与品类绑定（参考 Overnight Oats、Moroccan Oil 案例），建立品类壁垒
+3. **侵权监控：** 日常侵权监控与保护由 Amazon Brand Registry 的 Report a Violation、Project Zero、Transparency 承担，从多维角度监控（看图/看词/用采购号反查）；Amazon APEX（Patent Evaluation Express）不是监控工具，而是在实用专利争议中由中立评估人快速裁定的评估程序，仅在遇到实用专利纠纷时启用
+4. **品类即品牌策略：** 如产品具有创新性，考虑将品牌名与品类绑定，建立品类壁垒
 
 #### P2：持续监控
 1. 上架后定期在 Amazon 上搜索同类产品，关注新竞品是否有新外观专利

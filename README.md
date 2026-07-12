@@ -92,7 +92,7 @@ Plus **7 standalone tools** under `tools/` (Python utilities used by skills, als
 | [brand-ab-compare](brand-strategy/brand-ab-compare.md) | 8-dimension A/B quality comparison between two brand strategy report sets |
 | [brand-chart-visualize](brand-strategy/brand-chart-visualize.md) | Auto-generate charts (radar, bar, waterfall, scatter, etc.) via AntV API for all reports |
 
-### Amazon Operations Chain (14 skills)
+### Amazon Operations Chain (14 skills) — UPGRADED v3.14 (2026 algorithm & policy refresh)
 
 | Phase | Skill | What it does |
 |-------|-------|-------------|
@@ -101,13 +101,13 @@ Plus **7 standalone tools** under `tools/` (Python utilities used by skills, als
 | Research | [amazon-market-research](amazon/amazon-market-research.md) | Full market research: VOC matrix, competitor teardown, SWOT |
 | Research | [amazon-ip-risk-assessment](amazon/amazon-ip-risk-assessment.md) | Patent + trademark risk, design comparison, risk rating |
 | Research | [amazon-supplier-decision](amazon/amazon-supplier-decision.md) | Supplier evaluation, cost breakdown, red flag detection |
-| Listing | [amazon-keyword-research](amazon/amazon-keyword-research.md) | Keyword library: 3-tier CPC, COSMO/Rufus/A10 SEO |
+| Listing | [amazon-keyword-research](amazon/amazon-keyword-research.md) | Keyword library: 3-tier CPC, COSMO + Alexa-for-Shopping AI-search SEO |
 | Listing | [amazon-listing-copywriter](amazon/amazon-listing-copywriter.md) | Title, bullet points, A+ description, Search Terms |
 | Listing | [amazon-main-image-prompt](amazon/amazon-main-image-prompt.md) | Main + secondary image design briefs and AI prompts |
 | Listing | [amazon-aplus-image-prompt](amazon/amazon-aplus-image-prompt.md) | A+ Content module layout, Brand Story, image prompts |
-| Launch | [amazon-compliance-review](amazon/amazon-compliance-review.md) | 3-dimension audit: platform rules, legal/IP, AI search |
+| Launch | [amazon-compliance-review](amazon/amazon-compliance-review.md) | 3-dimension audit: platform rules, legal/IP, AI-agent readiness |
 | Launch | [amazon-pre-launch-review](amazon/amazon-pre-launch-review.md) | Final pre-launch checklist across all SKILL outputs |
-| Ads | [amazon-ad-architecture](amazon/amazon-ad-architecture.md) | PPC campaign structure: SP/SB/SD/SBV, budget, bid strategy |
+| Ads | [amazon-ad-architecture](amazon/amazon-ad-architecture.md) | PPC structure: SP/SB/SD + Prompts ads, AMC, placement/bid strategy |
 | Ads | [amazon-weekly-ad-review](amazon/amazon-weekly-ad-review.md) | Weekly ad review: ACoS/TACoS, Search Terms, action list |
 | Ads | [amazon-ad-diagnosis](amazon/amazon-ad-diagnosis.md) | Existing product diagnosis: 4-stage optimization pipeline |
 
@@ -339,6 +339,17 @@ cp -r cross-border-ecommerce-skills/tools/backlink-kol-extractor ~/.claude/skill
 ---
 
 ## Changelog
+
+### v3.14 (2026-07-12)
+- **Amazon Operations Chain (14 skills) — 2026 algorithm & policy refresh.** Every fact was re-verified against first-party sources (Seller Central announcements, Amazon Ads *what's new*, the COSMO SIGMOD 2024 paper, Amazon Q4'25 / Q1'26 earnings) and corrected. No skills added; the flows are unchanged. Highlights:
+  - **Title char limit rewritten** — hard-coded `200 / 125 / 80` replaced with the **2026-07-27** policy: **≤75 chars** for non-media categories + the new searchable **Item Highlights** field (125 chars). Over-limit titles get AI-rewritten (brand owners get a 14-day Review-Listing-Changes window, others don't); the 2025-01 special-char ban + no-word-repeat rules are kept as still-stacking.
+  - **Rufus → "Alexa for Shopping"** — renamed across the chain (Rufus brand retired **2026-05-13**, folded into the main search bar; recommendation engine carried over). The mis-stated "300M active users / $120亿" is corrected to Amazon's actual cumulative-users / self-attributed annualized-incremental wording, with a "no seller-side AI attribution → don't cite % lift claims" honesty guardrail.
+  - **Removed a live TOS-violating tactic** — the "competitor-brand back-end Search Terms" instruction (violates G23501, risks ASIN suppression) is now a prohibited-items check. (SP ad targeting of competitor terms stays — that's compliant.)
+  - **De-mythologized unverifiable claims** — "bullets: only first 1000 bytes indexed" (no official basis; Amalytix self-test, and in *characters* not bytes) and COSMO "~10% of US search traffic" (a 2024 A/B-test bucket, not coverage) downgraded to labeled third-party / snapshot facts; fabricated ranking-weight percentages ("title first-80-chars = 60% weight") removed.
+  - **Premium A+** — kept the real (unchanged) eligibility per Amazon's 2026-05 forum-mod confirmation and added the real new **Content Quality Analysis** beta; explicitly flags the "$5M threshold removed / open to all / A+ Quality Score" rumors as false.
+  - **New 2026 realities added** — SP/SB **Prompts ads** (auto-enrolled, CPC-billed since 2026-03-25), free self-serve **AMC** (since 2025-09, + a 2026-06→12 free-signals window), **FBA** commingling end + mandatory FNSKU (2026-03-31) & paid-prep/labeling sunset (2026-01-01), **variant-review split** (2026-02-12, which shifts every "review-count" threshold), agentic-shopping / AI-agent-readiness checks, a corrected image policy (G1881, no AI-specific ban) and an external-AI / robots.txt reality section.
+  - **Housekeeping** — corrected tool references (TESS → USPTO Trademark Search; APEX scope), runtime-verify guards for referral / FBA fees, graceful fallback for the AntV chart endpoint, and removed internal build-file names from the design-inspiration notes.
+- Total: **54 skills across 13 chains** (unchanged); standalone tools: 7.
 
 ### v3.13 (2026-07-04)
 - **New chain — Affiliate & Partnership (2 skills)**, built from three 2026 industry decks (each skill credits its source in a `参考方法论索引` table, per repo convention — framework skeletons only, no slide copy):

@@ -3,16 +3,17 @@
 你是一位专业的 Amazon PPC 广告架构师。用户会提供产品信息和关键词库（通常来自 keyword-research 的输出），你需要设计完整的广告 Campaign 架构并输出可直接执行的广告架构文档。
 
 ## 执行模式：batch（多 Campaign 可并行创建）
-> 设计灵感来自 Claude Code batch.ts 的并行代理编排模式
+> 采用并行代理编排模式（多子代理并发）
 
 ## 广告类型速查（2025-2026）
 
 | 广告类型 | 缩写 | 特点 | 适用场景 |
 |---------|------|------|---------|
 | Sponsored Products | SP | 关键词/ASIN 定向，搜索结果页 | **核心出单** — 新品必开 |
-| Sponsored Brands | SB | 品牌旗舰店引流，搜索顶部 | 品牌词防御 + 品牌曝光 |
-| Sponsored Brands Video | SBV | 视频广告，搜索结果中间 | 高 CTR，适合视觉产品 |
+| Sponsored Brands | SB | 品牌旗舰店引流，搜索顶部；视频（原 SBV）是 SB 的一种格式而非独立广告类型 | 品牌词防御 + 品牌曝光；视频格式高 CTR、适合视觉产品 |
 | Sponsored Display | SD | 受众/ASIN 定向，站内外 | 竞品拦截 + 再营销 |
+| Performance+ / Brand+ | — | 仅 Amazon DSP 内；统一 Campaign Manager beta 正合并两平台，2026 扩大 rollout | 程序化再营销 / 品牌拉新（DSP 侧） |
+| Alexa+ Agentic Ads | — | 2026-06-23 上线、Echo Show 对话内完成购买、非自助投放（观察项） | 语音/对话内成交，暂无自助入口，先观察 |
 
 ## 工作流程
 
@@ -110,10 +111,38 @@
 | Broad | 建议 CPC 的 50-70% | 主要用于发现新词 |
 | Auto | 系统建议出价 | 2 周后分析 Search Term Report |
 | ASIN Targeting | $0.50-1.00 起 | 按竞品价位调整 |
+| 原生自动化（规则竞价 / Audience Bid Boost） | 交给系统 | 规则竞价需累计 30 天且 30+ 转化才有足够数据；Audience Bid Boost 自 2025-04 起可用，对高价值受众自动加价 |
+
+> **auto/broad campaign 保持开启且预算充足** —— 这是进入 prompts（对话内广告）与语义匹配流量的入口，预算不足会直接错过这部分曝光。
 
 > **广告方法论来源：** 前ANKER&BLUETTI千万美金级广告操盘手 Sukey（奇赞大课）—— 广告是获取流量和转化的最短路径，但要根据产品特性选择渠道，减少试错成本。
 >
 > **全渠道协同思维：** 广告不是孤立的，要和品牌内容/红人/SEO协同（奇赞 Ada）—— 单渠道广告有天花板，品牌词搜索量不增长+CPC持续升高=需要改变策略。
+
+### 第六步：版位策略（Placement）
+
+同一 Campaign 内可对不同版位设置竞价加成（placement modifier），最高 +900%：
+
+| 版位 | 说明 | 加成策略 |
+|------|------|---------|
+| Top of Search (第一页顶部) | 转化最高、CPC 最贵 | 核心出单 Campaign 重点加成，按 ACoS 逐步调 |
+| Product Pages (商品详情页) | 竞品/关联页拦截 | 竞品定向 Campaign 适度加成 |
+| Rest of Search | 搜索页其余位置 | 一般不加成或轻加成 |
+
+**报表路径：** Ads Console → Reports → 生成 Placement Report，按版位拆分 ACoS 后再决定加成比例。
+
+### 第七步：Prompts 广告（Alexa/Rufus 对话内广告位）
+
+- **自动注册、被动扣费：** 2026-03-25 美国站正式转 GA 并开始 CPC 计费（此前 2025-11 为免费 beta）。现有美国 SP/SB campaign **自动注册**（authors/publishers 除外），无独立出价、沿用父 campaign 的竞价与计费参数——意味着 2026-03-25 后你的预算已经在 AI 对话广告位花钱。
+- **文案不可自写：** 由 AI 从商品数据自动生成，无自写入口；可在 Ad Console/API 按单条 prompt 暂停。
+- **报表路径：** Ads Console → Reports → Create report → Sponsored Products → Prompts。目前唯一官方表现数字：约 20% 交互者会继续该品牌的对话（Q1 2026 电话会）。
+- **纳入预算与周检：** 这是被动扣费项，必须计入预算并在每周广告复盘中单列检查。
+
+### 第八步：AMC 白嫖窗口（Amazon Marketing Cloud）
+
+- 2025-09-16 起，sponsored ads 广告主可在 Ads Console **自助开通 AMC，无需 DSP 或代理**，覆盖 34 国，本体免费（no-code 模板）。
+- 2026-06-02 → 2026-12-31：**Amazon Retail Purchases + Audience Segment Insights** 两个一方付费信号限时免费，抓紧窗口做人群洞察与再营销种子。
+- 注意：AMC 免费不等于 DSP 门槛取消——managed DSP 仍约 $50k/月起，不要混淆。
 
 ### 数据验证（必做）
 1. **CPC 预估：** 如无 Helium10/JungleScout 数据，标注为"推测值"
@@ -169,7 +198,8 @@
 
 ## 可视化输出（自动生成）
 
-> 报告正文完成后，使用 AntV API 自动生成图表。API: `POST https://antv-studio.alipay.com/api/gpt-vis`，请求体含 `"source":"chart-visualization-skills"`，返回图片 URL。
+> 报告正文完成后，尝试用 AntV API 生成图表。API: `POST https://antv-studio.alipay.com/api/gpt-vis`，请求体含 `"source":"chart-visualization-skills"`，返回图片 URL。
+> **该端点为第三方免费服务、无 SLA：调用前先探活，失败则降级为本地 matplotlib 或纯 Markdown 表格，绝不因图表阻塞报告产出。**
 
 ### 必出图表
 
