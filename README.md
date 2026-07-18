@@ -484,7 +484,7 @@ Free to use, share, and adapt with credit.
 
 ## Author
 
-Created by **Alex / 黄子阳** — WhaleBridge
+Created by **Alex / 黄子阳** — **WhaleBridge / 远鲸引力**
 
 - **官网 / Website** — [whalebridge.us](https://whalebridge.us)
 - **介绍 PPT / Deck** — [ckcm.us](https://ckcm.us)
