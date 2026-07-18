@@ -484,7 +484,10 @@ Free to use, share, and adapt with credit.
 
 ## Author
 
-Created by **Alex / 黄子阳** — [ckcm.us](https://ckcm.us)
+Created by **Alex / 黄子阳** — WhaleBridge
+
+- **官网 / Website** — [whalebridge.us](https://whalebridge.us)
+- **介绍 PPT / Deck** — [ckcm.us](https://ckcm.us)
 
 ### Contact / 联系方式
 
