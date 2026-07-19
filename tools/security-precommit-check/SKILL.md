@@ -65,6 +65,30 @@ $SKILLS/tools/security-precommit-check/scripts/scan.sh --files path1 path2
 $SKILLS/tools/security-precommit-check/scripts/scan.sh
 ```
 
+## Selftest — run this after ANY rule edit
+
+```bash
+$SKILLS/tools/security-precommit-check/scripts/selftest.sh   # exit 0 = every rule is alive
+```
+
+Every rule in `rules/default.txt` must fire on a known-positive sample in
+`rules/selftest-samples.txt` (`DESCRIPTION|SAMPLE`, all values synthetic). The scanner
+**fails open**, in two ways, and only the first is visible:
+
+| Failure | Symptom | Caught by |
+|---|---|---|
+| Invalid regex | scan.sh prints `dropping invalid rule regex` | the warning — but only if you read it |
+| **Valid regex that matches nothing** | *nothing at all* — the rule looks like coverage | **only the selftest** |
+
+The second class is why this exists. `\|` inside a group is a LITERAL pipe in ERE, not
+alternation, so `(api[_-]?key\|secret[_-]?key)` matched only the text `api_key|secret_key`
+— dead, silently, for its whole life. Add a positive control with every new rule; a rule
+without one fails the selftest.
+
+The selftest also asserts benign lines trip no BLOCK rule (an over-broad rule teaches
+people to `--no-verify`, which costs more than it saves) and that the generic `sk-` rule
+does not shadow the vendor-specific Anthropic/OpenAI ones.
+
 ## Rule format
 
 ```
@@ -73,9 +97,14 @@ SEVERITY|PATTERN|DESCRIPTION
 
 - `SEVERITY` = `BLOCK` (rejects commit) or `WARN` (prints warning, exit 0)
 - `PATTERN` = extended-regex passed to `grep -E`
-- `DESCRIPTION` = human-readable label (printed in scanner output)
+- `DESCRIPTION` = human-readable label (printed in scanner output; the selftest's sample key)
 
 Lines starting with `#` and blank lines are ignored.
+
+🔴 **POSIX ERE only — no PCRE.** No `(?!…)` lookahead, no `(?=…)`, no `\d`/`\w` shorthand
+you rely on. Write `|` for alternation **unquoted** — the parser takes SEV as the first
+field and DESC as the last, so a pattern may contain pipes freely; escaping them as `\|`
+silently turns them into literal characters.
 
 ## What's in `rules/default.txt` (universal)
 

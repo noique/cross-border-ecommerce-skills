@@ -1,0 +1,51 @@
+# Positive controls for rules/default.txt — one per rule, keyed by DESCRIPTION.
+#
+# WHY: the scanner fails OPEN. An invalid regex is dropped with a warning, but a rule that
+# is VALID and simply matches nothing (e.g. \| read as a literal pipe instead of
+# alternation) dies SILENTLY — it sits in the file looking like coverage while scanning
+# nothing. Two rules were in that state before this file existed. selftest.sh asserts every
+# rule still fires on its own sample.
+#
+# Format: DESCRIPTION|SAMPLE   (DESCRIPTION must match the rule DESCRIPTION exactly)
+#
+# 🔴 <REP:c:n> expands to n copies of c at TEST time, so no credential-shaped literal is
+# ever stored here. That is deliberate: with the bodies written out, GitHub push protection
+# blocked the push (Stripe/Shopify prefixes + a long-enough body is all its detectors need),
+# and "allow the secret" is the wrong answer for a value that was never a secret. Encoded,
+# the file is inert to every scanner AND obviously synthetic to a human — while selftest.sh
+# still matches against the fully expanded string, so coverage is unchanged.
+#
+# Every value is SYNTHETIC: correct SHAPE, zero-entropy body, never issued by any vendor.
+Anthropic API key|sk-ant-api03-<REP:A:45>
+OpenAI project API key|sk-proj-<REP:A:45>
+OpenAI / generic sk- API key|sk-<REP:A:48>
+GitHub Personal Access Token (classic)|ghp_<REP:A:36>
+GitHub OAuth token|gho_<REP:A:36>
+GitHub PAT (fine-grained)|github_pat_<REP:A:60>
+Slack token|xoxb-<REP:A:12>
+AWS Access Key ID|AKIA<REP:A:16>
+Stripe secret key (LIVE)|sk_live_<REP:A:24>
+Stripe restricted key (LIVE)|rk_live_<REP:A:24>
+HOST:PORT:USER:PASS credential string|203.0.113.5:8080:useruser:passpass
+PostgreSQL URL with embedded password|postgresql://user:pass@db.example.com/mydb
+MySQL URL with embedded password|mysql://user:pass@db.example.com/mydb
+MongoDB URL with embedded password|mongodb+srv://user:pass@cluster.example.com/db
+PEM private key|-----BEGIN RSA PRIVATE KEY-----
+JWT token|eyJ<REP:A:22>.eyJ<REP:A:22>.<REP:A:8>
+macOS personal home path|/Users/exampleuser/project
+Linux personal home path|/home/exampleuser/project
+Hardcoded password literal|password = "abcd1234efgh"
+Hardcoded api_key/secret_key literal|api_key = "abcdefghij0123456789"
+Shopify Admin API access token|shpat_<REP:a:32>
+Shopify webhook shared secret|shpss_<REP:a:32>
+Shopify custom app token|shpca_<REP:a:32>
+Shopify private app password|shppa_<REP:a:32>
+OpenRouter API key|sk-or-v1-<REP:a:48>
+Resend API key|re_<REP:A:28>
+SendGrid API key|SG.<REP:A:20>.<REP:A:20>
+Telegram bot token|123456789:AA<REP:A:33>
+Google service-account JSON key|"type": "service_account"
+GitLab personal access token|glpat-<REP:A:20>
+DigitalOcean personal access token|dop_v1_<REP:a:64>
+Cloudflare API token (context match)|CLOUDFLARE_API_TOKEN="<REP:A:40>"
+Vendor API key (context match)|LOVART_API_KEY: "<REP:a:16>"

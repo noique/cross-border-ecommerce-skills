@@ -14,7 +14,12 @@
 # ============================================================================
 BLOCK|sk-ant-(api03-)?[a-zA-Z0-9_\-]{40,}|Anthropic API key
 BLOCK|sk-proj-[a-zA-Z0-9_\-]{40,}|OpenAI project API key
-BLOCK|sk-(?!ant-\|proj-)[a-zA-Z0-9]{40,}|OpenAI / generic sk- API key
+# No negative lookahead here: patterns run through `grep -E` (POSIX ERE), which has no
+# `(?!…)`. The earlier `sk-(?!ant-\|proj-)…` was invalid and got dropped every run — it
+# scanned nothing. None is needed: `[a-zA-Z0-9]` excludes `-`, so the 40-char run cannot
+# start until after the vendor segment, and `sk-ant-…` / `sk-proj-…` (own rules above)
+# break on their hyphen 3-4 chars in. Verified against all three key shapes.
+BLOCK|sk-[a-zA-Z0-9]{40,}|OpenAI / generic sk- API key
 BLOCK|ghp_[a-zA-Z0-9]{36}|GitHub Personal Access Token (classic)
 BLOCK|gho_[a-zA-Z0-9]{36}|GitHub OAuth token
 BLOCK|github_pat_[a-zA-Z0-9_]{60,}|GitHub PAT (fine-grained)
@@ -50,7 +55,11 @@ WARN|/home/[a-zA-Z]{4,}/[A-Za-z0-9._\-]+|Linux personal home path
 # Hardcoded password / api_key literals (WARN — usually env-var ref instead)
 # ============================================================================
 WARN|password\s*[:=]\s*["'][a-zA-Z0-9!@#$%^&*]{8,}["']|Hardcoded password literal
-WARN|(api[_-]?key\|secret[_-]?key)\s*[:=]\s*["'][a-zA-Z0-9_\-]{20,}["']|Hardcoded api_key/secret_key literal
+# `\|` inside the group was a LITERAL pipe, so this rule only ever matched the text
+# "api_key|secret_key" — i.e. nothing, silently, with no invalid-regex warning to catch it.
+# Unescaped `|` is correct AND safe: scan.sh parses SEV=first field, DESC=last field,
+# PATTERN=everything between, so alternation in a pattern does not break the split.
+WARN|(api[_-]?key|secret[_-]?key)\s*[:=]\s*["'][a-zA-Z0-9_\-]{20,}["']|Hardcoded api_key/secret_key literal
 
 # ---------------------------------------------------------------------------
 # 2026-07-19 — credentials this operation ACTUALLY uses. The original 20 rules
