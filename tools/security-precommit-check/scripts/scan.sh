@@ -80,16 +80,46 @@ ISSUES_BLOCK=()
 ISSUES_WARN=()
 
 # --- 1. filter the file list once (binary / self / rules-file exclusions) ---
+# 🔴 In --staged mode we scan the INDEX, not the working tree.
+# Reading paths off disk is a fail-open: `git add secret.txt` then editing the secret out
+# of the file WITHOUT re-staging left the index (and therefore the commit) still holding
+# it, while the scanner read the clean worktree copy and exited 0 with no output. Same
+# hole for `git add -p` partial staging. Reproduced end to end before this fix — the token
+# landed in HEAD. So each staged blob is materialised via `git show :FILE` and THAT is
+# what gets grepped; findings are mapped back to the real path for reporting.
+STAGEDIR=""
+declare -a REALOF=()
 SAFE=()
-for f in "${FILES[@]}"; do
-  [ -f "$f" ] || continue
-  case "$f" in *"security-precommit-check/"*) continue ;; esac
-  [ "$(basename "$f")" = ".security-precommit-rules.txt" ] && continue
-  # binary check runs ONCE per file now, not once per (rule × file)
-  case "$(file --brief --mime "$f" 2>/dev/null)" in *charset=binary*) continue ;; esac
-  SAFE+=("$f")
-done
-[ ${#SAFE[@]} -eq 0 ] && exit 0
+if [ "$MODE" = "--staged" ]; then
+  STAGEDIR=$(mktemp -d)
+  n=0
+  for f in "${FILES[@]}"; do
+    case "$f" in *"security-precommit-check/"*) continue ;; esac
+    [ "$(basename "$f")" = ".security-precommit-rules.txt" ] && continue
+    blob="$STAGEDIR/$n"
+    git show ":$f" > "$blob" 2>/dev/null || continue
+    case "$(file --brief --mime "$blob" 2>/dev/null)" in *charset=binary*) rm -f "$blob"; continue ;; esac
+    SAFE+=("$blob"); REALOF[$n]="$f"; n=$((n+1))
+  done
+else
+  for f in "${FILES[@]}"; do
+    [ -f "$f" ] || continue
+    case "$f" in *"security-precommit-check/"*) continue ;; esac
+    [ "$(basename "$f")" = ".security-precommit-rules.txt" ] && continue
+    # binary check runs ONCE per file now, not once per (rule × file)
+    case "$(file --brief --mime "$f" 2>/dev/null)" in *charset=binary*) continue ;; esac
+    SAFE+=("$f")
+  done
+fi
+[ ${#SAFE[@]} -eq 0 ] && { [ -n "$STAGEDIR" ] && rm -rf "$STAGEDIR"; exit 0; }
+
+# Translate a scanned path back to what the user actually committed.
+realpath_of() {
+  case "$1" in
+    "$STAGEDIR"/*) local i="${1##*/}"; printf '%s' "${REALOF[$i]:-$1}" ;;
+    *) printf '%s' "$1" ;;
+  esac
+}
 
 # --- 2. load rules into parallel arrays ---
 #
@@ -129,7 +159,7 @@ done
 [ ${#PATS[@]} -eq 0 ] && { echo "scan.sh: no usable rules" >&2; exit 2; }
 [ "$DROPPED" -gt 0 ] && printf 'scan.sh: %d invalid rule(s) dropped — fix them, they are scanning nothing.\n' "$DROPPED" >&2
 
-TMPD=$(mktemp -d); trap 'rm -rf "$TMPD"' EXIT
+TMPD=$(mktemp -d); trap 'rm -rf "$TMPD" "$STAGEDIR"' EXIT
 : > "$TMPD/block.pat"; : > "$TMPD/warn.pat"
 for idx in "${!PATS[@]}"; do
   if [ "${SEVS[$idx]}" = "BLOCK" ]; then printf '%s\n' "${PATS[$idx]}" >> "$TMPD/block.pat"
@@ -154,7 +184,10 @@ scan_severity() {
   [ -s "$patfile" ] || return 0
   while IFS= read -r line; do
     [ -z "$line" ] && continue
-    loc=$(printf '%s' "$line" | cut -d: -f1,2)
+    local rawfile rawline
+    rawfile=$(printf '%s' "$line" | cut -d: -f1)
+    rawline=$(printf '%s' "$line" | cut -d: -f2)
+    loc="$(realpath_of "$rawfile"):$rawline"
     text=$(printf '%s' "$line" | cut -d: -f3-)
     desc=$(attribute "$sev" "$text")
     local entry="$loc:$(printf '%s' "$text" | cut -c1-180)  ← [$desc]"
