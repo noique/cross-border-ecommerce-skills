@@ -27,21 +27,30 @@ PROJECT_RULES="$REPO_ROOT/.security-precommit-rules.txt"
 
 # -------------------- determine target files --------------------
 
+# 🔴 File lists are read NUL-separated into an array. An earlier version used an
+# unquoted `for f in $FILES`, which word-split any path containing a space into
+# non-existent fragments; those silently failed the -f test and the file was never
+# scanned — a secret in "my file.txt" passed the gate with exit 0. Demonstrated, not
+# theoretical: this repo set contains paths like "建站 skill" and
+# "kristikay-diary GitHub Actions deploy API .txt".
 MODE="${1:---staged}"
+FILES=()
 case "$MODE" in
   --staged)
-    FILES=$(git diff --cached --name-only --diff-filter=ACM 2>/dev/null) ;;
+    while IFS= read -r -d '' f; do FILES+=("$f"); done \
+      < <(git diff --cached --name-only --diff-filter=ACM -z 2>/dev/null) ;;
   --all)
-    FILES=$(git ls-files 2>/dev/null) ;;
+    while IFS= read -r -d '' f; do FILES+=("$f"); done \
+      < <(git ls-files -z 2>/dev/null) ;;
   --files)
     shift
-    FILES="$*" ;;
+    FILES=("$@") ;;
   *)
     echo "scan.sh: unknown mode '$MODE' (expected --staged | --all | --files PATH...)" >&2
     exit 2 ;;
 esac
 
-if [ -z "$FILES" ]; then
+if [ ${#FILES[@]} -eq 0 ]; then
   exit 0
 fi
 
@@ -57,50 +66,104 @@ if [ ${#RULE_FILES[@]} -eq 0 ]; then
 fi
 
 # -------------------- scan --------------------
+#
+# 🔴 Performance note. The original shape was `for rule; do for file; do file+grep`,
+# i.e. one `file(1)` and one `grep(1)` subprocess per (rule × file) pair. Measured at
+# 540 ms/file — kristikay-diary (1775 tracked files × 33 rules) would have taken ~16
+# minutes, so --all and any CI use were effectively impossible.
+#
+# Restructured to: filter the file list ONCE, then run ONE grep per severity over all
+# files at once (`grep -nE -f patterns -- file...`). Rule attribution happens only on
+# the handful of lines that actually matched. Same rules, same output, same exit codes.
 
 ISSUES_BLOCK=()
 ISSUES_WARN=()
 
+# --- 1. filter the file list once (binary / self / rules-file exclusions) ---
+SAFE=()
+for f in "${FILES[@]}"; do
+  [ -f "$f" ] || continue
+  case "$f" in *"security-precommit-check/"*) continue ;; esac
+  [ "$(basename "$f")" = ".security-precommit-rules.txt" ] && continue
+  # binary check runs ONCE per file now, not once per (rule × file)
+  case "$(file --brief --mime "$f" 2>/dev/null)" in *charset=binary*) continue ;; esac
+  SAFE+=("$f")
+done
+[ ${#SAFE[@]} -eq 0 ] && exit 0
+
+# --- 2. load rules into parallel arrays ---
+#
+# 🔴 Rule format is SEV|PATTERN|DESC, but several PATTERNS legitimately contain `|`
+# (alternation). Splitting on field 2 truncated them — e.g. one rule was being read as
+# the fragment `sk-(?!ant-\` . So: SEV is the FIRST field, DESC is the LAST field, and
+# PATTERN is everything in between, rejoined.
+#
+# 🔴 Every pattern is then VALIDATED. Combining patterns into one `grep -f` file means a
+# single invalid regex makes grep exit 2 and print nothing — the whole scan silently
+# passes. That is a fail-open, so a bad rule is dropped loudly instead of taken on trust.
+SEVS=(); PATS=(); DESCS=(); DROPPED=0
 for rule_file in "${RULE_FILES[@]}"; do
   while IFS= read -r line || [ -n "$line" ]; do
-    # skip comments and blanks
     [ -z "$line" ] && continue
     case "$line" in \#*) continue ;; esac
+    case "$line" in *"|"*) ;; *) continue ;; esac
 
-    SEVERITY=$(echo "$line" | cut -d'|' -f1)
-    PATTERN=$(echo "$line" | cut -d'|' -f2)
-    DESC=$(echo "$line" | cut -d'|' -f3-)
+    sev="${line%%|*}"                 # first field
+    rest="${line#*|}"                 # everything after it
+    dsc="${rest##*|}"                 # last field
+    if [ "$rest" = "$dsc" ]; then pat="$rest"; dsc=""; else pat="${rest%|*}"; fi
 
-    [ -z "$PATTERN" ] && continue
-    [ "$SEVERITY" != "BLOCK" ] && [ "$SEVERITY" != "WARN" ] && continue
+    [ -z "$pat" ] && continue
+    [ "$sev" != "BLOCK" ] && [ "$sev" != "WARN" ] && continue
 
-    for f in $FILES; do
-      [ -f "$f" ] || continue
-      # Don't scan binary files
-      if file --brief --mime "$f" 2>/dev/null | grep -q "charset=binary"; then
-        continue
-      fi
-      # Don't scan the scanner's own files (rule definitions are designed to
-      # contain the patterns they block — that's their job)
-      [[ "$f" == *"security-precommit-check/"* ]] && continue
-      [[ "$(basename "$f")" == ".security-precommit-rules.txt" ]] && continue
-
-      MATCHES=$(grep -nE "$PATTERN" "$f" 2>/dev/null || true)
-      [ -z "$MATCHES" ] && continue
-
-      while IFS= read -r m; do
-        # Truncate long lines
-        m_short=$(echo "$m" | cut -c1-180)
-        entry="$f:$m_short  ← [$DESC]"
-        if [ "$SEVERITY" = "BLOCK" ]; then
-          ISSUES_BLOCK+=("$entry")
-        else
-          ISSUES_WARN+=("$entry")
-        fi
-      done <<< "$MATCHES"
-    done
+    # Valid patterns simply do not match the probe (exit 1, no stderr).
+    # An invalid regex writes to stderr — that is the only reliable signal.
+    rx_err=$(printf 'probe' | grep -E -e "$pat" 2>&1 >/dev/null)
+    if [ -n "$rx_err" ]; then
+      printf 'scan.sh: WARNING dropping invalid rule regex: %s\n' "$pat" >&2
+      DROPPED=$((DROPPED+1)); continue
+    fi
+    SEVS+=("$sev"); PATS+=("$pat"); DESCS+=("${dsc:-unnamed rule}")
   done < "$rule_file"
 done
+[ ${#PATS[@]} -eq 0 ] && { echo "scan.sh: no usable rules" >&2; exit 2; }
+[ "$DROPPED" -gt 0 ] && printf 'scan.sh: %d invalid rule(s) dropped — fix them, they are scanning nothing.\n' "$DROPPED" >&2
+
+TMPD=$(mktemp -d); trap 'rm -rf "$TMPD"' EXIT
+: > "$TMPD/block.pat"; : > "$TMPD/warn.pat"
+for idx in "${!PATS[@]}"; do
+  if [ "${SEVS[$idx]}" = "BLOCK" ]; then printf '%s\n' "${PATS[$idx]}" >> "$TMPD/block.pat"
+  else printf '%s\n' "${PATS[$idx]}" >> "$TMPD/warn.pat"; fi
+done
+
+# --- 3. one grep pass per severity across ALL files ---
+# attribute() finds which rule a matched line belongs to — only runs on real hits.
+attribute() {
+  local want_sev="$1" text="$2" k
+  for k in "${!PATS[@]}"; do
+    [ "${SEVS[$k]}" = "$want_sev" ] || continue
+    if printf '%s' "$text" | grep -qE -e "${PATS[$k]}" 2>/dev/null; then
+      printf '%s' "${DESCS[$k]}"; return
+    fi
+  done
+  printf 'unclassified'
+}
+
+scan_severity() {
+  local sev="$1" patfile="$2" line loc text desc
+  [ -s "$patfile" ] || return 0
+  while IFS= read -r line; do
+    [ -z "$line" ] && continue
+    loc=$(printf '%s' "$line" | cut -d: -f1,2)
+    text=$(printf '%s' "$line" | cut -d: -f3-)
+    desc=$(attribute "$sev" "$text")
+    local entry="$loc:$(printf '%s' "$text" | cut -c1-180)  ← [$desc]"
+    if [ "$sev" = "BLOCK" ]; then ISSUES_BLOCK+=("$entry"); else ISSUES_WARN+=("$entry"); fi
+  done < <(printf '%s\0' "${SAFE[@]}" | xargs -0 grep -nHE -f "$patfile" -- 2>/dev/null || true)
+}
+
+scan_severity BLOCK "$TMPD/block.pat"
+scan_severity WARN  "$TMPD/warn.pat"
 
 # -------------------- report --------------------
 

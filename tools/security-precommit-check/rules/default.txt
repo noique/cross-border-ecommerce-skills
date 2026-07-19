@@ -51,3 +51,23 @@ WARN|/home/[a-zA-Z]{4,}/[A-Za-z0-9._\-]+|Linux personal home path
 # ============================================================================
 WARN|password\s*[:=]\s*["'][a-zA-Z0-9!@#$%^&*]{8,}["']|Hardcoded password literal
 WARN|(api[_-]?key\|secret[_-]?key)\s*[:=]\s*["'][a-zA-Z0-9_\-]{20,}["']|Hardcoded api_key/secret_key literal
+
+# ---------------------------------------------------------------------------
+# 2026-07-19 — credentials this operation ACTUALLY uses. The original 20 rules
+# covered generic vendors (Anthropic/OpenAI/GitHub/AWS/Stripe/DB/PEM) but not a
+# single one of the tokens this business runs on. Found the hard way: a staged
+# file containing a Shopify Admin token passed the gate cleanly.
+# ---------------------------------------------------------------------------
+BLOCK|shpat_[a-fA-F0-9]{32}|Shopify Admin API access token
+BLOCK|shpss_[a-fA-F0-9]{32}|Shopify webhook shared secret
+BLOCK|shpca_[a-fA-F0-9]{32}|Shopify custom app token
+BLOCK|shppa_[a-fA-F0-9]{32}|Shopify private app password
+BLOCK|sk-or-v1-[a-f0-9]{48,}|OpenRouter API key
+BLOCK|\bre_[A-Za-z0-9_]{28,}\b|Resend API key
+BLOCK|SG\.[A-Za-z0-9_\-]{20,}\.[A-Za-z0-9_\-]{20,}|SendGrid API key
+BLOCK|\b[0-9]{8,10}:AA[A-Za-z0-9_\-]{33}\b|Telegram bot token
+BLOCK|"type"[[:space:]]*:[[:space:]]*"service_account"|Google service-account JSON key
+BLOCK|glpat-[A-Za-z0-9_\-]{20,}|GitLab personal access token
+BLOCK|dop_v1_[a-f0-9]{64}|DigitalOcean personal access token
+WARN|(CLOUDFLARE_API_TOKEN|CF_API_TOKEN)[[:space:]]*[:=][[:space:]]*["']?[A-Za-z0-9_\-]{40}|Cloudflare API token (context match)
+WARN|(LOVART|UMAMI|JUDGEME|SEMRUSH|ZOHO)[A-Z_]*(KEY|TOKEN|SECRET)[[:space:]]*[:=][[:space:]]*["'][^"']{16,}|Vendor API key (context match)
