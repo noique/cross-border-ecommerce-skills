@@ -9,7 +9,16 @@
 #      coverage while scanning nothing, with no warning of any kind. That is the failure
 #      mode this file exists to catch: a rule is only real if it fires on a known positive.
 #
-# Usage: scripts/selftest.sh          # exits 0 when every rule is alive, 1 otherwise
+# Usage: scripts/selftest.sh                    # default.txt + THIS repo's per-repo rules
+#        scripts/selftest.sh RULES_FILE...      # also check the given per-repo rule files
+#
+# 🔴 Per-repo rules (.security-precommit-rules.txt) are checked too, and by default, because
+# scan.sh loads them with exactly the same weight as the defaults — a dead rule there is just
+# as blind. They are held to a WEAKER standard on purpose: two of these repos are public, and
+# a positive control for "known-leaked proxy password" or "founder's real name" would mean
+# committing the very string the rule exists to keep out. So per-repo rules get regex validity
+# + the dead-alternation lint + the benign negative controls, and get the full positive-control
+# check only for those descriptions a companion .security-precommit-samples.txt covers.
 #
 # Parsing below MIRRORS scan.sh exactly (SEV = first field, DESC = last field, PATTERN =
 # everything between). If scan.sh's parser changes, change it here too — a selftest that
@@ -20,6 +29,16 @@ set -uo pipefail
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 RULES="$SCRIPT_DIR/../rules/default.txt"
 SAMPLES="$SCRIPT_DIR/../rules/selftest-samples.txt"
+
+# Same discovery scan.sh does, so selftest sees the same rule set the scanner will.
+REPO_ROOT="$(cd "$SCRIPT_DIR" && git rev-parse --show-toplevel 2>/dev/null || true)"
+EXTRA_RULES=()
+[ -n "$REPO_ROOT" ] && [ -f "$REPO_ROOT/.security-precommit-rules.txt" ] \
+  && EXTRA_RULES+=("$REPO_ROOT/.security-precommit-rules.txt")
+for arg in "$@"; do
+  [ -f "$arg" ] || { echo "selftest: no such rules file: $arg" >&2; exit 2; }
+  EXTRA_RULES+=("$arg")
+done
 
 for f in "$RULES" "$SAMPLES"; do
   [ -f "$f" ] || { echo "selftest: missing $f" >&2; exit 2; }
@@ -41,15 +60,22 @@ expand() {
 
 # bash 3.2 (macOS default) has no associative arrays → parallel arrays, like scan.sh.
 S_DESCS=(); S_VALS=()
-while IFS= read -r line || [ -n "$line" ]; do
-  [ -z "$line" ] && continue
-  case "$line" in \#*) continue ;; *"|"*) ;; *) continue ;; esac
-  S_DESCS+=("${line%%|*}")
-  S_VALS+=("$(expand "${line#*|}")")
-done < "$SAMPLES"
+load_samples() {          # replaces the sample table; empty/absent file = no samples
+  S_DESCS=(); S_VALS=()
+  [ -f "${1:-}" ] || return 0
+  local line
+  while IFS= read -r line || [ -n "$line" ]; do
+    [ -z "$line" ] && continue
+    case "$line" in \#*) continue ;; *"|"*) ;; *) continue ;; esac
+    S_DESCS+=("${line%%|*}")
+    S_VALS+=("$(expand "${line#*|}")")
+  done < "$1"
+}
+load_samples "$SAMPLES"
 
 sample_for() {           # echo the sample for a description, empty if none
   local want="$1" i
+  [ ${#S_DESCS[@]} -eq 0 ] && return 1     # set -u: ${!arr[@]} on an empty array aborts
   for i in "${!S_DESCS[@]}"; do
     [ "${S_DESCS[$i]}" = "$want" ] && { printf '%s' "${S_VALS[$i]}"; return 0; }
   done
@@ -140,7 +166,76 @@ if [ -n "$GENERIC_SK" ]; then
   done
 fi
 
+# ---------- 5. per-repo rule files (.security-precommit-rules.txt) ----------
+# scan.sh gives these the same weight as the defaults, so they get checked too. Weaker
+# standard, for the reason in the header: some positive controls cannot exist in a public
+# repo. What IS enforced everywhere: valid regex, no dead alternation, no benign false
+# positive. Rules with no positive control are counted and reported as UNPROVEN, never
+# silently folded into the pass count — an unproven rule is not a passing rule.
+UNPROVEN=0
+if [ ${#EXTRA_RULES[@]} -gt 0 ]; then
+  for rf in "${EXTRA_RULES[@]}"; do
+    echo "per-repo rules: $rf"
+    load_samples "${rf%.txt}"".samples.txt"   # .security-precommit-rules.samples.txt
+    [ ${#S_DESCS[@]} -eq 0 ] && load_samples "$(dirname "$rf")/.security-precommit-samples.txt"
+
+    while IFS= read -r line || [ -n "$line" ]; do
+      [ -z "$line" ] && continue
+      case "$line" in \#*) continue ;; *"|"*) ;; *) continue ;; esac
+
+      sev="${line%%|*}"; rest="${line#*|}"; dsc="${rest##*|}"
+      if [ "$rest" = "$dsc" ]; then pat="$rest"; dsc=""; else pat="${rest%|*}"; fi
+      [ -z "$pat" ] && continue
+      [ "$sev" != "BLOCK" ] && [ "$sev" != "WARN" ] && continue
+
+      # (a) valid regex — scan.sh would drop it loudly
+      rx_err=$(printf 'probe' | grep -E -e "$pat" 2>&1 >/dev/null)
+      if [ -n "$rx_err" ]; then fail "[$sev] $dsc — INVALID REGEX (scan.sh drops it): $pat"; continue; fi
+
+      # (b) dead alternation — the exact bug that shipped here. `\|` is a LITERAL pipe in
+      #     ERE, so (a\|b) matches only the text "a|b". Valid regex, zero coverage, silent.
+      #     A bare `|` parses fine (SEV is first field, DESC is last); for a genuine literal
+      #     pipe write [|], which is unambiguous.
+      case "$pat" in
+        *'\|'*) fail "[$sev] $dsc — DEAD ALTERNATION: \\| is a literal pipe in ERE, so this only matches the text with a pipe in it. Use (a|b), or [|] for a real literal pipe: $pat"
+                continue ;;
+      esac
+
+      # (c) BLOCK rules must not fire on ordinary code
+      if [ "$sev" = "BLOCK" ]; then
+        for b in "${BENIGN[@]}"; do
+          printf '%s' "$b" | grep -qE -e "$pat" 2>/dev/null \
+            && fail "[BLOCK] $dsc — FALSE POSITIVE on benign line: $b"
+        done
+      fi
+
+      # (d) positive control when one exists.
+      #     🔴 Per-repo descriptions are NOT unique — this file has 9 rules all described
+      #     "Competitor brand name". Keying on the FIRST sample with that description would
+      #     test all 9 against one brand and report the other 8 dead. So the rule passes if
+      #     it fires on ANY sample carrying its description; a genuinely dead rule (typo'd
+      #     pattern) still matches none of them and is still caught.
+      hit=0; have=0
+      if [ ${#S_DESCS[@]} -gt 0 ]; then
+        for si in "${!S_DESCS[@]}"; do
+          [ "${S_DESCS[$si]}" = "$dsc" ] || continue
+          have=1
+          printf '%s' "${S_VALS[$si]}" | grep -qE -e "$pat" 2>/dev/null && { hit=1; break; }
+        done
+      fi
+      if [ "$have" -eq 0 ]; then UNPROVEN=$((UNPROVEN+1))
+      elif [ "$hit" -eq 1 ]; then pass
+      else fail "[$sev] $dsc — DEAD: valid regex, matches no sample carrying its description: $pat"; fi
+    done < "$rf"
+  done
+  echo
+fi
+
 echo
+if [ "$UNPROVEN" -gt 0 ]; then
+  printf 'selftest: ⚠ %d per-repo rule(s) have no positive control — checked for validity, NOT proven to fire.\n' "$UNPROVEN"
+  printf '          Add controls in .security-precommit-samples.txt (DESCRIPTION|SAMPLE) for any whose sample is safe to store.\n'
+fi
 if [ "$FAIL" -gt 0 ]; then
   printf 'selftest: %d passed · %d FAILED — a failing rule scans nothing; fix it or the gate is theatre.\n' "$PASS" "$FAIL"
   exit 1

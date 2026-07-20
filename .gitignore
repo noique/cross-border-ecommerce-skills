@@ -1,2 +1,8 @@
 __pycache__/
 *.pyc
+
+# 🔴 The per-repo denylist names the very strings it exists to keep out (VPS IP,
+# founder identity, rotated credentials). This repo is PUBLIC, so the live file
+# stays untracked; only tools/security-precommit-check/templates/*.example ships.
+.security-precommit-rules.txt
+.security-precommit-samples.txt
