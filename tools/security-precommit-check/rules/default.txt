@@ -35,7 +35,14 @@ BLOCK|rk_live_[a-zA-Z0-9]{24,}|Stripe restricted key (LIVE)
 # and requires user/pass be ≥8 chars to skip "none:none")
 BLOCK|[1-9][0-9]{0,2}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}:[0-9]+:[a-zA-Z0-9]{8,}:[a-zA-Z0-9]{8,}|HOST:PORT:USER:PASS credential string
 # Database URLs with embedded creds (matches non-localhost via simple substring exclude)
-BLOCK|postgres(ql)?://[^/[:space:]]+:[^/[:space:]@]+@[^/[:space:]]+|PostgreSQL URL with embedded password
+# The password segment must LOOK like a password: >=8 chars, and free of the
+# characters that only ever appear in placeholders and shell interpolation
+# (<> for <password>, ${} for ${DB_PASSWORD}/$PGPASSWORD). Before this, the rule
+# fired on every .env.example, every deployment doc and every usage string in the
+# Curator repo — 10 hits, all fake. Ten fake hits is how a gate becomes wallpaper.
+# Trade-off accepted: a REAL password under 8 chars now slips this rule. The
+# generic high-entropy rules and the hook remain as the backstop.
+BLOCK|postgres(ql)?://[^/[:space:]@]+:[^/[:space:]@<>${}]{8,}@[^/[:space:]]+|PostgreSQL URL with embedded password
 BLOCK|mysql://[^/[:space:]]+:[^/[:space:]@]+@[^/[:space:]]+|MySQL URL with embedded password
 BLOCK|mongodb(\+srv)?://[^/[:space:]]+:[^/[:space:]@]+@[^/[:space:]]+|MongoDB URL with embedded password
 

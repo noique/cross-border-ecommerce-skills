@@ -27,7 +27,7 @@ AWS Access Key ID|AKIA<REP:A:16>
 Stripe secret key (LIVE)|sk_live_<REP:A:24>
 Stripe restricted key (LIVE)|rk_live_<REP:A:24>
 HOST:PORT:USER:PASS credential string|203.0.113.5:8080:useruser:passpass
-PostgreSQL URL with embedded password|postgresql://user:pass@db.example.com/mydb
+PostgreSQL URL with embedded password|postgresql://user:Xq7vRt2mPz9L@db.example.com/mydb
 MySQL URL with embedded password|mysql://user:pass@db.example.com/mydb
 MongoDB URL with embedded password|mongodb+srv://user:pass@cluster.example.com/db
 PEM private key|-----BEGIN RSA PRIVATE KEY-----
