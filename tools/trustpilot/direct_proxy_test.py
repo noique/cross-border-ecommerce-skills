@@ -90,8 +90,8 @@ def test_direct_proxy(proxy_str):
 
 def main():
     parser = argparse.ArgumentParser(description="直接测试远程代理连接")
-    parser.add_argument("--proxy1", action="store_true", help="测试第一个远程代理 (93.89.220.26)")
-    parser.add_argument("--proxy2", action="store_true", help="测试第二个远程代理 (149.18.52.92)")
+    parser.add_argument("--proxy1", action="store_true", help="测试第一个远程代理 (见 TP_PROXY_1)")
+    parser.add_argument("--proxy2", action="store_true", help="测试第二个远程代理 (见 TP_PROXY_2)")
     parser.add_argument("--all", action="store_true", help="测试所有远程代理")
     parser.add_argument("--proxy", type=str, help="指定要测试的代理字符串 (格式: HOST:PORT:USER:PASS)")
     

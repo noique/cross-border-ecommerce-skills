@@ -45,6 +45,27 @@ if [ ! -f "$PROJECT_RULES" ]; then
   fi
 fi
 
+# 🔴 Ignore it, always, in every repo — a denylist of secrets IS a list of secrets.
+# This installer used to drop the file in and walk away, so it got committed like any
+# other config. In THIS repo that published a Cloudflare-hidden origin IP for ten weeks:
+# the rule "never commit the VPS IP" was the thing committing the VPS IP. The file is
+# per-machine operator config, not shared project config, so nothing is lost by ignoring
+# it — and the sibling samples file holds the same strings, so it goes too.
+IGNORE="$REPO_ROOT/.gitignore"
+for f in .security-precommit-rules.txt .security-precommit-samples.txt; do
+  if ! grep -qxF "$f" "$IGNORE" 2>/dev/null; then
+    [ -s "$IGNORE" ] && [ -n "$(tail -c 1 "$IGNORE" 2>/dev/null)" ] && printf '\n' >> "$IGNORE"
+    printf '%s\n' "$f" >> "$IGNORE"
+    echo "  → .gitignore += $f"
+  fi
+  # Already tracked from a previous install? Untrack it (content stays on disk).
+  if git -C "$REPO_ROOT" ls-files --error-unmatch "$f" >/dev/null 2>&1; then
+    git -C "$REPO_ROOT" rm --cached --quiet "$f"
+    echo "  🔴 $f was TRACKED — untracked it. If this repo is public, assume the"
+    echo "     values in it are already exposed and rotate anything still live."
+  fi
+done
+
 echo "Installed pre-commit hook → $HOOK_PATH"
 echo "  → calls: $SCAN_SH --staged"
 echo "  → reads default rules from $SCRIPT_DIR/../rules/default.txt"

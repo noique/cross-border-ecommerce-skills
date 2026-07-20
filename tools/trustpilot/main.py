@@ -196,8 +196,8 @@ def main():
     parser.add_argument("--base_proxy", type=str, default="socks", choices=["socks", "http"], help="选择基础代理类型 (socks 或 http)")
     parser.add_argument("--proxy_mode", type=str, default=None, choices=["direct", "v2ray", "chain", "local"], 
                         help="代理模式: direct=直接使用远程代理, v2ray=仅使用本地V2Ray, chain=二级代理链, local=不使用代理")
-    parser.add_argument("--use_proxy1", action='store_true', help="使用第一个代理 (93.89.220.26)")
-    parser.add_argument("--use_proxy2", action='store_true', help="使用第二个代理 (149.18.52.92)")
+    parser.add_argument("--use_proxy1", action='store_true', help="使用第一个代理 (见 TP_PROXY_1)")
+    parser.add_argument("--use_proxy2", action='store_true', help="使用第二个代理 (见 TP_PROXY_2)")
     parser.add_argument("--skip_merge", action='store_true', help="爬取完成后跳过合并步骤")
     parser.add_argument("--cutoff_date", type=str, default=None, help="只抓 ≥ 该日期的评论，YYYY-MM-DD（如 2025-11-06）。Trustpilot 按时间倒序，达到截止后停止")
 
@@ -223,10 +223,10 @@ def main():
     # 根据参数选择使用哪些代理
     selected_proxies = []
     if use_proxy1:
-        selected_proxies.append(PROXIES[0])  # 93.89.220.26
+        selected_proxies.append(PROXIES[0])  # TP_PROXY_1
         print(f"已选择代理1: {PROXIES[0]}")
     if use_proxy2:
-        selected_proxies.append(PROXIES[1])  # 149.18.52.92
+        selected_proxies.append(PROXIES[1])  # TP_PROXY_2
         print(f"已选择代理2: {PROXIES[1]}")
     
     # 如果没有指定具体代理但又需要使用代理
