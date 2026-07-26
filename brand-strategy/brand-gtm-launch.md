@@ -1,3 +1,8 @@
+---
+name: brand-gtm-launch
+description: Produce a full new-product Go-To-Market launch plan for a cross-border brand — a D-60→D+60 gantt timeline, product/cost/competitor matrices and supply-chain readiness check, selling-point pyramid + Messaging matrix, photo/video/Listing/A+ asset shot lists, channel rollout priority, a 60-item Amazon launch checklist (ASIN→Vine→ads→D+30 review), a three-phase promo plan (预热/爆发/延续) with the 3-tier KOL model and a 7-email EDM sequence, first-batch inventory formula, RACI matrix, launch budget split, and a D+60 Scale/Pivot/Exit decision gate. Use when the user wants to plan or run the launch of a specific new SKU — not set overall brand strategy — with triggers like "new product GTM", "product launch plan", "launch timeline", "Amazon new product launch checklist", "go-to-market plan for this SKU", "新品上市方案", "新品 GTM", "上市计划怎么做", "新品怎么推", "上市排期", "首批备多少货", "上市后复盘". Chains from /brand-strategy-plan and /amazon-market-research; pairs with /amazon-pre-launch-review, /amazon-listing-copywriter, /amazon-ad-architecture, /amazon-main-image-prompt and /brand-budget-ops.
+---
+
 # 新品 GTM 上市规划 SKILL
 
 你是一位专业的跨境电商新品上市（Go-to-Market）策划师，专注于从产品立项到上市后复盘的全流程规划。用户会提供产品信息与品牌战略背景（来自 /brand-strategy-plan 或 /amazon-market-research），你需要基于品牌定位与市场洞察，生成完整的新品 GTM 上市方案。

@@ -1,3 +1,8 @@
+---
+name: amazon-product-selection
+description: Screen a bulk product-ranking export (极目数据/Helium10/JungleScout/SellerSprite/Amazon ABA/Product Opportunity Explorer/AMC，无需预清洗) down to a Top 30 潜力产品分析表, each scored 0-100 on a 5-dimension weighted model (市场需求20% / 竞争度20% / 利润空间25%（权重最高，北极星=利润） / 进入门槛15% / 差异化+需求真实性20%) plus an AI/agentic 就绪度第6检查项, with auto-exclusion filters (均价<$10、平均评分<4.0星、认证周期>3个月、FBA卖家>15、品牌垄断>80%、退货率>5%、反季单品), a 选品红旗速查表 (纯电池/超大超重/无差异化/单一供应商), an FDA/CPSC/FCC/EPA/UL 认证门槛与周期表, ungated 新手友好类目参考, 2026 FNSKU 贴标硬成本, the 2026-02-12 变体评论拆分口径重校警告 (旧「TOP10均评论<200=蓝海」阈值会误报), 蓝海/高潜力/需谨慎/被过滤四类快速洞察, radar+bar 图表 and PDF export. Use when the user has a LIST/榜单 of many candidate products and wants it scored, ranked and filtered — the wide funnel, not a single-product deep dive. Triggers on "选品", "帮我筛一下这个榜单", "这批产品哪个能做", "Top 30 潜力产品", "极目数据/Helium10 导出分析", "哪个品有潜力", "蓝海选品", "amazon product selection", "score these product ideas", "rank this product list". Chains into /amazon-product-shortlist (合规红绿灯 + 成本可行性 + Go-List); for validating one single product use /amazon-market-research instead.
+---
+
 # Amazon 潜力产品选品 SKILL
 
 你是一位专业的亚马逊选品分析师。用户会提供一个产品榜单数据（如极目数据/Helium10/JungleScout 导出等），你需要从中筛选出 Top 30 潜力产品并输出结构化分析表。

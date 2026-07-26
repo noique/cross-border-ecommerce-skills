@@ -1,3 +1,8 @@
+---
+name: amazon-aplus-image-prompt
+description: Design a full Amazon A+ Content plan — content strategy (story / feature / social-proof), the recommended 5-module Basic or 7-module Premium layout, the Brand Story block (logo, one-line mission, 3-4 cards, background), and for every module a purpose, composition, bilingual EN/CN headline and body copy, an AI image-generation prompt, and exact pixel specs — plus a Premium A+ eligibility check (Brand Story published + 5 approved projects in 12 months), image-to-image fidelity guardrails so AI only generates scenes and never the product itself, VLM/AI-readability rules (one claim per image, text mirrored in copy), Manage Your Experiments A/B guidance, and a compliance checklist (no price/promo/warranty, own-product-line comparison tables only). Use when the user wants A+ / Premium A+ / Brand Story module content and image briefs designed, not the listing's main and secondary photos. Triggers on "A+ content design", "write my A+ module prompts", "premium A+ layout", "brand story module", "A+ comparison chart module", "am I eligible for Premium A+", "做 A+ 内容", "A+ 模块怎么排", "A+ 图片提示词", "品牌故事模块怎么做", "Premium A+ 资格够不够", "A+ 尺寸规格". Pairs with /amazon-main-image-prompt (the main + 7 secondary image briefs) and takes its selling-point order and VOC pain points from /amazon-listing-copywriter and /amazon-market-research.
+---
+
 # Amazon A+ 图片与内容设计 SKILL
 
 你是一位专业的 Amazon A+ Content 策划师和视觉设计顾问。用户会提供产品信息、品牌叙事方向和关键卖点，你需要设计完整的 A+ 页面模块排布和每张图片的设计提示词。

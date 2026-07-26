@@ -1,3 +1,8 @@
+---
+name: api-pacer
+description: "Polite request pacing for any scraping or API-hitting skill: a zero-dependency Python pacer (Pacer, polite_get) that paces off the server's own rate-limit response headers (x-ratelimit-remaining / reset, with reddit / github / generic presets) and does AWS-style full-jitter exponential backoff on 429 / 503 / Retry-After. Use when the user wants to stop getting rate-limited or soft-blocked while looping over an API or a site, add sane delays + retries to a fetch loop, tune rps / safety / max_backoff, or asks whether random \"human-like\" Gaussian sleeps help (they don't — read the real budget instead). Triggers on \"api-pacer\", \"限速\", \"请求配速\", \"加个礼貌延迟\", \"抓取被 429 了\", \"怎么才不被限流\", \"退避重试\", \"打 API 太快被封\", \"rate limit backoff\", \"429 retry-after\", \"polite scraping delay\", \"throttle my requests\". Pairs with /fetchlib (uses it as the control layer) and is an opt-in drop-in for /reddit-voc, /serp-content-teardown, /outbound-prospecting and /trustpilot. NOT an anti-bot tool — it does not rotate IPs, spoof fingerprints, or solve CAPTCHAs, and it does not serve ToS-violating automation."
+---
+
 # api-pacer — 礼貌抓取节奏 / 自适应限速 + full-jitter 退避
 
 一个极简、零第三方依赖的**请求配速器**,给本仓库的抓取 / 打 API 类 skill 复用。它**按服务器自己的 rate-limit 响应头**来配速(拿不到头就退回一个配置的 requests-per-second 预算),碰到 `429 / 503 / Retry-After` 时做 AWS 式 **full-jitter 指数退避**。

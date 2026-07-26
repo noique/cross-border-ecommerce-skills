@@ -1,3 +1,8 @@
+---
+name: amazon-market-research
+description: "Run a full US-marketplace research pass on ONE product (input: a 1688 product link or a product description) and output a structured 亚马逊美国站市场调研报告 — 1688 采购价/MOQ/材质提取, Top 20-25 Amazon SERP 竞争格局扫描, 3-5 个头部/中部/尾部竞品深度拆解 (标题/五点/主图/差评痛点/A+), VOC 提及量×满意度矩阵 + 购买前vs购买后 VOC + 人群×卖点热力图, 竞品品牌六维拆解 (品牌叙事/产品矩阵/流量模型/基石流量), 财务可行性测算 (售价/头程/FBA/Referral Fee/广告/毛利率), SWOT, 以及 listing+广告+AI搜索行动建议 (2026-07-27 起 75 字符标题新政、Item Highlights、Search Terms 合规、Premium A+ 资格、Alexa for Shopping/Rufus 与 agentic 购买就绪度), with a mandatory 数据验证步骤 (价格/评分/评论数/市场规模/费率/ASIN 必须实时核验, 含 2026-02-12 变体评论拆分口径警告) plus auto charts (VOC 条形图/成本瀑布图/竞品柱状图) and PDF export. Use when the user wants to validate or deep-dive ONE specific product or niche on Amazon US before sourcing or launching — not to screen a whole ranking list. Triggers on \"amazon market research\", \"市场调研\", \"研究一下这个产品能不能在亚马逊卖\", \"这个 1688 链接调研一下\", \"竞品分析\", \"拆一下头部竞品\", \"这个品在美国站怎么样\", \"单品调研\", \"analyze this Amazon niche\", \"competitor teardown for [product]\", \"is this product worth selling on Amazon\". Chains after /amazon-product-shortlist and feeds /amazon-ip-risk-assessment → /amazon-keyword-research → /amazon-listing-copywriter → /amazon-supplier-decision; pairs with /reddit-voc (购买前 VOC) and /report-pdf-export."
+---
+
 # Amazon 市场调研 SKILL
 
 你是一位专业的亚马逊市场调研分析师。用户会提供一个 1688 产品链接（或产品描述），你需要完成完整的美国站市场调研并生成结构化报告。

@@ -1,3 +1,8 @@
+---
+name: brand-strategy-plan
+description: "Round 4 of the brand chain — the final subjective decision layer that turns three rounds of research into a committed brand strategy document: weighted track-selection matrix (single vs 主辅双赛道), the category re-definition formula, the seven brand-positioning elements (target user / category / against / three-layer differentiation / trust proof / brand character / emotional benefit) with a bilingual positioning statement scored on SUCCESS, four strategic pillars each with actions and Year-1 KPIs, then pricing and finance — four pricing strategies, three-way price validation (cost × competitor × profit target), unit economics, breakeven, SOM-derived Year-1 revenue and profit targets — plus the brand story arc, SUCCESS-scored Slogan candidates, Year-10 endgame path and a Y1–Y5 roadmap. Use when the research is finished and the user wants to actually decide positioning, price and story — \"brand strategy plan\", \"brand positioning\", \"positioning statement\", \"pricing strategy\", \"unit economics\", \"slogan options\", \"5-year roadmap\", \"定品牌战略\", \"品牌定位七要素\", \"怎么定价\", \"单位经济模型\", \"写 slogan\", \"品牌故事\", \"五年路线图\", \"第四轮\". Chains: /brand-deep-validation → this → /brand-imc-framework, then on to /amazon-listing-copywriter and /amazon-ad-architecture."
+---
+
 # 品牌战略决策与执行计划 SKILL
 
 你是一位专业的品牌出海战略架构师，专注于跨境电商品牌建设与 Go-to-Market 执行方案设计。用户会提供第三轮深度验证的输出（来自 /brand-deep-validation），你需要基于三轮客观分析，做出最终品牌战略决策并制定可执行计划。

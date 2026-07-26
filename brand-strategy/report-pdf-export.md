@@ -1,3 +1,8 @@
+---
+name: report-pdf-export
+description: "Convert a Markdown report — one file or every .md in a directory — into a styled PDF using this repo's fixed house style: A4 landscape, PingFang/Noto CJK fonts, dark-blue table headers with white text, zebra rows, blue-ruled headings, centered X / Y page numbers, and images resolved from a relative charts/ folder, by rebuilding the /tmp/md2pdf.py converter (weasyprint + markdown, dependency check and pip install included) and writing output into a PDF/ subfolder. Use when the user wants a report turned into a shareable PDF, a whole folder batch-converted, or the styling kept byte-identical across sessions after /tmp was cleared; it is also the automatic final step invoked by the report-producing skills (/offline-retail-us, /social-content-calendar, /tiktok-growth, /youtube-channel-ops). Also covers the known failure modes: missing images, overflowing tables, UTF-8 mojibake (grep for '�'), missing script, weasyprint not installed. Triggers on \"export to PDF\", \"convert markdown to PDF\", \"batch convert this folder of .md\", \"md2pdf\", \"same report styling as before\", \"导出 PDF\", \"报告转 PDF\", \"把这些 md 批量转成 PDF\", \"报告排版统一\", \"PDF 样式\". Pairs with /brand-chart-visualize (its charts/ PNGs get embedded into the PDF)."
+---
+
 # 报告 PDF 导出 SKILL
 
 当用户需要将 Markdown 报告导出为 PDF 时调用此技能。统一样式、横版 A4、中文字体、深蓝配色，确保跨会话样式一致。

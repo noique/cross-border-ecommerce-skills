@@ -1,3 +1,8 @@
+---
+name: brand-chart-visualize
+description: Read a finished folder of brand-strategy reports (00-08), extract the numbers out of their Markdown tables, and generate up to 10 report-grade charts via the AntV gpt-vis API — feasibility 8-dimension radar, VOC opportunity bar, GTM flywheel radar, 5D score radar, unit-economics waterfall, channel budget pie, competitor price-band column, SEO keyword KD/volume scatter, 12-month traffic line, category-expansion sankey — downloading each PNG into a charts/ subfolder and inserting the ![标题](charts/x.png) reference back into the right report at the right position (charts supplement the tables, never replace them), then reporting which succeeded or failed. Use when the reports are already written and the user wants visuals added without rewriting any text. Triggers on "add charts to the reports", "visualize the brand reports", "generate the radar chart", "给报告配图", "把报告数据可视化", "生成图表", "出雷达图", "出瀑布图", "报告加图表", "这批报告太干了配点图". Pairs with /report-pdf-export (run charts first, export PDF second) and consumes the outputs of /brand-market-scan, /brand-track-hypothesis, /brand-deep-validation, /brand-strategy-plan and /brand-imc-framework.
+---
+
 # 品牌报告数据可视化 SKILL
 
 你是一位数据可视化专家。用户已完成品牌战略系列报告（01-08），你需要读取报告中的关键数据，调用 AntV API 生成专业图表，并将图表嵌入对应报告。

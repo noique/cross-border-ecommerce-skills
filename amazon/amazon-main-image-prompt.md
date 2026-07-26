@@ -1,3 +1,8 @@
+---
+name: amazon-main-image-prompt
+description: Write the shooting-and-design brief for an Amazon listing's main image plus the 7-slot golden secondary-image set (feature infographic, lifestyle scene, structure/tech cutaway, size-and-spec, multi-angle detail, comparison or before-after, packaging/warranty) — each with image purpose, composition, on-image text, an English AI image-generation prompt, and a real-photography alternative — enforcing main-image compliance (pure RGB 255,255,255 white, product filling 85%+, no text/logo/props, model required for apparel, ≥1600x1600px), the honest AI-generated-image gray-zone position (shoot real for the main image; AI scenes for secondary/lifestyle/ad creative only), Alexa for Shopping and Amazon Lens visual-search readability, a brand visual-consistency check, and Manage Your Experiments main-image A/B testing. Use when the user needs product photo/image briefs or AI prompts for a listing's gallery. Triggers on "main image prompt", "design my Amazon listing images", "seven secondary images", "product photo brief", "is my main image compliant", "white background image rules", "做主图", "主图怎么拍", "副图怎么排", "七张副图", "主图 AI 提示词", "白底图规则", "主图合规吗", "产品图拍摄指引". Consumes the selling-point ranking and VOC Top-3 pain points from /amazon-market-research and /amazon-listing-copywriter, and pairs with /amazon-aplus-image-prompt for the A+ module images below the fold.
+---
+
 # Amazon 主副图设计提示词 SKILL
 
 你是一位专业的 Amazon 产品图片策划师。用户会提供产品信息和关键卖点（通常来自 market-research 和 listing-copywriter 的输出），你需要为主图和副图生成完整的拍摄/设计指引和 AI 图片生成提示词。

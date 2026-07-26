@@ -1,3 +1,8 @@
+---
+name: trustpilot-voc-quick
+description: Pull a 5-minute surface read of a brand's Trustpilot page with WebFetch — overall rating, total review count, 5★-to-1★ distribution, Verified/Claimed status, a summary table of the 10-20 most recent reviews with their core themes, positive/negative high-frequency words, and a trend call — plus an automatic side-by-side comparison table with green/yellow/red reputation-risk flags when several brands are passed at once. Use when the user just wants a fast read on how a brand's word-of-mouth looks right now, or wants to benchmark a handful of competitors in parallel, without setting up a scraper or waiting on a full-corpus run. Triggers on "Trustpilot 快速扫描", "看看这个品牌口碑怎么样", "查一下 Trustpilot 评分", "几个竞品口碑对比", "Trustpilot 星级分布", "这个牌子差评多不多", "quick Trustpilot check", "what's this brand's Trustpilot rating", "compare competitors on Trustpilot". Supplies the VOC section of /brand-market-scan 第零步; escalate to /trustpilot-voc-deep when the brand has >500 reviews, its rating sits in the 2.0-3.5 danger band, or LDA topic modeling / AI theme synthesis is needed; complements /amazon-market-research (Amazon platform VOC vs. this skill's independent-site VOC).
+---
+
 # Trustpilot VOC 快速扫描 SKILL
 
 用户想要快速获取某品牌在 Trustpilot 上的用户评价概况时调用此技能。使用 WebFetch 抓取表层数据（总评分、评论数、星级分布、近期评论摘要），5 分钟内出结果。

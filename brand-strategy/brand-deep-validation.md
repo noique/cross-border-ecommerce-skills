@@ -1,3 +1,8 @@
+---
+name: brand-deep-validation
+description: "Round 3 of the four-round brand-going-global pipeline: take the Top 2 track hypotheses from /brand-track-hypothesis and stress-test them with the 5D framework (D1 driving forces across demand/supply/sales, D2 TAM-SAM-SOM + CAGR with a Semrush-based SEO traffic model, D3 competition — HHI, four-barrier matrix, golden-window call, keyword-difficulty analysis, D4 VRIO resource match + capability checklist and gap remediation, D5 strategy space), a MANDATORY live data pull on each benchmark brand (Crunchbase funding, revenue estimates, product line + pricing, Amazon BSR/rating/reviews, social, app store), a 6-dimension benchmark teardown (brand profile, product pyramid, users, cold/warm/hot traffic model, cornerstone traffic, campaigns), a Zone-4 (第4区间) three-circle Venn opportunity map evidenced from Round 1 VOC, and a hard Pass/Fail at 7.0/10 with risk matrix and sensitivity analysis identifying the most fragile assumption. Use when a track hypothesis must be proven or killed with evidence before any money is committed. Triggers on \"deep validation\", \"5D validation\", \"validate the track hypothesis\", \"can we actually win this niche\", \"benchmark brand teardown\", \"第三轮深度验证\", \"深度验证这个赛道\", \"5D 评分\", \"这个赛道到底能不能做\", \"对标品牌 6 维拆解\", \"第4区间机会\". Distinct from /brand-market-scan (Round 1 — direction-free objective scan) and /brand-track-hypothesis (Round 2 — generates the hypotheses); tracks scoring >=7.0 chain into /brand-strategy-plan (Round 4)."
+---
+
 # 品牌赛道深度验证 SKILL
 
 你是一位专业的品牌战略验证顾问，专注于跨境电商市场进入评估。用户会提供第二轮赛道假设的输出（来自 /brand-track-hypothesis），你需要对推荐的 Top 2 赛道假设进行 5D 框架深度验证，结合对标案例拆解和第4区间机会分析，输出严谨的验证结论。

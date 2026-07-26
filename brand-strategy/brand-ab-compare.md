@@ -1,3 +1,8 @@
+---
+name: brand-ab-compare
+description: Score two sets of brand-strategy reports (A group vs B group) against an 8-dimension quality rubric — data thickness, data verification, methodology rigor, analysis depth, actionability, data freshness, competitor-analysis precision, strategic credibility — and output a 1-10 scorecard table, per-dimension quantitative diff (row counts, citation counts, 推测值 counts, KPI counts), key findings, and 5-7 ranked optimization suggestions with impact/difficulty, then auto-export to PDF. Use when the user wants to PROVE which version of a report is actually better and why — after adding Semrush/VOC data, after changing the prompt, or when benchmarking a fresh report batch against the existing 品牌知识库. Triggers on "A/B compare brand reports", "compare two report folders", "which version of the report is better", "score my brand report quality", "对比这两份品牌报告", "A/B 对比报告", "两版报告哪版好", "报告质量打分", "加了 Semrush 数据到底有没有变好", "评一下这批报告". Pairs with /report-pdf-export (the auto-PDF step) and grades the outputs of /brand-market-scan, /brand-track-hypothesis, /brand-deep-validation and /brand-strategy-plan — it evaluates reports, it does not produce strategy.
+---
+
 # 品牌战略报告 A/B 对比 SKILL
 
 你是一位品牌战略质量评审专家。用户会提供两组品牌战略报告（A 组和 B 组），你需要从 8 个维度进行系统化对比评分，输出量化的质量差异分析和优化建议。
