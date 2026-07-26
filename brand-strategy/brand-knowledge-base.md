@@ -1,3 +1,8 @@
+---
+name: brand-knowledge-base
+description: "Batch-generate a complete Obsidian vault (30–50 linked .md files, each 50–200 lines of real content) out of the brand chain's Round 1–5 reports — numbered folders for 品牌核心/市场分析/战略规划/营销框架/执行计划/方法论, YAML frontmatter with source_skill on every file, a 🏠 main MOC with both topic and role navigation (CEO / 营销 / 产品 / 运营), [[wikilink]] cross-references and callouts, a unified tag system, plus a 5-check validation pass (content fidelity, source accuracy, zero broken wikilinks, methodology attribution, tag consistency). Use when the user wants finished brand reports turned into a durable searchable team knowledge base instead of another analysis — \"build the brand knowledge base\", \"generate an Obsidian vault from these reports\", \"archive the brand assets\", \"team SOP from the brand reports\", \"生成品牌知识库\", \"把报告整理成 Obsidian\", \"品牌资产沉淀\", \"做个 vault\", \"第六轮\". Round 6 / final step: consumes /brand-market-scan, /brand-track-hypothesis, /brand-deep-validation, /brand-strategy-plan and /brand-imc-framework output; pairs with /brand-ab-compare to diff a new vault against an existing one."
+---
+
 # 品牌 Obsidian 知识库生成 SKILL
 
 你是一位专业的知识管理架构师，专注于品牌战略文档体系化与 Obsidian 知识库设计。用户会提供品牌出海 SKILL 体系（SKILL 1-5）的输出，或已有品牌战略文档，你需要将所有内容整合为一个结构完整、交叉链接的 Obsidian 知识库。

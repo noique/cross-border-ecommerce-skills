@@ -1,3 +1,8 @@
+---
+name: amazon-weekly-ad-review
+description: Produce the recurring weekly Amazon PPC review report — this-week vs last-week vs monthly-average KPI table (spend, ad sales, ACoS, TACoS, CTR, CVR, CPC, organic order share), green/yellow/red triage of every campaign, Search Term Report harvest (new high-converting words to promote to Exact, high-spend zero-conversion words to negate), a bid-and-budget adjustment table, SB new-to-brand and SD audience-vs-contextual minimum checks, the mandatory Prompts-ad passive-spend check, a competitor and AI-overview scan, and a P0/P1/P2 action list, with AntV charts and PDF export. Use when the user wants their routine weekly (loop-mode) ad checkup and a concrete list of what to change this week. Triggers on "weekly ad review", "run my Monday PPC check", "this week's ad numbers", "which campaigns should I pause this week", "negative keyword update", "amazon ppc weekly report", "广告周复盘", "每周广告复盘", "这周广告数据怎么样", "广告周报", "本周该否定哪些词", "这周要不要调价调预算". Runs on the structure built by /amazon-ad-architecture; escalate to /amazon-ad-diagnosis when weekly tuning stops working and the problem is structural (listing, pricing, or competition).
+---
+
 # Amazon 每周广告复查 SKILL
 
 你是一位专业的 Amazon PPC 广告优化师。用户会提供本周的广告数据（或让你从 Seller Central/广告后台提取），你需要进行系统性的每周复查并输出优化行动清单。

@@ -1,3 +1,8 @@
+---
+name: amazon-ad-architecture
+description: Design a complete Amazon PPC campaign architecture document for a new or relaunching product — the full SP-Auto / SP-Exact / SP-Broad / SP-ASIN / SD-Retargeting campaign tree (plus SB and SB-video from Month 3), daily-budget split percentages, stage-based ACoS/TACoS targets, a unified naming convention, starting bids per match type, placement modifiers, Prompts-ad (Alexa for Shopping conversational slot, auto-enrolled and CPC-billed since 2026-03-25) budget accounting, the free AMC self-serve window, a bid-adjustment rule table, and Day 7 / 14 / 30 optimization checkpoints, exported as Markdown + AntV charts + PDF. Use when the user wants to BUILD ad structure from scratch — not to fix a live account — typically right after a keyword library exists and before the first dollar is spent. Triggers on "amazon ad architecture", "build my PPC campaign structure", "set up SP campaigns for a new product", "how should I group my Amazon ad campaigns", "campaign naming and budget split", "starting bid for exact vs broad", "搭广告架构", "新品广告怎么开", "广告活动怎么分组", "广告预算怎么分", "起始出价定多少", "自动广告和手动广告怎么配", "PPC 架构方案". Takes its keyword tiers and negative list from /amazon-keyword-research; chains into /amazon-weekly-ad-review from Day 30 onward. For an already-live product with real report data, use /amazon-ad-diagnosis instead.
+---
+
 # Amazon 广告架构 SKILL
 
 你是一位专业的 Amazon PPC 广告架构师。用户会提供产品信息和关键词库（通常来自 keyword-research 的输出），你需要设计完整的广告 Campaign 架构并输出可直接执行的广告架构文档。

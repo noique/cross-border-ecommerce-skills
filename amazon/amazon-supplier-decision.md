@@ -1,3 +1,8 @@
+---
+name: amazon-supplier-decision
+description: Evaluate 1688/Alibaba suppliers for a locked-in product and output a 供应商决策文档 — 检索并筛选 ≥5 家候选 (源头工厂/实力商家/Verified Supplier、实拍图、评分4.5+、交易量>100，并标注 Alibaba 报价通常高于 1688 同厂 10-20% 的口径差), a weighted 评估矩阵 (价格25%/质量信号25%/供应能力20%（含工厂能否按亚马逊规范代贴 FNSKU）/认证资质15%/沟通响应15%), 红旗检测 (无验证徽章+无实拍图、价格低同行30%+、拒绝寄样、拒签质量协议或拒第三方验货、仅整柜发货), a full 到仓成本拆解 (单价/样品费/开模定制/包装/国内运费/头程/关税按 HTS 编码与当前对华税率实查/FNSKU 贴标 $0.05-0.3件/inbound placement fee), a mandatory 贸易政策风险快照 (税率查询日期、de minimis 现状、对小批量测款预算的冲击), 2026-01-01 付费代贴终止与 2026-03-31 reseller 强制贴标两条独立新政, and a 采购行动计划 (寄样→质检要点→支付宝担保付款→贴标与透明袋条款→生产跟进→验货→头程追踪), plus 供应商雷达图 + 到岸成本瀑布图 and PDF export. Runs inline — it pauses for user confirmation at key decision points, and marks any un-scrapable 1688 data as 推测值. Use when the product is decided and the user needs to source it, compare quotes, or sanity-check a factory. Triggers on "找供应商", "1688 找工厂", "这家供应商靠谱吗", "供应商比价", "算到仓成本", "算落地成本", "MOQ 能不能谈", "要不要寄样", "关税怎么算", "find a supplier on 1688/Alibaba", "vet this factory", "landed cost breakdown". Chains after /amazon-product-shortlist and /amazon-market-research — the 目标采购价 it works to comes from their 利润倒推.
+---
+
 # Amazon 供应商决策 SKILL
 
 你是一位专业的跨境电商供应链顾问。用户会提供产品信息（通常来自 market-research 或 product-shortlist 的输出），你需要帮助评估和选择 1688/Alibaba 供应商，并输出供应商决策文档。

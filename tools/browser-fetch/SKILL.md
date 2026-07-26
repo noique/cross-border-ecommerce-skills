@@ -1,3 +1,8 @@
+---
+name: browser-fetch
+description: "A shared, pluggable real-browser rendering backend (default engine Selenium, headless, optional proxy) that mounts as fetchlib's L3 tier, so multiple skills stop each writing their own Selenium — returns (status, html, headers), normalizes anti-bot challenge pages to status=403 so the waterfall correctly marks them blocked, and exposes register_engine() for opt-in nodriver / camoufox / scrapling. Use when the user needs JS-rendered HTML for a scrape, hits a page that comes back empty or thin without a browser, wants one reusable browser layer across scraping skills, or wants to route a fetch through a proxy. Triggers on \"browser-fetch\", \"要真浏览器渲染\", \"这站要跑 JS 才有内容\", \"用 Selenium 抓一下\", \"挂个浏览器后端\", \"curl 抓不到内容\", \"带代理抓\", \"render JS to scrape\", \"headless browser fetch\", \"this site needs a browser\". Pairs with /fetchlib (register it as the browser L3 tier, only after curl_cffi / Jina fail) and /api-pacer; deliberately does NOT replace the existing Selenium inside /trustpilot. Honest limit (2026-06, datacenter IP): it takes Trustpilot-grade JS sites but still fails Cloudflare Managed Challenge / DataDome — that needs residential IPs or a paid unblocker; it never solves CAPTCHAs or defeats access barriers."
+---
+
 # browser-fetch — 共享可选浏览器渲染后端（fetchlib L3）
 
 把"**真浏览器渲染 + 可选代理**"能力(和 `tools/trustpilot` 里那套 Selenium 一个路子)提成一个**可复用的共享后端**,直接当 `fetchlib` 的 **L3** 挂上——多个 skill 不再各写一套浏览器。**引擎可插拔,默认 Selenium。**

@@ -1,3 +1,8 @@
+---
+name: amazon-ad-diagnosis
+description: "Run a four-stage deep diagnosis on an ALREADY-LIVE Amazon product (ASIN + last-30-day SP Search Term Report + current listing copy required) and output an executable turnaround report: (1) competitive landscape + break-even ACoS financial math and single-channel-ceiling判断, (2) keyword matrix rebuilt from real ad data into T1/T2/T3 tiers plus a competitor-ASIN targeting library, (3) title / bullet-point / backend Search Terms re-embedding with before-vs-after rewrites and character-and-byte checks, (4) an ad ledger with the high-spend-zero-conversion leak quadrant, negative-keyword purge, new exact-match campaigns, ASIN targeting, and a Week 1 / Week 2-3 / Month 2+ roadmap — with AntV charts and PDF export. Use when the user wants to know why an existing listing's ads are bleeding money or why sales stalled, not to build a new campaign structure. Triggers on \"amazon ad diagnosis\", \"diagnose my PPC\", \"my ACoS is way too high\", \"ads spend money but no orders\", \"analyze my search term report\", \"turn around a dying ASIN\", \"广告诊断\", \"ACoS 太高怎么办\", \"广告花钱不出单\", \"老品广告没效果\", \"帮我看下广告报表\", \"老链接怎么翻盘\", \"listing 埋词有没有问题\". Deeper and heavier than the routine /amazon-weekly-ad-review; use /amazon-ad-architecture instead when nothing is running yet, and feed its rewrites into /amazon-listing-copywriter."
+---
+
 # Amazon 已有产品广告诊断与优化 SKILL
 
 你是一位资深的 Amazon PPC 广告诊断师。用户会提供一款**已上架产品**的广告报表数据和产品链接，你需要进行全链路诊断并输出可直接执行的优化方案。

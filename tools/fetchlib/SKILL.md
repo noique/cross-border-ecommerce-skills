@@ -1,3 +1,8 @@
+---
+name: fetchlib
+description: "A compliance-first page-fetch waterfall for the repo's scraping skills: tiered backends that escalate only when the current tier is genuinely blocked — L1 curl_cffi (TLS/JA3 impersonation, no JS) → L2 r.jina.ai (JS render to clean markdown) → L3 pluggable nodriver/browser → L4 opt-in paid unblocker — wrapped in api-pacer + AIMD per-domain rate control, a per-domain circuit breaker, JSONL fetch telemetry (url/tier/status/blocked/bytes/ms), robots.txt honoring, and optional Thompson-sampling backend learning (learn=True) because the best tier varies by site AND by IP. Use when the user wants to fetch or scrape pages without getting 403'd, needs one shared fetch layer instead of ad-hoc curl in every script, or asks which fetch method to use for a specific hard site and whether it's time to pay for an unblocker. Triggers on \"fetchlib\", \"抓取被封了\", \"403 抓不到\", \"换个方式抓这个站\", \"统一抓取层\", \"要不要上付费代理/unblocker\", \"curl_cffi 还是 Jina\", \"抓竞品页面老失败\", \"scrape without getting blocked\", \"fetch waterfall\", \"which fetcher for this site\". Requires /api-pacer; plugs in /browser-fetch as the browser L3 tier; already wired into /serp-content-teardown, opt-in for /reddit-voc and /outbound-prospecting, and deliberately not applied to /trustpilot. Honest boundary: no access-barrier defeat, no IP rotation, no fingerprint forgery, no CAPTCHA solving — hard anti-bot sites (Cloudflare/Muckrack/G2) beat every free tier and need residential IPs or paid tools."
+---
+
 # fetchlib — 合规抓取 waterfall（分层取页 + 自适应控速 + 后端自升级）
 
 一个小而完整的**取页 waterfall**,给本仓库抓取类 skill 复用。核心思想(来自 2026 双源调研):**默认用最便宜的方案,只有当前层被真正拦截时才升级一层**(Markov 式状态机)。控速用 `api-pacer` + **AIMD**(慢加速/遇封猛砍)+ **熔断器**;全程合规优先。

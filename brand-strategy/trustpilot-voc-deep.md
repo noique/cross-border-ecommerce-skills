@@ -1,3 +1,8 @@
+---
+name: trustpilot-voc-deep
+description: Run a full-corpus Trustpilot VOC teardown on a brand — a local Selenium scraper pulls every review, then sentiment analysis + LDA topic modeling + AI synthesis + AntV charts produce a markdown report with Top-5 complaint and praise themes (each with real user quotes), star distribution, country-by-country sentiment splits, monthly rating trend, an AI-generated action list, and a sample-size credibility table. Use when the user needs to know exactly WHY a brand's reviews look the way they do — reputation-crisis diagnosis on a low-rated brand, deep competitor dig after the target is already chosen, investment / acquisition due diligence, or cross-market sentiment comparison — and accepts a 15-40 minute local batch run (requires Chrome + the Python toolchain at ~/.claude/tools/trustpilot/, an OPENROUTER_API_KEY or LLM_API_KEY for the AI pass, and a proxy pool if Trustpilot throttles). Triggers on "Trustpilot 深度分析", "把这个品牌的评论全爬下来", "全量评论情感分析", "跑 LDA 主题建模", "差评到底在骂什么", "竞品 VOC 深挖", "口碑危机诊断", "trustpilot deep VOC", "scrape all Trustpilot reviews", "why is this brand rated 2.0", "LDA topic modeling on reviews". This is the heavy upgrade of /trustpilot-voc-quick (which is WebFetch surface data in 5 minutes); its output plugs into /brand-market-scan 第零步 and /brand-deep-validation D1 demand-side validation, shares the AntV chart infrastructure with /brand-chart-visualize, exports via /report-pdf-export, and complements /amazon-market-research (Amazon-platform VOC vs. this skill's DTC-site VOC).
+---
+
 # Trustpilot VOC 深度分析 SKILL
 
 用户需要对某品牌进行**全量评论抓取 + 情感分析 + LDA 主题建模 + AI 深度归纳**时调用此技能。调用本地爬虫工具链，图表输出使用 AntV API（统一报告风格）。

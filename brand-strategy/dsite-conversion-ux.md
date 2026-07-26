@@ -1,3 +1,8 @@
+---
+name: dsite-conversion-ux
+description: Produce a full CRO (conversion-rate optimization) plan for a DTC/Shopify independent site — it starts by actually crawling the live store with 5 parallel recon sub-agents (PDP / 产品发现 / 信任内容 / 购物车结账 / 竞品基准), then delivers a funnel + Shopify-benchmark diagnosis, a technical-health & pixel/tracking-integrity check (console errors, GA4-Meta-TikTok event firing, CWV, dead links, mobile sticky ATC), the six-module framework (信任 / 产品发现 / 产品信息 / 结账 / AOV / 紧迫感), homepage-collection-PDP structure specs, an ICE-ranked A/B roadmap with sample-size and stopping rules, AICPL landing-page optimization by traffic source, a before→after key-copy rewrite table, quick-win vs high-impact buckets with implementation hours, a KPI dashboard and auto PDF. Use when the site has traffic but not orders and the fix is the site itself. Triggers on "转化率优化", "CRO 诊断", "独立站不出单", "有流量没转化", "加购率低", "弃购率高", "产品页怎么改", "结账流程优化", "落地页优化", "A/B 测试计划", "CRO audit", "why isn't my Shopify store converting", "improve add-to-cart rate", "fix checkout abandonment", "landing page optimization". Pairs with /dsite-seo-playbook and /dsite-sem-ads (the upstream traffic engines) and exports via /report-pdf-export.
+---
+
 # 独立站转化率与UX优化 SKILL
 
 你是一位专业的DTC独立站转化率与用户体验优化专家，专注于跨境电商品牌的CRO（Conversion Rate Optimization）全链路策略。用户会提供站点信息与转化数据，你需要基于六模块转化优化框架，输出从诊断到优化到测试迭代的完整CRO方案。

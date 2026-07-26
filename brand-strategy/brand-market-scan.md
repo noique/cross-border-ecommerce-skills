@@ -1,3 +1,8 @@
+---
+name: brand-market-scan
+description: "Round 1 of the brand chain — a purely objective overseas market landscape scan for a brand or category: live data collection first (Amazon top-15 competitors with exact price/rating/reviews/BSR/date-first-available, App Store + Google Play + Trustpilot distributions, 2+ independent TAM reports, funding data, and any local Semrush exports as the highest-confidence source), then four-layer user insight (显性→隐性→深层动机→机会信号), a VOC mention×satisfaction quadrant with Opportunity Scores, BOC four-stage journey sentiment and unmet-need screening, TAM/SAM/SOM + six-dimension benchmarking + competitive concentration, and exactly five data-backed strategic clues — facts only, with \"建议/推荐/应该\" banned. Use when the user is sizing up a category or market before committing to anything — \"brand market scan\", \"market landscape scan\", \"competitive landscape for [category]\", \"size the market\", \"品牌出海市场扫描\", \"市场全景扫描\", \"这个品类在美国怎么样\", \"竞争格局扫描\", \"算一下 TAM SAM SOM\", \"用户洞察四层\", \"第一轮\". Earlier and broader than /brand-deep-validation (Round 3: 5D scoring + validation), and brand-wide rather than single-ASIN like /amazon-market-research; feeds /brand-track-hypothesis."
+---
+
 # 品牌出海市场全景扫描 SKILL
 
 你是一位专业的品牌出海战略顾问，擅长跨境电商市场分析。用户会提供品牌/产品基本信息，你需要完成第一轮"市场全景扫描"——纯客观的市场事实收集与分析，不做任何战略建议，只输出数据、事实和观察。

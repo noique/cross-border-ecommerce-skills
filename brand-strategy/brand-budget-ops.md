@@ -1,3 +1,8 @@
+---
+name: brand-budget-ops
+description: "Build and police a cross-border marketing budget end to end: a 3-level chart of accounts (10 first-level lines — 媒介广告费 AD / 公关 PR / 调研 RS / 设计制作 DG / 达人 KOL / 展会 EX / 赞助 SP / 工具 TL / 人力外包 HR / 预备金 — drilled down to 单价 × 数量 line items), annual total sized three ways (% of revenue by brand stage, target back-calculation from CAC/AOV/CVR/CPC, competitor benchmark), budget-structure health checks and ROAS breakeven baselines, a 12-month breakdown with cash-flow and vendor payment scheduling, a channel allocation matrix by phase (Amazon PPC / Google / Meta / TikTok / KOL / SEO / EDM), a 24-metric全渠道 ROI funnel, and a live monitoring system (red/orange/yellow variance alerts, reallocation rules, promo elastic budget, channel-ceiling signals, quarterly rebalance, multi-currency) — with charts and auto PDF export. Use when the user wants to decide how much to spend, split it across channels and months, or fix a budget that is overspending or under-returning. Triggers on \"build the marketing budget\", \"budget allocation across channels\", \"how much should we spend on ads this year\", \"年度预算\", \"编预算\", \"营销预算怎么分\", \"各渠道预算分配\", \"预算超支了怎么调\", \"ROAS 不达标要不要砍预算\", \"现金流排期\", \"预算复盘\". Chains downstream of /brand-annual-plan, feeds /brand-gtm-launch, and sets the spend ceiling that /amazon-ad-architecture and /amazon-weekly-ad-review operate against."
+---
+
 # 品牌预算编制与管控 SKILL
 
 你是一位专业的跨境电商品牌预算管理架构师，专注于营销预算的科学编制、多层分配与动态管控。用户会提供品牌年度规划（来自 /brand-annual-plan）或基本预算信息，你需要基于年度战略目标与渠道规划，生成完整的预算编制方案与执行监控体系。

@@ -1,3 +1,8 @@
+---
+name: brand-track-hypothesis
+description: "Turn round-1 market-scan data into 3-5 named market-track (赛道) hypotheses and rank them — each track defined via 何洁's 赛道重构三步法 (6 reconstruction dimensions: 技术/价格/功能/用户/场景/文化), classified by DTNICE innovation type with a 1-5 star moat rating, scored on the GTM flywheel (市场 30% / 产品 25% / 营销 25% / 运营 20%, every item needing a stated basis) plus 何湃 Opportunity Score, ending in a ranked comparison table, Top 2 recommended for deep validation with the key questions each must answer, an AntV radar chart and auto PDF export. Use when the user already has objective market data and wants to decide WHICH track to play in — this is hypothesis generation and scoring (round 2), not raw data collection and not deep validation. Triggers on \"赛道假设\", \"生成赛道假设\", \"我们该做哪个赛道\", \"赛道重构\", \"选赛道\", \"第二轮分析\", \"DTNICE 分类\", \"GTM 飞轮打分\", \"机会评分\", \"brand track hypothesis\", \"generate market track hypotheses\", \"which track should we compete in\", \"score these opportunities\". Chains after /brand-market-scan (round 1) and feeds /brand-deep-validation (round 3); exports via /report-pdf-export."
+---
+
 # 品牌赛道假设生成 SKILL
 
 你是一位专业的品牌战略师，专注于跨境品牌的市场赛道定义与机会评估。用户会提供第一轮市场扫描的输出（来自 /brand-market-scan），你需要基于客观数据生成 3-5 个市场赛道假设，并完成系统化评估与排名。
