@@ -54,7 +54,7 @@ Build a query plan from `references/search-formulas.md`. The original 3-formula 
 Also pick the right execution mode:
 - **Manual** (≤30 queries, one-off): use Google directly with VPN per country
 - **Semi-auto** (30–300): SerpAPI / ScraperAPI one-shot script in `templates/serpapi-batch.py`
-- **High-volume** (300+): rotate IPs, throttle to 1 req/3s, expect ~5% CAPTCHA loss
+- **High-volume** (300+): use a **search API** (SerpAPI / ScraperAPI) rather than scraping Google directly — throttle to 1 req/3s and accept the ~5% loss on challenged queries. Do **not** rotate IPs to evade rate limits or solve CAPTCHAs: that crosses the repo-wide scraping red line (see `tools/fetchlib/SKILL.md` — no access-barrier defeat, no IP rotation, no CAPTCHA solving). If the volume can't be met inside the API's limits, cut the query set, not the compliance.
 
 ### Stage 2 — Extract & validate
 
@@ -115,7 +115,7 @@ If the compliance answer is "this country is too risky", tell the user explicitl
 - **Searching "+91" alone** returns landline-heavy results from Indian directory sites. Use `"+91 9*"` or `"+91 8*"`. (Same logic per country in `references/country-targeting.md`.)
 - **Extracting numbers without the country code prefix** — they all collide on dedupe. Always store in E.164 (`+919876543210`).
 - **Translating the first message via Google Translate** — comes across as a bot in markets that read English fine (NL/DK/SE) and as broken in markets that don't (BR/MX/JP). Use a native template, not a translation.
-- **Same WhatsApp number for 200+ daily sends** — guaranteed ban. Either rotate numbers or move to BSP/API.
+- **Same WhatsApp number for 200+ daily sends** — guaranteed ban, and the fix is **not** a pile of burner numbers (rotating numbers to outrun a ban is ToS evasion and gets the whole set flagged). Move to the **WhatsApp Business API via Meta or a BSP**, which is the sanctioned high-volume path — or keep volume inside what one legitimate number supports.
 - **Skipping the validation step** — sales team wastes hours on numbers that aren't on WhatsApp at all.
 - **Ignoring the time-zone column** — messaging Brazil at 3am Brasilia time is the fastest way to get blocked.
 
