@@ -227,6 +227,7 @@ See [tools/README.md](tools/README.md) for standalone usage.
 - **AI Search Ready** — Optimized for Amazon Rufus, COSMO knowledge graph, and GEO
 - **Multi-Agent Concurrency (Claude Code-native)** — skills like `dsite-conversion-ux` orchestrate parallel recon + analysis subagents via the `Workflow` tool with `StructuredOutput` schemas, run as background tasks, and use browser-class MCP (Claude in Chrome / Preview) for live-site inspection — fan out the work, keep the conclusions
 - **Compliant Scraping Stack (2026-benchmarked)** — a free-first, US-compliant fetch pipeline the skills share: `api-pacer` (pacing + backoff) → `fetchlib` (waterfall: `curl_cffi` → Jina Reader → browser → paid) → `browser-fetch` (browser-render L3). Honors robots + rate limits; no barrier-defeat / IP-rotation / CAPTCHA-solving / PII. Benchmarks, tier mechanics, and the full compliance red line live in each tool's `SKILL.md`
+- **Linted, not just written** — every skill carries `name` + `description` frontmatter (the triggering surface), and a `Skill lint` CI gate blocks four regressions this repo actually hit: missing/mismatched frontmatter, the same skill living at two paths (copies drift apart silently), dead relative links, and any advice that would break the scraping red line. Run it locally with `python3 scripts/lint_skills.py`
 - **Multi-Platform** — Works on Claude Code, Google Antigravity, OpenClaw, and any AI IDE
 
 ### Installation
@@ -306,6 +307,7 @@ Key requirements: long context (8K+ input), strong instruction following, Chines
 - **AI 搜索适配** — Amazon Rufus / COSMO / GEO 优化
 - **多 Agent 并发（Claude Code 原生）** — `dsite-conversion-ux` 等技能用 `Workflow` 工具编排并发侦察+分析子代理（`StructuredOutput` schema），后台任务运行 + 浏览器类 MCP（Claude in Chrome / Preview）做实站检测——把活儿 fan out，只留结论
 - **合规抓取栈（2026 实测）** — 各 skill 共享的免费优先、美国合规取页流水线：`api-pacer`（限速 + 退避）→ `fetchlib`（waterfall：`curl_cffi` → Jina Reader → 浏览器 → 付费）→ `browser-fetch`（浏览器渲染 L3）。默认守 robots + 限速，不破壁 / 不换 IP / 不解 CAPTCHA / 不碰 PII。基准数据、分层机制与完整合规红线见各工具 `SKILL.md`
+- **有 lint 兜底,不只是写完** — 每个技能都带 `name` + `description` frontmatter(技能触发面),并有 `Skill lint` CI 门禁拦住本仓踩过的四类回归:frontmatter 缺失/名不符实、同一技能存在于两个路径(副本会静默分叉)、相对链接失效、以及任何违反抓取红线的写法。本地跑:`python3 scripts/lint_skills.py`
 - **多平台兼容** — Claude Code / Antigravity / OpenClaw / 任何 AI IDE
 
 ### 安装方式
@@ -339,6 +341,15 @@ cp -r cross-border-ecommerce-skills/tools/backlink-kol-extractor ~/.claude/skill
 ---
 
 ## Changelog
+
+### v3.15 (2026-07-26) — repo hygiene: dedupe, red-line fix, frontmatter, CI
+No skills added or removed; this release fixes structural debt found in an external audit, with each claim verified against the tree first.
+- **Deleted 14 stale duplicate skills (−2,704 lines).** Every Amazon skill existed *twice* — `amazon/<name>.md` **and** `amazon/<category>/<name>.md` — and **all 14 pairs had diverged**. The root copies are canonical (README links only to them, and they carry two sections the subdirectory copies had lost); the subdirectory copies were referenced nowhere. Left in place, an agent grepping the repo could hit the older, capability-poorer version.
+- **Closed a cross-file compliance conflict.** `google-whatsapp-prospecting` advised rotating IPs for high-volume search and rotating numbers past a ban — contradicting the repo-wide scraping red line in `tools/fetchlib` / `tools/browser-fetch` (*no access-barrier defeat, no IP rotation, no CAPTCHA solving*) **and** the skill's own rule to move to the WhatsApp Business API above 50 msgs/day. Both now point at the sanctioned path, with the instruction to cut the query set rather than the compliance.
+- **Frontmatter on all 53 remaining skills.** `name` + `description` now present repo-wide, matching the convention the multi-file packages already used. Descriptions were authored from each file's actual contents — what it produces, when to reach for it, bilingual EN/中文 triggers, sibling cross-refs — with explicit disambiguation between near neighbours (`amazon-ad-architecture` vs `-diagnosis` vs `weekly-ad-review`; `trustpilot-voc-quick` vs `-deep`; `dsite-seo-diagnostic` vs `-playbook`). Support files (`references/` `templates/` `scripts/` `examples/`) are deliberately exempt — they are not skills.
+- **New `Skill lint` CI gate** (`scripts/lint_skills.py`, stdlib-only) blocking all four regressions above: frontmatter presence + `name`-matches-filename, duplicate skill names across paths, dead relative `.md` links, and scraping-red-line violations (negation-aware, so the red-line statements themselves pass). Each check was negative-tested against a seeded fault.
+- **Open design questions parked as issues** rather than guessed at: [#15](https://github.com/noique/cross-border-ecommerce-skills/issues/15) making the weighted scoring models reproducible (normalization / missing values / ties) and [#16](https://github.com/noique/cross-border-ecommerce-skills/issues/16) the tension between output quotas and honest "insufficient evidence". Input welcome on both.
+- Total: **54 skills across 13 chains** (unchanged); standalone tools: 7.
 
 ### v3.14 (2026-07-12)
 - **Amazon Operations Chain (14 skills) — 2026 algorithm & policy refresh.** Every fact was re-verified against first-party sources (Seller Central announcements, Amazon Ads *what's new*, the COSMO SIGMOD 2024 paper, Amazon Q4'25 / Q1'26 earnings) and corrected. No skills added; the flows are unchanged. Highlights:
