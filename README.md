@@ -1,6 +1,6 @@
 # Cross-Border E-Commerce AI Skills
 
-**54 AI-powered skill templates for cross-border e-commerce — from brand strategy to Amazon operations to DTC growth to finance & capital ops to affiliate-program building to EU channel entry to overseas-buyer prospecting + earned-media press discovery + Reddit pre-purchase VOC.**
+**55 AI-powered skill templates for cross-border e-commerce — from brand strategy to Amazon operations to DTC growth to finance & capital ops to affiliate-program building to EU channel entry to overseas-buyer prospecting + earned-media press discovery + Reddit pre-purchase VOC.**
 
 Compatible with Claude Code (`~/.claude/commands/`), Google Antigravity (`SKILL.md`), and any AI IDE with skill/prompt support.
 
@@ -12,7 +12,7 @@ Compatible with Claude Code (`~/.claude/commands/`), Google Antigravity (`SKILL.
 
 ### What is this?
 
-A collection of **54 AI agent skills** (structured prompt templates) that automate the entire cross-border e-commerce workflow — brand strategy, market research, product selection, listing optimization, advertising, DTC site operations, **finance & capital management**, **affiliate-program building**, **EU channel & market entry**, social media, influencer marketing, **overseas-buyer outbound prospecting**, **earned-media press discovery**, and **Reddit pre-purchase VOC**.
+A collection of **55 AI agent skills** (structured prompt templates) that automate the entire cross-border e-commerce workflow — brand strategy, market research, product selection, listing optimization, advertising, DTC site operations, **finance & capital management**, **affiliate-program building**, **EU channel & market entry**, social media, influencer marketing, **overseas-buyer outbound prospecting**, **earned-media press discovery**, and **Reddit pre-purchase VOC**.
 
 Two formats:
 - **Single-file skills** (45) — one `.md` file each, drop into your AI IDE's skill directory.
@@ -20,7 +20,7 @@ Two formats:
 
 Plus **7 standalone tools** under `tools/` (Python utilities used by skills, also runnable independently): `backlink-kol-extractor`, `trustpilot`, `linktree-expander`, `contact-extractor`, `api-pacer`, `fetchlib`, `browser-fetch`.
 
-### Skill Map (54 skills across 13 chains)
+### Skill Map (55 skills across 13 chains)
 
 ```
                         ┌─────────────────────────────────────┐
@@ -75,7 +75,7 @@ Plus **7 standalone tools** under `tools/` (Python utilities used by skills, als
 
 ---
 
-### Brand Strategy Chain (10 skills)
+### Brand Strategy Chain (11 skills)
 
 **4-Round Analysis Pipeline + Planning + Execution + Tools**
 
@@ -91,6 +91,7 @@ Plus **7 standalone tools** under `tools/` (Python utilities used by skills, als
 | [brand-knowledge-base](brand-strategy/brand-knowledge-base.md) | Obsidian knowledge base — batch-creates 30-50 interlinked .md files from all rounds |
 | [brand-ab-compare](brand-strategy/brand-ab-compare.md) | 8-dimension A/B quality comparison between two brand strategy report sets |
 | [brand-chart-visualize](brand-strategy/brand-chart-visualize.md) | Auto-generate charts (radar, bar, waterfall, scatter, etc.) via AntV API for all reports |
+| [report-pdf-export](brand-strategy/report-pdf-export.md) | Convert any finished report Markdown into a house-styled PDF (A4 landscape, dark-blue headers, zebra rows, page numbers). The most-reused skill in the repo — **37 other skills chain into it** for their final deliverable |
 
 ### Amazon Operations Chain (14 skills) — UPGRADED v3.14 (2026 algorithm & policy refresh)
 
@@ -216,7 +217,7 @@ See [tools/README.md](tools/README.md) for standalone usage.
 
 ### Key Features
 
-- **54 Skills, 13 Chains** — Complete coverage from brand strategy to daily operations to finance & capital to affiliate-program building to EU channel entry to overseas-buyer outbound to earned-media press discovery to pre-purchase Reddit VOC
+- **55 Skills, 13 Chains** — Complete coverage from brand strategy to daily operations to finance & capital to affiliate-program building to EU channel entry to overseas-buyer outbound to earned-media press discovery to pre-purchase Reddit VOC
 - **Affiliate & Channel Systems (2026 decks)** — a 2-skill affiliate chain built from the affiliate's own economics (`affiliate-readiness-audit` mirrors CRO — "why affiliates won't promote you"; `affiliate-program-ops` runs the AI recruit→score→outreach→activate loop), plus a US-entity Europe channel-entry strategy (SSPV / RCS / growth flywheel) and a multi-channel price-conflict guard. Framework skeletons only, each crediting its source deck in a methodology index
 - **Finance & YMYL Discipline** — the 8-skill finance chain carries explicit "planning aid, not professional tax/legal/accounting advice — verify with a CPA" disclaimers, point-in-time-stamped 2026 regulations, and ⚠️-flagged estimates (no fabricated numbers)
 - **Data Verification Layer** — Every skill includes mandatory verification; estimates are explicitly flagged with ⚠️
@@ -269,7 +270,7 @@ Key requirements: long context (8K+ input), strong instruction following, Chines
 
 ### 这是什么？
 
-一套 **54 个跨境电商 AI 技能模板**，覆盖品牌战略→选品→调研→文案→广告→独立站→**财务资金**→**联盟营销**→**欧洲渠道进入**→社媒→红人→线下渠道→海外开发→媒体公关→**购买前 Reddit VOC** 全流程自动化。
+一套 **55 个跨境电商 AI 技能模板**，覆盖品牌战略→选品→调研→文案→广告→独立站→**财务资金**→**联盟营销**→**欧洲渠道进入**→社媒→红人→线下渠道→海外开发→媒体公关→**购买前 Reddit VOC** 全流程自动化。
 
 两种格式：
 - **单文件技能（45 个）** — 一个 `.md` 文件，放入 AI IDE 技能目录即可使用
@@ -277,11 +278,11 @@ Key requirements: long context (8K+ input), strong instruction following, Chines
 
 外加 **7 个独立工具** 在 `tools/`（Python 工具，被 skill 调用也可独立使用）：`backlink-kol-extractor` / `trustpilot` / `linktree-expander` / `contact-extractor` / `api-pacer` / `fetchlib` / `browser-fetch`。
 
-### 技能矩阵（54 个技能，13 条链路）
+### 技能矩阵（55 个技能，13 条链路）
 
 | 链路 | 数量 | 技能 |
 |------|------|------|
-| **品牌战略链** | 10 | 市场扫描 → 赛道假设 → 深度验证 → 品牌战略 → IMC框架 → 年度规划 → 预算管控 → 知识库 → A/B对比 → 图表可视化 |
+| **品牌战略链** | 11 | 市场扫描 → 赛道假设 → 深度验证 → 品牌战略 → IMC框架 → 年度规划 → 预算管控 → 知识库 → A/B对比 → 图表可视化 → 报告 PDF 导出（全库被复用最多，37 个技能链它出终稿） |
 | **Amazon 运营链** | 14 | 选品 → 筛选 → 调研 → IP排查 → 供应商 → 关键词 → 文案 → 主图 → A+ → 合规 → 复查 → 广告架构 → 周报 → 诊断 |
 | **独立站流量** | 5 | SEO 全链路诊断（NEW v3.3）→ SEO全链路规划 → SEM广告 → **转化率优化 CRO（UPGRADED v3.7，多 Agent 并发实站检测：第零步 5 子代理并发侦察 + 6 模块 + 技术追踪健康层 + 文案改写/异议表 + 速赢双桶，Claude Code Workflow 编排）** → SERP 内容拆解（NEW v3.6，竞品文章结构 + 关键词 + 反链 + GEO 一起拆） |
 | **财务与资金（NEW v3.8）** | 8 | 落地成本与单位经济(CM1/CM2/CM3) → 收款·结汇·FX 对冲 → 税务合规(Nexus/VAT/IOSS/EPR，含 EU €3 关税与 ~€2 处理费之分) → 13 周现金流预测 → 定价·毛利护栏 → 多渠道对账记账 → 跨境架构与利润回流 → 融资真实成本与风控 |
@@ -296,7 +297,7 @@ Key requirements: long context (8K+ input), strong instruction following, Chines
 
 ### 核心特色
 
-- **54 技能 × 13 链路 + 7 独立工具** — 从战略到执行到财务资金到联盟营销到欧洲渠道进入到海外开发到媒体公关到购买前 Reddit VOC 全覆盖
+- **55 技能 × 13 链路 + 7 独立工具** — 从战略到执行到财务资金到联盟营销到欧洲渠道进入到海外开发到媒体公关到购买前 Reddit VOC 全覆盖
 - **联盟与渠道体系（源自 2026 行业分享）** — 从联盟客的经济账反推的 2 技能联盟链（`affiliate-readiness-audit` 是 CRO 的镜像——审"联盟客为什么不推你"；`affiliate-program-ops` 跑 AI 招募→评分→建联→激活闭环），外加美国主体的欧洲渠道进入战略（SSPV / RCS / 增长飞轮）与多渠道价格冲突护栏。只抽方法论骨架，每个技能在"参考方法论索引"注明来源分享
 - **财务链 YMYL 纪律** — 8 个财务技能均带"规划辅助、非专业税务/法律/会计意见、需找 CPA 核实"免责，2026 法规打时间戳，估算标 ⚠️（不编造数字）
 - **数据验证层** — 每个技能内置强制验证，推测数据标 ⚠️
@@ -348,8 +349,10 @@ No skills added or removed; this release fixes structural debt found in an exter
 - **Closed a cross-file compliance conflict.** `google-whatsapp-prospecting` advised rotating IPs for high-volume search and rotating numbers past a ban — contradicting the repo-wide scraping red line in `tools/fetchlib` / `tools/browser-fetch` (*no access-barrier defeat, no IP rotation, no CAPTCHA solving*) **and** the skill's own rule to move to the WhatsApp Business API above 50 msgs/day. Both now point at the sanctioned path, with the instruction to cut the query set rather than the compliance.
 - **Frontmatter on all 53 remaining skills.** `name` + `description` now present repo-wide, matching the convention the multi-file packages already used. Descriptions were authored from each file's actual contents — what it produces, when to reach for it, bilingual EN/中文 triggers, sibling cross-refs — with explicit disambiguation between near neighbours (`amazon-ad-architecture` vs `-diagnosis` vs `weekly-ad-review`; `trustpilot-voc-quick` vs `-deep`; `dsite-seo-diagnostic` vs `-playbook`). Support files (`references/` `templates/` `scripts/` `examples/`) are deliberately exempt — they are not skills.
 - **New `Skill lint` CI gate** (`scripts/lint_skills.py`, stdlib-only) blocking all four regressions above: frontmatter presence + `name`-matches-filename, duplicate skill names across paths, dead relative `.md` links, and scraping-red-line violations (negation-aware, so the red-line statements themselves pass). Each check was negative-tested against a seeded fault.
+- **Removed a disguised-consent instruction and two folklore ban thresholds.** `google-whatsapp-prospecting`'s reference doc told readers to send a *"transactional-looking"* opt-in request to obtain consent — deceptive on its own terms, what Meta rejects templates for, and an FTC Act §5 exposure for a US operator; and it stated `3+ blocks → warning / 5+ block + 2+ report → 24h ban` as fact, which Meta does not publish. Both rewritten (identify yourself and ask plainly; enforcement described qualitatively). The lint gained two checks — **deception** and **unpublished-threshold folklore** — because none of the original four would have caught either.
+- **Skill count corrected 54 → 55.** No skill was added: `report-pdf-export` had always existed and is chained by **37 other skills**, but it was never listed in the skill map. It now appears in the Brand Strategy chain.
 - **Open design questions parked as issues** rather than guessed at: [#15](https://github.com/noique/cross-border-ecommerce-skills/issues/15) making the weighted scoring models reproducible (normalization / missing values / ties) and [#16](https://github.com/noique/cross-border-ecommerce-skills/issues/16) the tension between output quotas and honest "insufficient evidence". Input welcome on both.
-- Total: **54 skills across 13 chains** (unchanged); standalone tools: 7.
+- Total: **55 skills across 13 chains** (count corrected, none added); standalone tools: 7.
 
 ### v3.14 (2026-07-12)
 - **Amazon Operations Chain (14 skills) — 2026 algorithm & policy refresh.** Every fact was re-verified against first-party sources (Seller Central announcements, Amazon Ads *what's new*, the COSMO SIGMOD 2024 paper, Amazon Q4'25 / Q1'26 earnings) and corrected. No skills added; the flows are unchanged. Highlights:
