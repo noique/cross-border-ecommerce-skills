@@ -27,7 +27,7 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SUPPORT_DIRS = ("/references/", "/templates/", "/scripts/", "/assets/", "/examples/")
+SUPPORT_DIRS = ("/references/", "/templates/", "/scripts/", "/assets/", "/examples/", "/docs/")
 SKIP_DIRS = {".git", "node_modules", ".github"}
 
 # Phrases that would contradict tools/fetchlib's red line. Matched case-insensitively.
@@ -44,6 +44,8 @@ ALLOW = (
     r"crosses the", r"would contradict", r"is tos evasion", r"rather than",
     r"deceptive", r"是欺骗", r"不需要", r"根本不需要",
     r"不是", r"而是", r"无需", r"别去", r"不应",       # 中文 "不是 X 而是 Y" negation
+    # 告诫式framing："不披露维度数 = 把数据不全伪装成评分很高" 是在警告，不是在教
+    r"严禁", r"不得", r"避免", r"不披露", r"等于把", r"就是把",
 )
 
 # Outreach/messaging deception — advising that a message be dressed up as something it
