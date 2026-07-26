@@ -10,6 +10,11 @@ Checks the failure modes that actually bit this repo (each one is a real, fixed 
   3. DEAD LINKS    every relative .md link resolves — deleting a file must not orphan a link.
   4. RED LINE      no skill teaches IP/number rotation, CAPTCHA solving, or barrier defeat,
                    which would contradict the scraping red line in tools/fetchlib.
+  5. DECEPTION     no skill tells the reader to disguise a message or identity (e.g. sending a
+                   "transactional-looking" opt-in to harvest consent) — deceptive on its own
+                   terms and an FTC Act s5 exposure for a US operator.
+  6. FOLKLORE      no skill states an unpublished enforcement threshold as fact ("5+ blocks ->
+                   24h ban"); vendors don't publish these, and a fake line invites gaming it.
 
 Support files (references/ templates/ scripts/ assets/ examples/) are NOT skills and are
 exempt from the frontmatter check — but they ARE still link- and red-line checked.
@@ -37,6 +42,25 @@ ALLOW = (
     r"\bno\b", r"\bnot\b", r"\bnever\b", r"without", r"don'?t", r"do not",
     r"不换", r"不解", r"不破", r"不轮换", r"禁止", r"red line", r"红线",
     r"crosses the", r"would contradict", r"is tos evasion", r"rather than",
+    r"deceptive", r"是欺骗", r"不需要", r"根本不需要",
+    r"不是", r"而是", r"无需", r"别去", r"不应",       # 中文 "不是 X 而是 Y" negation
+)
+
+# Outreach/messaging deception — advising that a message be dressed up as something it
+# isn't. Caught late: a references/ file once told users to send a "transactional-looking"
+# opt-in request to harvest consent, which the four checks above all sailed past.
+DECEPTION = (
+    r"[-\s](?:looking|styled|disguised)\s+(?:opt-?in|request|message|email|notice)",
+    r"\bdisguis\w*", r"\bmasquerad\w*", r"\bpose\s+as\b", r"\bposing\s+as\b",
+    r"make it (?:look|appear|seem) like",
+    r"伪装(?:成|为)", r"假装(?:成|是)", r"冒充",
+)
+
+# Precise enforcement thresholds vendors do not publish (e.g. "5+ blocks -> 24h ban").
+# Growth-blog folklore stated as fact invites users to optimize against a fake line.
+FAKE_THRESHOLD = (
+    r"[0-9]+\+?\s*(?:blocks?|reports?)\b[^.\n]{0,30}(?:→|->|=+>?|gets?\s+you)[^.\n]{0,20}\b(?:ban|warning|restrict)",
+    r"(?:→|->)\s*[0-9]+\s*h(?:our)?s?\s+ban\b",
 )
 
 FM_RE = re.compile(r"\A---[ \t]*\r?\n(.*?)\r?\n---[ \t]*\r?\n", re.S)
@@ -126,12 +150,19 @@ def main():
                     or os.path.isfile(os.path.join(ROOT, target))):
                 errors.append("%s: dead link -> %s" % (rel, target))
 
-        # ---- 4) scraping red line ----
+        # ---- 4/5/6) line-level policy checks ----
         for lineno, line in enumerate(text.splitlines(), 1):
             low = line.lower()
-            if any(re.search(p, low) for p in RED_LINE) and \
-               not any(re.search(a, low) for a in ALLOW):
+            excused = any(re.search(a, low) for a in ALLOW)
+            if any(re.search(p, low) for p in RED_LINE) and not excused:
                 errors.append("%s:%d: violates the scraping red line -> %s"
+                              % (rel, lineno, line.strip()[:90]))
+            if any(re.search(p, low) for p in DECEPTION) and not excused:
+                errors.append("%s:%d: tells the reader to disguise a message/identity -> %s"
+                              % (rel, lineno, line.strip()[:90]))
+            if any(re.search(p, low) for p in FAKE_THRESHOLD):
+                errors.append("%s:%d: states an unpublished enforcement threshold as fact "
+                              "(vendors don't publish these) -> %s"
                               % (rel, lineno, line.strip()[:90]))
 
     if errors:

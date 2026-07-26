@@ -20,10 +20,10 @@ WhatsApp's *Terms of Service* and *Acceptable Use Policy* prohibit:
 - "Use that conflicts with our Acceptable Use Policy" (broad — includes unsolicited promotional messaging)
 - Use of unauthorised third-party clients (any "WhatsApp marketing tool" not built on Business API)
 
-**What gets a number banned:**
-- 3+ recipients block you within 24h → automatic warning
-- 5+ block + 2+ report → 24h ban
-- Repeat offence → permanent ban + device-fingerprint ban (new SIMs from same device get re-banned)
+**What gets a number banned** — ⚠️ Meta does **not** publish the thresholds, and any exact "N blocks = ban" figure circulating in growth blogs is folklore, not policy. Treat the mechanism as qualitative:
+- Blocks and spam reports from recipients are the dominant signal; a burst of them on a young number triggers review fastest.
+- Enforcement escalates — warning → temporary restriction → permanent ban — and repeat offences can extend beyond the single number.
+- The rate that is "safe" is not a number you can look up; it is a function of how wanted your messages are. Optimize for relevance and consent, not for staying under a rumoured line.
 
 **The compliant path for any campaign >50 messages/day:**
 
@@ -37,8 +37,8 @@ WhatsApp's *Terms of Service* and *Acceptable Use Policy* prohibit:
 For Business API, every "marketing template" must be **pre-approved by Meta**. They reject templates that look like cold outreach without prior consent. The realistic compliant flow:
 
 1. Find lead via Google
-2. Send a *transactional-looking* opt-in request via email or web form
-3. Once user replies / clicks consent → send WhatsApp via Business API
+2. Ask for opt-in over a channel where cold contact is lawful for you (email or a web form), **identifying yourself and stating plainly** that you want to talk on WhatsApp about a specific business need. Do **not** dress a marketing message up as a transactional or service notice to get the consent — that is deceptive, it is exactly what Meta rejects templates for, and in the US it is an FTC Act §5 deception exposure independent of WhatsApp's own rules.
+3. Once the user replies / clicks consent → send WhatsApp via Business API
 
 This is more friction than the article suggests but is the path that doesn't get your business banned.
 
