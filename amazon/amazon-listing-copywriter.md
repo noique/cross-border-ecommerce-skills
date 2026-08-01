@@ -1,6 +1,6 @@
 ---
 name: amazon-listing-copywriter
-description: "Write the complete Amazon US listing copy pack — golden title (≤75 chars for non-media categories, 2026-07-27 rule) plus Item Highlights, five bullet points, Product Description / A+ HTML, and a byte-counted backend Search Terms block — in bilingual EN + 中文, built on brand narrative rather than keyword stuffing: it anchors the product to a Maslow-level need, finds the \"user wants it / competitors are weak / we can deliver\" wedge, and turns specs into story, while annotating each block with the keyword it carries and the VOC pain point it answers. Reads any existing market-research, IP-risk and keyword-library reports first, then enforces its own data validation (actual character count, len(text.encode('utf-8')) ≤249 bytes, same-word ≤2 in title, every quantified claim and certification traceable to real product testing, no invented expert endorsements) and closes with a Premium A+ eligibility check, an Alexa for Shopping (ex-Rufus) AI optimization checklist, an agent-readability check (first sentence of each bullet = an extractable fact in standard units), and a Pass/Fail compliance self-check table covering trademark generics, EPA/FDA wording, banned characters and G23501 Search Terms rules. Use when the research is done and the user now needs the actual selling text. Triggers on \"写 listing\", \"写文案\", \"五点描述\", \"标题怎么写\", \"写 A+ 文案\", \"listing 文案优化\", \"帮我改标题\", \"write my Amazon listing\", \"bullet points for [product]\", \"rewrite this title\", \"A+ content copy\". Consumes /amazon-keyword-research (Tier 1 / COSMO / Rufus words) and /amazon-ip-risk-assessment (words to avoid); hand the finished pack to /amazon-compliance-review for the independent three-dimension audit, then /amazon-pre-launch-review. Writes copy — it does not audit someone else's copy."
+description: "Write the complete Amazon US listing copy pack — golden title (≤75 chars for non-media categories, 2026-07-27 rule) plus Item Highlights (≤125), five bullet points, Product Description / A+ HTML, and a byte-counted backend Search Terms block — shipping the title and Item Highlights as 3 strategy-distinct candidate versions each (volume-first / long-tail-first / scenario-first), every version character-counted and independently compliance-checked, closing with one recommended version whose rationale states what traffic it prioritizes, what it gives up, and the condition under which to switch — in bilingual EN + 中文, built on brand narrative rather than keyword stuffing: it anchors the product to a Maslow-level need, finds the \"user wants it / competitors are weak / we can deliver\" wedge, and turns specs into story, while annotating each block with the keyword it carries and the VOC pain point it answers. Reads any existing market-research, IP-risk and keyword-library reports first, then enforces its own data validation (actual character count on every candidate version rather than only the recommended one, len(text.encode('utf-8')) ≤249 bytes, same-word ≤2 in title, every quantified claim and certification traceable to real product testing, no invented expert endorsements, and no fabricated material / size / certification / audience invented just to fill a third candidate — fewer honest versions with the reason stated counts as complete) and closes with a Premium A+ eligibility check, an Alexa for Shopping (ex-Rufus) AI optimization checklist, an agent-readability check (first sentence of each bullet = an extractable fact in standard units), and a Pass/Fail compliance self-check table covering trademark generics, EPA/FDA wording, banned characters and G23501 Search Terms rules. Use when the research is done and the user now needs the actual selling text. Triggers on \"写 listing\", \"写文案\", \"五点描述\", \"标题怎么写\", \"写 A+ 文案\", \"listing 文案优化\", \"帮我改标题\", \"write my Amazon listing\", \"bullet points for [product]\", \"rewrite this title\", \"A+ content copy\". Consumes /amazon-keyword-research (Tier 1 / COSMO / Rufus words) and /amazon-ip-risk-assessment (words to avoid); hand the finished pack to /amazon-compliance-review for the independent three-dimension audit, then /amazon-pre-launch-review. Writes copy — it does not audit someone else's copy."
 ---
 
 # Amazon Listing 文案撰写 SKILL
@@ -54,13 +54,15 @@ description: "Write the complete Amazon US listing copy pack — golden title (�
 ### 第三步：撰写 Listing 文案
 
 ### 第四步：数据验证（必做）
-1. **标题字符数：** 必须实际计数确认 ≤ 类目限制，不可目测
-2. **Search Terms 字节数：** `len(text.encode('utf-8'))` ≤ 249
-3. **Bullet Points 措辞：** 核心词前置到前两条（软预算合计≈1000 字符——Amalytix 自测观察，非官方索引规则，不作合规判定）
-4. **同词重复检查：** 标题中同一单词不得出现超过 2 次
-5. **事实性声称验证：** 文案中引用的数据（吸收量/UPF/认证）必须有产品实际测试支持，不可编造
-6. **专业背书验证：** 如文案声称"参考专业人士意见设计"，必须确认有实际合作记录。如无，改为更准确的表述
-7. **Referral Fee 确认：** 如文案涉及定价建议，使用当前类目的实际 Referral Fee 费率
+1. **标题字符数：** 必须实际计数确认 ≤ 类目限制，不可目测。🔴 **3 个候选版本逐版计数**，不是只算推荐那版——运营会挑走任意一版直接上架
+2. **Item Highlights 字符数：** 逐版实际计数 ≤125 字符；该字段不可留空（标题瘦身后长尾词的承接位）
+3. **Search Terms 字节数：** `len(text.encode('utf-8'))` ≤ 249
+4. **Bullet Points 措辞：** 核心词前置到前两条（软预算合计≈1000 字符——Amalytix 自测观察，非官方索引规则，不作合规判定）
+5. **同词重复检查：** 标题中同一单词不得出现超过 2 次（3 个候选版本逐版检查）
+6. **多版本真实性：** 候选版本之间必须是真实存在的取词策略差异。🔴 严禁为凑够 3 版而编造材质、尺寸、认证、人群或使用场景；角度不够就少交并注明原因
+7. **事实性声称验证：** 文案中引用的数据（吸收量/UPF/认证）必须有产品实际测试支持，不可编造
+8. **专业背书验证：** 如文案声称"参考专业人士意见设计"，必须确认有实际合作记录。如无，改为更准确的表述
+9. **Referral Fee 确认：** 如文案涉及定价建议，使用当前类目的实际 Referral Fee 费率
 
 ### 第五步：合规自检
 
@@ -81,20 +83,74 @@ description: "Write the complete Amazon US listing copy pack — golden title (�
 
 > 字符限制：非媒体类目 ≤75 字符（2026-07-27 生效）| 核心出单词布局进 75 字符标题，长尾/场景词迁 Item Highlights（≤125 字符）| 同词不超过 2 次 | 禁特殊字符 ! $ ? _ { } ^ ¬ ¦（品牌名内除外，2025-01 政策）
 
-### 英文标题
+### 候选标题（3 版 + 实测字符数）
+
+标题骨架参考：
 ```
 [Brand] + [Core Keyword] + [Key Feature 1] + [Key Feature 2] + [Material/Spec] + [Target Audience/Use Case] + [Size/Quantity]
 ```
 
+输出 **3 个取词策略不同的候选标题**，供运营按自己的库存与广告计划挑选。三版必须是真正不同的取词策略，**不是同义词换皮**：
+
+| 版本 | 策略 | 英文标题 | 字符数 | 主打词 | 放弃了什么 |
+|------|------|---------|--------|--------|-----------|
+| A | 核心大词优先（吃搜索量）| | XX/75 | | |
+| B | 长尾精准优先（吃转化率）| | XX/75 | | |
+| C | 场景/人群优先（吃 COSMO 语意）| | XX/75 | | |
+
+**🔴 三版逐版校验，不能只校验推荐版**——运营会挑走任意一版直接上架：
+- [ ] 每版实际计数 ≤75 字符（含空格，不可目测）
+- [ ] 每版同一单词 ≤2 次（介词/冠词/连词除外，复数算重复）
+- [ ] 每版无 `! $ ? _ { } ^ ¬ ¦`（品牌名内除外）
+- [ ] 每版不含 IP 报告中的风险词与竞品注册商标
+
+**🔴 3 版是目标，不是及格线。** 产品信息只支撑得起 2 个真正不同的取词角度时（如无第二人群词、无差异化材质），就出 2 版并注明「实际 2/3 版，原因：XX」。**严禁为凑第三版编造材质、尺寸、认证、人群或使用场景**——标题里的每个词都会被买家和平台当作产品事实。**如实少交 = 本步骤完成。**
+
+### 推荐上架版本
+
+**推荐：版本 [X]**，理由须写清三件事：
+1. 它优先吃哪个词的流量
+2. 相比另外两版放弃了什么
+3. 什么条件下应该改选另一版（如「若 Tier 1 大词 CPC 打不动，改选 B」）
+
+> 只给"推荐 A"而不给理由与切换条件 = 本步骤未完成。运营要的是判断依据，不是一个结论。
+
 ### 中文翻译
-[对应中文翻译]
+[推荐版本的对应中文翻译]
 
 ### 算法融合说明
 - **位置信号：** 核心出单词前置于 75 字符标题（位置越靠前信号越强，社区经验，无官方权重）
 - **COSMO 覆盖：** 场景词/人群词迁入 Item Highlights + 五点，覆盖语意搜索
 - **Alexa for Shopping 适配：** 自然语言结构，侧重使用场景而非参数堆砌
 
-## 二、五绝卖点 (Bullet Points)
+## 二、商品亮点 (Item Highlights)
+
+> ≤125 字符（含空格）| 2026-07-27 随标题新政启用 | **可被搜索索引**，随标题展示于搜索结果与详情页 | 标题瘦身到 75 字符后，这里是长尾/场景词的主要承接位，**不可留空**
+
+### 候选亮点（3 版 + 实测字符数）
+
+| 版本 | 承接方向 | 英文 Item Highlights | 字符数 | 承接的长尾词 |
+|------|---------|---------------------|--------|-------------|
+| A | 使用场景 | | XX/125 | |
+| B | 目标人群 | | XX/125 | |
+| C | 材质/规格差异化 | | XX/125 | |
+
+**逐版校验：**
+- [ ] 每版实际计数 ≤125 字符（含空格）
+- [ ] 不与推荐标题重复堆同一批词——标题已占的核心词不在这里重复占位
+- [ ] 不含主观/绝对化词（best / No.1 / perfect）与保证性措辞
+- [ ] 不含竞品注册商标与 IP 报告风险词
+
+**🔴 同样适用 3 版短交规则：** 承接方向不足 3 个（如产品无明确细分人群）时，按实际版本数输出并注明原因。**严禁编造使用场景或人群来凑版本。**
+
+### 推荐上架版本
+
+**推荐：版本 [X]** — 说明它承接了标题放弃的哪些词，以及「推荐标题 + 推荐亮点」的组合是否形成完整覆盖（标题吃精确词，亮点吃长尾/场景词）。
+
+### 中文翻译
+[推荐版本的对应中文翻译]
+
+## 三、五绝卖点 (Bullet Points)
 
 > 每条 10–255 字符（官方 2024-08-15：禁 emoji/特殊字符/保证性措辞）| 核心词前置到前两条（软预算合计≈1000 字符——Amalytix 自测观察，非官方索引规则）
 
@@ -135,7 +191,7 @@ description: "Write the complete Amazon US listing copy pack — golden title (�
 **中文翻译：** [翻译]
 **算法优化：** 品牌叙事闭环 + 降低购买决策风险
 
-## 三、产品描述与售后支持 (A+ / Product Description)
+## 四、产品描述与售后支持 (A+ / Product Description)
 
 > 建议使用 Premium A+（符合条件可免费使用，支持视频/UGC/交互模块；官方营销口径「up to 20% higher sales」，口径是销售非转化率）
 
@@ -173,7 +229,7 @@ description: "Write the complete Amazon US listing copy pack — golden title (�
 - COSMO：使用五感体验描述 + 多场景覆盖
 - Alexa for Shopping：包含自然语言问答格式（"Looking for...?" "Wondering how...?"）
 
-## 四、核心隐藏流量词 (Search Terms)
+## 五、核心隐藏流量词 (Search Terms)
 
 > **严格限制 <250 字节**（美国站，字节非字符；日本 500/印度 200）| 超限整字段可能不索引 | 禁品牌名（含自有）/ASIN/亵渎/临时词（new/on sale now）/主观词（best/cheapest）——违反官方 G23501，may result in ASIN suppression 并影响 Account Health
 
@@ -192,7 +248,7 @@ description: "Write the complete Amazon US listing copy pack — golden title (�
 - **禁止项（勿放后台）：** 竞品/自有品牌词、ASIN、主观/临时词——违反 G23501，可致 ASIN suppression；如需投竞品品牌词请走 SP 广告 targeting（广告定向≠后台字段，合规）
 - **培养文义词：** [长期培养的语义关键词]
 
-## 五、Alexa for Shopping（前身 Rufus）AI 优化清单
+## 六、Alexa for Shopping（前身 Rufus）AI 优化清单
 
 | 优化项 | 是否完成 | 说明 |
 |--------|---------|------|
@@ -204,7 +260,7 @@ description: "Write the complete Amazon US listing copy pack — golden title (�
 | 产品图片清晰展示多角度 | | 主图须实物专业照片（禁 graphics/illustrations/mockups，官方 G1881）|
 | A+ Content 完整 | | |
 
-## 五·补、AI 代理可读性检查（Agent-Readable）
+## 六·补、AI 代理可读性检查（Agent-Readable）
 
 > 推荐引擎与 AI overview 直接抽取 Listing 结构化事实，措辞需便于机器提取（Alexa for Shopping 读商品目录/评论/Q&A/全网信息，推荐参考评论、库存、配送信号）。
 
@@ -213,7 +269,7 @@ description: "Write the complete Amazon US listing copy pack — golden title (�
 - [ ] **上架后核对 review highlights / AI overview 转述是否失真**：失真则回改 BP 措辞，并使卖点措辞与目标好评用语对齐
 - [ ] **守 4.0 星线 + 库存连续性**：<4.0 星通常不被 AI 推荐（第三方拆解，medium）；断货中断推荐信号
 
-## 六、强制最终合规自检报告
+## 七、强制最终合规自检报告
 
 | 检查项 | 状态 | 说明 |
 |--------|------|------|
@@ -221,7 +277,9 @@ description: "Write the complete Amazon US listing copy pack — golden title (�
 | EPA 措辞 | Pass/Fail | 未使用 Antibacterial, Mold, Disinfect（仅用 hygienic, clean）|
 | 侵权词 | Pass/Fail | 未使用 [来自IP报告的风险词] |
 | 商标词 | Pass/Fail | 未在关键词/标题中使用竞品注册商标 |
-| 标题字符 | Pass/Fail | 非媒体类 ≤75 字符（2026-07-27），同词 ≤ 2 次，禁 ! $ ? _ { } ^ ¬ ¦（品牌名内除外，2025-01 政策）|
+| 标题字符 | Pass/Fail | 非媒体类 ≤75 字符（2026-07-27），同词 ≤ 2 次，禁 ! $ ? _ { } ^ ¬ ¦（品牌名内除外，2025-01 政策）—— **3 个候选版本逐版通过**，任一版不合规即 Fail |
+| Item Highlights | Pass/Fail | 逐版 ≤125 字符，非空，无主观/绝对化词与保证性措辞 |
+| 多版本真实性 | Pass/Fail | 版本差异来自真实取词策略，未编造材质/尺寸/认证/人群/场景凑数；短交已注明原因 |
 | Bullet 前置 | 建议 | 核心词前置到前两条（软预算，非官方索引规则，不作合规判定）|
 | Search Terms | Pass/Fail | <250 字节，空格分隔，无逗号 |
 | Search Terms 合规 | Pass/Fail | 不含任何品牌名（含自有）/ASIN/主观词/临时词（G23501，违者可致 ASIN suppression）|
