@@ -16,7 +16,7 @@ description: "Write the complete Amazon US listing copy pack — golden title (�
 优先读取以下已有报告（如果存在）：
 1. **市场调研报告** — VOC洞察、用户画像、势能用户、痛点矩阵、竞品品牌叙事
 2. **IP 风险排查报告** — 需规避的侵权敏感词/商标词
-3. **关键词词库报告** — Tier 1-3 关键词、COSMO 场景词、Rufus 对话词
+3. **关键词词库报告** — Tier 1-3 关键词、COSMO 场景词、Alexa for Shopping（前身 Rufus）对话词
 
 如果没有这些报告，需根据用户提供的产品信息独立完成关键词分析和竞品研究。
 
@@ -182,7 +182,7 @@ description: "Write the complete Amazon US listing copy pack — golden title (�
 ### BP4：[第四卖点 - 专业背书/权威认证]
 **English:** [文案 - 包含专家背书/认证/数据支撑，增强 EEAT 信号]
 **中文翻译：** [翻译]
-**算法优化：** EEAT 权威信号 + Rufus 可信度
+**算法优化：** EEAT 权威信号 + Alexa for Shopping 可信度
 
 ---
 
