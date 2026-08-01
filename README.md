@@ -20,7 +20,7 @@ Two formats:
 
 Plus **7 standalone tools** under `tools/` (Python utilities used by skills, also runnable independently): `backlink-kol-extractor`, `trustpilot`, `linktree-expander`, `contact-extractor`, `api-pacer`, `fetchlib`, `browser-fetch`.
 
-### Skill Map (55 skills across 13 chains)
+### Skill Map (58 skills across 13 chains)
 
 ```
                         ┌─────────────────────────────────────┐
@@ -86,6 +86,9 @@ Plus **7 standalone tools** under `tools/` (Python utilities used by skills, als
 | [brand-deep-validation](brand-strategy/brand-deep-validation.md) | Round 3: Deep hypothesis validation — 5D framework, SEO traffic model, benchmark cases, Zone 4 |
 | [brand-strategy-plan](brand-strategy/brand-strategy-plan.md) | Round 4: Brand strategy & execution — 7-element positioning, 4 pillars, pricing, narrative, roadmap |
 | [brand-imc-framework](brand-strategy/brand-imc-framework.md) | IMC integrated marketing — Audience/User dual-path, 6-stage funnel, channel mix, execution calendar |
+| [brand-event-marketing](brand-strategy/brand-event-marketing.md) | Moment/event marketing — 4 event types, calendar + trend-jacking SOPs, ambush-marketing legal gate |
+| [crowdfunding-launch](brand-strategy/crowdfunding-launch.md) | Kickstarter/Indiegogo launch — FTC delivery gate, verified fee stack, 4-phase SOP, post-campaign DTC flywheel |
+| [attribution-measurement](brand-strategy/attribution-measurement.md) | Measurement stack — MMM + incrementality + attribution triangulation, geo-test design, Meridian vs Robyn |
 | [brand-annual-plan](brand-strategy/brand-annual-plan.md) | Annual planning — BSC scorecard, 52-week calendar, quarterly OKRs, resource allocation |
 | [brand-budget-ops](brand-strategy/brand-budget-ops.md) | Budget planning & control — 10-category budget model, monthly tracking, ROI by channel |
 | [brand-knowledge-base](brand-strategy/brand-knowledge-base.md) | Obsidian knowledge base — batch-creates 30-50 interlinked .md files from all rounds |
@@ -270,7 +273,7 @@ Key requirements: long context (8K+ input), strong instruction following, Chines
 
 ### 这是什么？
 
-一套 **55 个跨境电商 AI 技能模板**，覆盖品牌战略→选品→调研→文案→广告→独立站→**财务资金**→**联盟营销**→**欧洲渠道进入**→社媒→红人→线下渠道→海外开发→媒体公关→**购买前 Reddit VOC** 全流程自动化。
+一套 **58 个跨境电商 AI 技能模板**，覆盖品牌战略→选品→调研→文案→广告→独立站→**财务资金**→**联盟营销**→**欧洲渠道进入**→社媒→红人→线下渠道→海外开发→媒体公关→**购买前 Reddit VOC** 全流程自动化。
 
 两种格式：
 - **单文件技能（45 个）** — 一个 `.md` 文件，放入 AI IDE 技能目录即可使用
@@ -278,7 +281,7 @@ Key requirements: long context (8K+ input), strong instruction following, Chines
 
 外加 **7 个独立工具** 在 `tools/`（Python 工具，被 skill 调用也可独立使用）：`backlink-kol-extractor` / `trustpilot` / `linktree-expander` / `contact-extractor` / `api-pacer` / `fetchlib` / `browser-fetch`。
 
-### 技能矩阵（55 个技能，13 条链路）
+### 技能矩阵（58 个技能，13 条链路）
 
 | 链路 | 数量 | 技能 |
 |------|------|------|
@@ -342,6 +345,15 @@ cp -r cross-border-ecommerce-skills/tools/backlink-kol-extractor ~/.claude/skill
 ---
 
 ## Changelog
+
+### v3.17 (2026-08-01) — three new skills: event marketing, crowdfunding, measurement
+Three gaps closed, each found by auditing the library against outside industry material rather than by brainstorming. The recurring lesson: **in all three, the most valuable part was not the framework — it was discovering that the source material's core premise had expired.** Every fact below was verified against primary sources at build time; none was taken on the source's word.
+
+- **New `brand-event-marketing`** — moment-driven marketing: the four event types by the question each answers (brand = who you are / product = what category you own / calendar = who you stand with / trend = where you're headed), a 7-step calendar-moment SOP and a 6-step trend-jacking SOP (four-plane trend read, competitor-axis reset, three value anchors, pyramid content matrix), plus a daily market-radar checklist. **What the source lacked and this adds: the ambush-marketing legal gate.** Newsjacking a big event is a legal act in the US — Olympic marks sit under the Ted Stevens Act with **no consumer-confusion requirement** (the USOPC has pursued "Olympian", "Team USA", even "Going for Gold"); FIFA's 2026 protection rests on the Lanham Act plus venue contracts and municipal clean zones rather than special legislation; and NFL enforcement is why every brand says "The Big Game". No rights, no reference — full stop. Also carries the practitioner's own measurement-honesty rule (PR counts page views not the outlet's monthly visits; creators count plays/likes/shares/comments not follower counts) and a no-hardcoded-event-dates freshness rule. Framework credited to its named speaker in the 参考方法论索引; **the source's own self-reported campaign results were deliberately excluded** — vendor self-reporting does not belong in a skill.
+- **New `crowdfunding-launch`** — reward-based launch on Kickstarter / Indiegogo as four jobs at once (production capital, demand validation, launch awareness, distribution path), with a four-phase SOP and the post-campaign DTC flywheel. **Opens with a delivery gate, because a reward campaign is an FTC-enforceable promise**: the Chevalier case (the FTC's first Kickstarter action — $122k raised on a $35k goal, settled with a $111,793.71 judgment) and the iBackPack case ($800k+ across four campaigns on both platforms, nothing shipped) are in the file as the reason the rule is *deliver or refund*. 🔴 **The stale premise caught here: Indiegogo retired Flexible Funding for new campaigns in October 2025** — both platforms are now all-or-nothing, so every "set a low goal and take the money via flexible" playbook (and every pre-2025 case screenshot showing a Flexible Goal) is teaching a route that no longer exists. Verified fee stack: Kickstarter 5% + 3% + $0.20 (small pledges 5% + $0.05, nothing at all if the goal is missed); Indiegogo 5% + ~3% + $0.30, InDemand now **Late Pledge** (5% native / 8% non-native). Includes a suitability gate that will tell a drop-ship or trading team its product is wrong for crowdfunding — **"don't do this" is a designed output.**
+- **New `attribution-measurement`** — the measurement stack the library was missing: attribution, incrementality and MMM answer three *different* questions and get calibrated against each other rather than chosen between. Covers why summing independently-reported platform conversions always overcounts, geo-test design that starts from the minimum detectable effect that would actually change a budget decision (an under-powered test is worse than no test), open-source MMM selection between **Google Meridian** (Bayesian, Apache-2.0, now open to everyone, Scenario Planner added February 2026 for no-code budget modelling) and **Meta Robyn** (frequentist/ML, MIT, still maintained), and Bayesian calibration of MMM priors with incrementality results. 🔴 **Two stale premises caught: the cookiepocalypse did not happen** — Google reversed third-party-cookie deprecation in July 2024 and confirmed in April 2025 that Chrome would neither run the choice prompt nor deprecate, so any strategy whose立论 is "cookies are going away, therefore X" needs rewriting from the premise up (while *not* over-correcting: click-level tracking was never complete, which is the actual reason to run incrementality and MMM); **and the rule-based attribution models are retiring on a live timeline** — GA4 dropped first-click / linear / time-decay / position-based in November 2023, and Google Ads retired the same four in 2026 (unselectable for new conversion actions from mid-July, force-migrated to data-driven attribution by September), which means accounts still sitting on them should choose their migration rather than be migrated.
+- **Validated against real data, not just linted.** Each skill was dry-run on real cases, and each run found a defect that was then fixed: `brand-event-marketing` had no operational way to grade an event's 势能 (now a table of observable signals — search-trend shape in the *target country*, whether the platform runs an official window, discussion breadth — with "does my category actually connect to this moment" as a **veto, not a bonus**); `crowdfunding-launch` had no way to size a pre-launch email list (now a back-solve from goal ÷ AOV ÷ list-conversion, and 🔴 the repo deliberately ships **no default conversion rate** — that number varies too much by category and list source for a borrowed one to be anything but precise and wrong). `attribution-measurement` was run against a real multi-year DTC dataset (~30k orders, six years, GA4 + GSC + keyword data all connected) and **correctly refused to produce a channel-ROI ranking**: no ad-spend data at all meant two of the three legs could not run, order-source coverage sat at 16-30% every year, and first-touch matched last-touch on all but 6 of 3,964 orders — so the output was "the data cannot answer which channel works" plus the gap list, which is exactly what the honest-shortfall rule exists to produce.
+- Total: **58 skills across 13 chains** (+3); standalone tools: 7.
 
 ### v3.16 (2026-08-01) — the honesty-scaffolding sweep: reproducible scoring, honest quotas, evidence gates
 Closes the two design questions parked in v3.15, then follows the thread: a gap found in one skill turned out to be a *class* of gap, so all 62 skills were swept for it. The pattern throughout — the repo's honesty scaffolding existed in its vocabulary but was missing at specific spots, and **the spots it was missing were often the highest-consequence ones**. No skills added or removed.
