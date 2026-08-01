@@ -1,6 +1,6 @@
 # Cross-Border E-Commerce AI Skills
 
-**55 AI-powered skill templates for cross-border e-commerce — from brand strategy to Amazon operations to DTC growth to finance & capital ops to affiliate-program building to EU channel entry to overseas-buyer prospecting + earned-media press discovery + Reddit pre-purchase VOC.**
+**58 AI-powered skill templates for cross-border e-commerce — from brand strategy to Amazon operations to DTC growth to finance & capital ops to affiliate-program building to EU channel entry to overseas-buyer prospecting + earned-media press discovery + Reddit pre-purchase VOC.**
 
 Compatible with Claude Code (`~/.claude/commands/`), Google Antigravity (`SKILL.md`), and any AI IDE with skill/prompt support.
 
@@ -12,10 +12,10 @@ Compatible with Claude Code (`~/.claude/commands/`), Google Antigravity (`SKILL.
 
 ### What is this?
 
-A collection of **55 AI agent skills** (structured prompt templates) that automate the entire cross-border e-commerce workflow — brand strategy, market research, product selection, listing optimization, advertising, DTC site operations, **finance & capital management**, **affiliate-program building**, **EU channel & market entry**, social media, influencer marketing, **overseas-buyer outbound prospecting**, **earned-media press discovery**, and **Reddit pre-purchase VOC**.
+A collection of **58 AI agent skills** (structured prompt templates) that automate the entire cross-border e-commerce workflow — brand strategy, market research, product selection, listing optimization, advertising, DTC site operations, **finance & capital management**, **affiliate-program building**, **EU channel & market entry**, social media, influencer marketing, **overseas-buyer outbound prospecting**, **earned-media press discovery**, and **Reddit pre-purchase VOC**.
 
 Two formats:
-- **Single-file skills** (45) — one `.md` file each, drop into your AI IDE's skill directory.
+- **Single-file skills** (53) — one `.md` file each, drop into your AI IDE's skill directory.
 - **Multi-file skill packages** (5, under `brand-strategy/`, `outbound-prospecting/`, and `voc-tools/`) — `SKILL.md` + `references/` + `templates/` (incl. Python scripts and CSV trackers). Point your AI IDE at the package directory.
 
 Plus **7 standalone tools** under `tools/` (Python utilities used by skills, also runnable independently): `backlink-kol-extractor`, `trustpilot`, `linktree-expander`, `contact-extractor`, `api-pacer`, `fetchlib`, `browser-fetch`.
@@ -220,7 +220,7 @@ See [tools/README.md](tools/README.md) for standalone usage.
 
 ### Key Features
 
-- **55 Skills, 13 Chains** — Complete coverage from brand strategy to daily operations to finance & capital to affiliate-program building to EU channel entry to overseas-buyer outbound to earned-media press discovery to pre-purchase Reddit VOC
+- **58 Skills, 13 Chains** — Complete coverage from brand strategy to daily operations to finance & capital to affiliate-program building to EU channel entry to overseas-buyer outbound to earned-media press discovery to pre-purchase Reddit VOC
 - **Affiliate & Channel Systems (2026 decks)** — a 2-skill affiliate chain built from the affiliate's own economics (`affiliate-readiness-audit` mirrors CRO — "why affiliates won't promote you"; `affiliate-program-ops` runs the AI recruit→score→outreach→activate loop), plus a US-entity Europe channel-entry strategy (SSPV / RCS / growth flywheel) and a multi-channel price-conflict guard. Framework skeletons only, each crediting its source deck in a methodology index
 - **Finance & YMYL Discipline** — the 8-skill finance chain carries explicit "planning aid, not professional tax/legal/accounting advice — verify with a CPA" disclaimers, point-in-time-stamped 2026 regulations, and ⚠️-flagged estimates (no fabricated numbers)
 - **Data Verification Layer** — Every skill includes mandatory verification; estimates are explicitly flagged with ⚠️
@@ -314,7 +314,7 @@ Key requirements: long context (8K+ input), strong instruction following, Chines
 一套 **58 个跨境电商 AI 技能模板**，覆盖品牌战略→选品→调研→文案→广告→独立站→**财务资金**→**联盟营销**→**欧洲渠道进入**→社媒→红人→线下渠道→海外开发→媒体公关→**购买前 Reddit VOC** 全流程自动化。
 
 两种格式：
-- **单文件技能（45 个）** — 一个 `.md` 文件，放入 AI IDE 技能目录即可使用
+- **单文件技能（53 个）** — 一个 `.md` 文件，放入 AI IDE 技能目录即可使用
 - **多文件技能包（5 个，分布在 `brand-strategy/`、`outbound-prospecting/` 和 `voc-tools/`）** — `SKILL.md` + `references/` + `templates/`（含 Python 脚本和 CSV 跟踪表），将整个目录指向 AI IDE
 
 外加 **7 个独立工具** 在 `tools/`（Python 工具，被 skill 调用也可独立使用）：`backlink-kol-extractor` / `trustpilot` / `linktree-expander` / `contact-extractor` / `api-pacer` / `fetchlib` / `browser-fetch`。
@@ -338,7 +338,7 @@ Key requirements: long context (8K+ input), strong instruction following, Chines
 
 ### 核心特色
 
-- **55 技能 × 13 链路 + 7 独立工具** — 从战略到执行到财务资金到联盟营销到欧洲渠道进入到海外开发到媒体公关到购买前 Reddit VOC 全覆盖
+- **58 技能 × 13 链路 + 7 独立工具** — 从战略到执行到财务资金到联盟营销到欧洲渠道进入到海外开发到媒体公关到购买前 Reddit VOC 全覆盖
 - **联盟与渠道体系（源自 2026 行业分享）** — 从联盟客的经济账反推的 2 技能联盟链（`affiliate-readiness-audit` 是 CRO 的镜像——审"联盟客为什么不推你"；`affiliate-program-ops` 跑 AI 招募→评分→建联→激活闭环），外加美国主体的欧洲渠道进入战略（SSPV / RCS / 增长飞轮）与多渠道价格冲突护栏。只抽方法论骨架，每个技能在"参考方法论索引"注明来源分享
 - **财务链 YMYL 纪律** — 8 个财务技能均带"规划辅助、非专业税务/法律/会计意见、需找 CPA 核实"免责，2026 法规打时间戳，估算标 ⚠️（不编造数字）
 - **数据验证层** — 每个技能内置强制验证，推测数据标 ⚠️
