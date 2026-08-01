@@ -259,11 +259,49 @@ Copy `.md` files (single-file skills) or whole directories (multi-file packages)
 
 ### Model Requirements
 
-| Tier | Quality | Models (as of April 2026) |
-|------|---------|--------------------------|
-| Recommended | Full execution, verification works | Claude Opus 4.6 / Sonnet 4.6, GPT-5.4, Gemini 3.1 Pro |
-| Usable | Structure OK, may skip verification | DeepSeek V4 / V3.2, Llama 4, Qwen 3.5 (72B+), GLM-5.1 |
-| Not recommended | Sections missing, checks fail | Models under 30B parameters |
+**Judge by capability, not by model name.** What these skills actually need is three things — the model list below expires every few months, this bar doesn't:
+
+| Capability | Why these skills need it |
+|---|---|
+| **Instruction-following across long context** | A single skill runs 10-50KB; the model has to still follow the structure after reading the whole spec |
+| **Actually executing multi-step verification** | The library leans hard on self-checks — count the bytes, cite the source, mark `❌未获取` when it's missing. A model that skips verification and jumps to the conclusion turns every honesty guardrail into decoration |
+| **Short-delivering honestly instead of filling the gap** | When evidence is thin it has to write "insufficient data, no conclusion" rather than inventing a plausible number to complete the table |
+
+> 🔴 **The second and third are the dividing line.** Following a structure is easy — plenty of mid-size models emit a report that *looks* complete. The hard part is **leaving blank what should be blank**. Test a candidate model by feeding it an input with a key figure missing and seeing whether it flags the gap or invents a number.
+
+### 🔴 "The skill doesn't run" — check the runtime before the skill
+
+**Maintainer's field observation (not a controlled benchmark):** these skills behave best on **stock Claude Code running against Anthropic's own API/subscription**. Reports of a skill "not working" have mostly traced back to the runtime, not the skill file — Claude Code pointed at a third-party relay or reseller subscription, or a different harness (Codex-style and other agent CLIs) loading the file.
+
+Why the runtime matters more here than for a plain prompt:
+
+| What the skills rely on | What a substituted runtime often breaks |
+|---|---|
+| The harness **loading `SKILL.md` and honoring its frontmatter** | `SKILL.md` + frontmatter is a Claude Code convention. Another harness may treat the file as plain context — or not load it at all — so the skill silently never activates |
+| **Full-fidelity long context** (10-50KB per skill, plus your data) | Relays commonly truncate, compress, or re-chunk context. The verification rules live throughout the file — drop the tail and the honesty gates go with it |
+| **A specific model actually serving the request** | Some resellers route "Claude" traffic to a different or quantized model without saying so. You get output shaped like the skill with none of the self-checking behavior |
+| **Multi-step self-verification surviving the system prompt** | Harnesses that rewrite or prepend their own system prompt can override the skill's verification instructions |
+
+**Self-diagnose in this order before filing an issue:**
+
+1. **What's actually serving you?** Confirm the runtime and that requests hit the model you think they do — not a relay in between.
+2. **Did the skill load at all?** Ask the agent to restate the skill's required output sections. If it can't, the file never activated — that's a loading problem, not a skill problem.
+3. **Run the blank test.** Feed an input with a key figure missing. Correct behavior is flagging the gap (`❌未获取` / "insufficient data"). If it invents a number, the honesty scaffolding isn't running, whatever the model claims to be.
+
+If all three pass and it still misbehaves, that's a real skill bug — please open an issue with the transcript.
+
+> This is one maintainer's testing across the setups they had access to, not a benchmark of every provider. Third-party relays vary widely; some may be fine. The point is that **the runtime is the first thing to rule out**, because it accounts for most of the "doesn't work" reports.
+
+**Reference models (verified 2026-08 — will go stale)**
+
+| Tier | Quality | Models at the time |
+|------|---------|--------------------|
+| Recommended | Full execution, verification works | Claude Opus 5 / Sonnet 5 (and Fable 5), GPT-5.6 Sol / GPT-5.5 family, Gemini 3.1 Pro |
+| Usable | Structure OK, may skip verification | DeepSeek V4, Qwen 3.5, GLM-5.2, Llama 4, Claude Haiku 4.5 |
+| Not recommended | Sections missing, checks fail | Small models (empirically, under ~30B) |
+
+> ⚠️ **This table goes stale by design** — the previous version sat at April 2026 and was already two Claude generations behind. **Don't copy the names; use the capability bar above to test whatever you have.** Current lineups: [Anthropic](https://platform.claude.com/docs/en/about-claude/models/overview) · [OpenAI](https://platform.openai.com/docs/models) · [Google](https://ai.google.dev/gemini-api/docs/models).
+> The Claude row comes from Anthropic's own docs; the rest is public reporting collated 2026-08 — vendors ship on different cadences, so treat each vendor's docs as authoritative.
 
 Key requirements: long context (8K+ input), strong instruction following, Chinese-English bilingual, tool use / web browsing.
 
@@ -336,11 +374,49 @@ cp -r cross-border-ecommerce-skills/tools/backlink-kol-extractor ~/.claude/skill
 
 ### 模型要求
 
-| 层级 | 效果 | 代表模型（2026 年 4 月） |
-|------|------|------------------------|
-| 推荐 | 完整执行，验证步骤生效 | Claude Opus 4.6 / Sonnet 4.6、GPT-5.4、Gemini 3.1 Pro |
-| 可用 | 结构完整，可能跳过验证 | DeepSeek V4 / V3.2、Llama 4、Qwen 3.5 (72B+)、GLM-5.1 |
-| 不建议 | 章节缺失，检查失效 | 30B 以下参数模型 |
+**先看能力门槛，再看型号。** 这些 skill 对模型的真实要求是三条——型号表每几个月就会过期，能力门槛不会：
+
+| 能力 | 为什么这些 skill 需要它 |
+|------|----------------------|
+| **长上下文里的指令遵循** | 单个 skill 有 10-50KB，模型要在读完整份规格后仍然照着结构走 |
+| **多步验证的执行力** | 本仓大量依赖「先算字节数 / 先查来源 / 缺了就标 ❌未获取」这类自检步骤。模型如果倾向于跳过验证直接给结论，诚信护栏就是摆设 |
+| **如实短交而非补齐** | 证据不足时要能写「数据不足，不下结论」，而不是编一个像样的数字把表格填满 |
+
+> 🔴 **第二条和第三条是本仓的分水岭。** 结构照着走很容易，很多中小模型都能生成看起来完整的报告——难的是**该空着的时候空着**。选型时请用这个测：给它一份缺关键数据的输入，看它是标注缺口，还是编一个数字。
+
+### 🔴 「skill 跑不通」——先排查运行环境，再怀疑 skill
+
+**维护者实测口径（非对照评测）：** 这些 skill 在**原版 Claude Code + Anthropic 官方 API/订阅**下表现最好。收到的「跑不通」反馈，绝大多数最后定位到的是**运行环境**而不是 skill 文件本身——要么 Claude Code 接的是第三方中转/转售订阅，要么换了别的 harness（Codex 一类的 agent CLI）在读这个文件。
+
+为什么这里比普通 prompt 更吃运行环境：
+
+| skill 依赖什么 | 换掉运行环境后常见的断点 |
+|---|---|
+| harness **真的加载 `SKILL.md` 并认 frontmatter** | `SKILL.md` + frontmatter 是 Claude Code 的约定。别的 harness 可能只当普通上下文、甚至根本不加载——skill **静默地压根没生效** |
+| **完整不打折的长上下文**（单个 skill 10-50KB，还要加你的数据） | 中转普遍会截断、压缩或重新分块。而验证规则是**散布在全文**的，尾部一丢，诚信闸就跟着丢了 |
+| **真的是那个模型在接请求** | 部分转售会把「Claude」流量路由到别的或量化过的模型且不告知。你会拿到一份**长得像** skill 输出、但完全没有自检行为的东西 |
+| **多步自检活过 system prompt** | 会改写或前置自己 system prompt 的 harness，可能直接盖掉 skill 的验证指令 |
+
+**报障前请按这个顺序自查：**
+
+1. **到底是谁在接你的请求？** 确认运行环境，以及请求真的打到了你以为的那个模型上——中间没有中转。
+2. **skill 到底加载了没？** 让 agent 复述这个 skill 要求输出哪几节。复述不出来 = 文件压根没生效，这是**加载问题不是 skill 问题**。
+3. **跑一次留白测试。** 喂一份缺关键数字的输入。正确行为是标出缺口（`❌未获取` / 「数据不足」）。**如果它编了一个数字，说明诚信脚手架没在跑**——不管它自称是什么模型。
+
+三条都过了还不对，那才是真 bug，欢迎带上对话记录提 issue。
+
+> 这是单个维护者在自己能接触到的环境里的实测，不是对所有服务商的评测。第三方中转差异很大，有些可能没问题。要点只有一个：**先把运行环境排除掉**，因为「跑不通」的报障大多出在这儿。
+
+**参考型号（2026-08 核实，会过期）**
+
+| 层级 | 效果 | 当时的代表型号 |
+|------|------|--------------|
+| 推荐 | 完整执行，验证步骤生效 | Claude Opus 5 / Sonnet 5（及 Fable 5）、GPT-5.6 Sol / GPT-5.5 家族、Gemini 3.1 Pro |
+| 可用 | 结构完整，可能跳过验证 | DeepSeek V4、Qwen 3.5、GLM-5.2、Llama 4、Claude Haiku 4.5 |
+| 不建议 | 章节缺失，检查失效 | 小参数量模型（经验上 30B 以下） |
+
+> ⚠️ **这张表按定义会过期**——上一版停留在 2026-04 就已经落后两代。**别照抄型号，用上面的能力门槛去测你手上的模型。**各家型号请查官方文档：[Anthropic](https://platform.claude.com/docs/en/about-claude/models/overview) · [OpenAI](https://platform.openai.com/docs/models) · [Google](https://ai.google.dev/gemini-api/docs/models)。
+> Claude 一栏来自 Anthropic 官方文档；其余为 2026-08 公开资料整理，各家发布节奏不同，以官方为准。
 
 ---
 
