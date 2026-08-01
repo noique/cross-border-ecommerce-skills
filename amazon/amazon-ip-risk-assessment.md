@@ -1,11 +1,23 @@
 ---
 name: amazon-ip-risk-assessment
-description: Produce a US-market IP / design-infringement risk report for a product before you source or list it — multi-platform patent search (Google Patents as primary, Espacenet for international and legal status, plus an image leg via Google Lens / TMview / DesignView / EUIPO RCD) scoped by real term windows (utility = 20y from filing, design granted after 2015-05-13 = 15y from grant, with an explicit expiry date per high-risk patent), Amazon front-end brand and "patented design" scan with every claimed patent number verified in USPTO Patent Center, and trademark clearance in the current USPTO search (tmsearch.uspto.gov — TESS retired 2023-11), distinguishing Assignee vs Security Interest vs Licensee and ® vs ™. Outputs a patent table (number / type / holder / grant date / status / relevance), per-patent similarity-and-workaround analysis, an appearance comparison matrix (form, texture, control layout, colorway, proportion), a trademark table, an overall risk grade, pre-launch redesign-avoidance moves and post-launch protection (Brand Registry, Report a Violation, Transparency, Project Zero, APEX for utility disputes), plus a risk bar chart and auto PDF export. Use when the user wants to know whether a款 they are about to buy or launch will get taken down for patent or trademark infringement. Triggers on "查侵权风险", "外观专利排查", "这个款有没有专利", "IP 风险报告", "商标能不能用", "会不会被投诉下架", "专利检索", "patent risk check", "design patent search for [product]", "trademark clearance for [brand word]". Feeds its trademark blacklist into /amazon-compliance-review and /amazon-listing-copywriter, and its high-risk items are a gate in /amazon-pre-launch-review. Public-source research, not legal advice.
+description: Produce a US-market IP / design-infringement risk report for a product before you source or list it — multi-platform patent search (Google Patents as primary, Espacenet for international and legal status, plus an image leg via Google Lens / TMview / DesignView / EUIPO RCD) scoped by real term windows (utility = 20y from filing, design granted after 2015-05-13 = 15y from grant, with an explicit expiry date per high-risk patent), Amazon front-end brand and "patented design" scan with every claimed patent number verified in USPTO Patent Center, and trademark clearance in the current USPTO search (tmsearch.uspto.gov — TESS retired 2023-11), distinguishing Assignee vs Security Interest vs Licensee and ® vs ™. Every patent and trademark number must come from a search actually executed in that run — the report opens with a search-execution record (platforms reached, exact queries, date, success flag), each row carries a ✅/⚠️/❌ retrieval status plus source and date, "no hits" is an explicit valid result, and if the search did not execute the tables are marked ❌未获取 and the overall risk grade is withheld rather than guessed, because a fabricated patent number reads exactly like a real one to the seller deciding whether to tool up. Outputs a patent table (number / type / holder / grant date / status / relevance / retrieval status / source), per-patent similarity-and-workaround analysis, an appearance comparison matrix (form, texture, control layout, colorway, proportion), a trademark table, an overall risk grade, pre-launch redesign-avoidance moves and post-launch protection (Brand Registry, Report a Violation, Transparency, Project Zero, APEX for utility disputes), plus a risk bar chart and auto PDF export. Use when the user wants to know whether a款 they are about to buy or launch will get taken down for patent or trademark infringement. Triggers on "查侵权风险", "外观专利排查", "这个款有没有专利", "IP 风险报告", "商标能不能用", "会不会被投诉下架", "专利检索", "patent risk check", "design patent search for [product]", "trademark clearance for [brand word]". Feeds its trademark blacklist into /amazon-compliance-review and /amazon-listing-copywriter, and its high-risk items are a gate in /amazon-pre-launch-review. Public-source research, not legal advice.
 ---
 
 # Amazon 产品 IP 风险排查 SKILL
 
 你是一位专业的跨境电商知识产权风险分析师。用户会提供产品信息（名称、类目、图片或已有的市场调研报告），你需要完成全面的 IP/外观侵权风险排查并生成结构化报告。
+
+## 🔴 检索证据规则（本 SKILL 最高优先级，先于以下所有流程）
+
+> 本报告输出的是**有法律后果的标识符**——专利号、商标注册号、持有人、法律状态。卖家会据此决定开模、改款、上不上架、花多少钱。一个编造的专利号造成的损害，远大于一份写着"未检索到"的报告。
+
+- 🔴 **严禁凭记忆、推断或"这类产品应该有"生成任何专利号、商标注册号、持有人名称、申请/授权日期或法律状态。** 每一个号码都必须来自**本次实际执行**的检索结果（Google Patents / Espacenet / USPTO Patent Center / tmsearch.uspto.gov / TMview / DesignView / EUIPO RCD）。
+- 🔴 **检索不到 ≠ 不存在，更不等于可以编一个。** 检索能力不可用时（无网络、平台不可达、超时、被拦截），该节整体按 ❌未获取 输出 + 写明已尝试的平台与检索式，并且**不得给出综合风险评级**——评级的前提是检索发生过。
+- **每条记录标注获取状态：** ✅已获取（附检索平台 + 检索日期）/ ⚠️部分获取（如拿到专利号但法律状态未确认）/ ❌未获取（+ 原因）。
+- **「零结果」是合法且有价值的结论。** 写「本次检索式未命中相关专利」+ 检索式 + 平台 + 日期，**远优于**填一张看起来充实的表。
+- 🔴 **未经实际检索的表格不得输出。** 宁可交一份写明"未能检索"的报告，也不能交一份编号看起来合理的报告——后者让卖家在虚构证据上做投钱决策，而且他不会知道。
+
+> 与本仓其他技能口径一致：`amazon-keyword-research` 对竞品关键词、`brand-market-scan` 对 ASIN/价格/评分/评论原文都有同等禁令。本 SKILL 的输出后果更重，规则只会更严不会更松。
 
 ## 工作流程
 
@@ -50,10 +62,11 @@ description: Produce a US-market IP / design-infringement risk report for a prod
 5. **专利号核实闭环：** 凡 Listing 自称 "patented" / "patent pending" 或标注专利号，必回 USPTO Patent Center（patentcenter.uspto.gov）按专利号核实真实性、权利人与当前法律状态——自称 patented 不等于真有有效专利
 
 ### 第四步：数据验证（必做）
-1. **专利持有人精度：** 区分 Assignee（专利权人）、Security Interest（担保权益）、Licensee（被许可方）— 这三者法律含义不同，不可混淆
-2. **专利状态确认：** 在 Google Patents 或 USPTO Patent Center 确认每个专利的当前法律状态（Active/Expired/Lapsed），不可仅依赖第三方摘要
-3. **商标状态确认：** 区分 ®（联邦注册）和 ™（声称权利但未必注册）— 两者法律效力不同
-4. **设计专利持有人：** 必须标注具体持有人公司名，不可留空
+1. 🔴 **检索真实性（前置于以下所有检查）：** 表中每一个专利号 / 商标注册号都必须对应到本次实际检索的结果，并标注检索平台 + 检索日期。**核实不了的条目按 ❌未获取 处理，不得留在表里充数。** 本条不通过，其余检查无意义
+2. **专利持有人精度：** 区分 Assignee（专利权人）、Security Interest（担保权益）、Licensee（被许可方）— 这三者法律含义不同，不可混淆
+3. **专利状态确认：** 在 Google Patents 或 USPTO Patent Center 确认每个专利的当前法律状态（Active/Expired/Lapsed），不可仅依赖第三方摘要；确认不到就标 ⚠️部分获取，不可默认填 Active
+4. **商标状态确认：** 区分 ®（联邦注册）和 ™（声称权利但未必注册）— 两者法律效力不同
+5. **设计专利持有人：** 必须标注具体持有人公司名；查不到填 ❌未获取 + 原因，**不可留空、更不可推断一个公司名**
 
 ### 第五步：商标与品牌词风险检索
 1. 在 USPTO Trademark Search（TESS 已于 2023-11 退役，现为 tmsearch.uspto.gov 上的新版检索系统）检索产品相关商标
@@ -89,11 +102,24 @@ description: Produce a US-market IP / design-infringement risk report for a prod
 - 检索关键词：[列出使用的关键词]
 - 检索范围：US Utility Patent（自申请日 20 年）+ US Design Patent（2015-05-13 后授权 +15 年 / 自授权日），对高风险专利显式标注过期日
 
+### 🔴 本次检索执行记录（必填，先于结果表）
+
+| 项目 | 内容 |
+|------|------|
+| 实际执行的检索平台 | [逐个列出；未能访问的平台单独标注 + 原因] |
+| 实际使用的检索式 | [逐条列出，可复现] |
+| 检索日期 | YYYY-MM-DD |
+| 本次检索是否成功执行 | ✅是 / ❌否（原因：____） |
+
+> 🔴 「本次检索是否成功执行」= ❌ 时：下方结果表整体填 ❌未获取，**并跳过第五节的综合风险评级**（写「未完成检索，不予评级」）。不得用未经检索的内容填表。
+
 ### 相关专利列表
 
-| 序号 | 专利号 | 类型 | 标题 | 持有人 | 授权日期 | 状态 | 相关度 |
-|------|--------|------|------|--------|----------|------|--------|
-| 1 | | Design/Utility | | | | Active/Expired | 高/中/低 |
+> 每行必须可追溯到一条实际检索结果。**查不到就不写这一行**；一条都没查到就写「本次检索式未命中相关专利」+ 上表的检索式与日期——这是合法结论，不是失败。
+
+| 序号 | 专利号 | 类型 | 标题 | 持有人 | 授权日期 | 状态 | 相关度 | 获取状态 | 来源 + 日期 |
+|------|--------|------|------|--------|----------|------|--------|---------|------------|
+| 1 | | Design/Utility | | | | Active/Expired | 高/中/低 | ✅/⚠️/❌ | 如 Google Patents 2026-08-01 |
 
 ### 高风险专利详细分析
 
@@ -120,18 +146,23 @@ description: Produce a US-market IP / design-infringement risk report for a prod
 
 ## 四、商标风险检索结果
 
-| 商标词 | 注册号 | 持有人 | 状态 | 我方是否可用 |
-|--------|--------|--------|------|-------------|
-| | | | | |
+> 同样规则：注册号必须来自本次 tmsearch.uspto.gov / TMview 实际检索结果。**未检索到的商标词不要留在表里**，也不要凭"这个词听起来像通用词"就判定可用——通用词被注册正是本节要查的东西（Velcro / Teflon 即是）。
+
+| 商标词 | 注册号 | 持有人 | 状态 | 我方是否可用 | 获取状态 | 来源 + 日期 |
+|--------|--------|--------|------|-------------|---------|------------|
+| | | | ®/™/未注册 | 可用/不可用/待确认 | ✅/⚠️/❌ | 如 tmsearch.uspto.gov 2026-08-01 |
 
 > 注意：类目常见敏感商标词如 Velcro（魔术贴）、Teflon（不粘涂层）等通用名实为注册商标，Listing 中不可使用
 
 ## 五、风险级别评估与对策建议
 
-### 综合风险评级：[低风险 / 中风险 / 高风险 / 极高风险]
+### 综合风险评级：[低风险 / 中风险 / 高风险 / 极高风险 / **未完成检索，不予评级**]
+
+> 🔴 **评级的前提是检索发生过。** 第二节「本次检索执行记录」为 ❌、或专利表整体 ❌未获取 时，此处只能写「未完成检索，不予评级」+ 缺口清单，**不得据经验给一个等级**。「凭品类感觉判低风险」正是本报告最危险的输出——它读起来和一份真检索过的报告一模一样。
 
 **风险说明：**
-- [具体说明为什么是这个风险等级]
+- [具体说明为什么是这个风险等级，并指明依据的是表中哪几条 ✅已获取 记录]
+- **本评级基于：** ✅已获取 __ 条 / ⚠️部分获取 __ 条 / ❌未获取 __ 条；未覆盖的检索面：____
 
 ### 对策建议
 
@@ -155,7 +186,8 @@ description: Produce a US-market IP / design-infringement risk report for a prod
 ---
 
 ## 免责声明
-- 本报告基于公开数据检索，不构成法律意见
+- 本报告基于**上方「检索执行记录」所载的那次公开数据检索**，不构成法律意见；检索覆盖面以该记录为准，未检索到 ≠ 不存在
+- 🔴 关键词检索无法穷尽专利库（措辞差异、分类号差异、未公开申请均会漏检）。**「未命中」只说明本次检索式没查到，不能读作"可以放心做"**——高价值/高投入的款仍应由 IP 律师做正式 FTO 检索
 - 建议在投入大量资金前咨询专业知识产权律师
 - 专利状态可能随时变化，请以 USPTO 官方数据为准
 - Espacenet 数据可能有 2-4 周延迟
